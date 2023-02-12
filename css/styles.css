@@ -11306,14 +11306,18 @@ html {
 }
 
 .home-dashboard {
-  margin: 0.5rem;
+  margin: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   overflow: hidden;
   border-radius: 1rem;
   flex-direction: column;
 }
 
 .home-calendar {
-  margin: 0.5rem;
+  margin: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
   overflow: hidden;
   border-radius: 1rem;
 }
@@ -11340,6 +11344,8 @@ html {
   height: inherit;
   width: 100%;
   text-align: center;
+  overflow: scroll;
+  scroll-padding-bottom: 1rem;
 }
 
 .dash-content {
@@ -11347,14 +11353,21 @@ html {
   height: 95%;
   padding: 2.5%;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .tutor-card {
-  background-color: var(--bs-secondary);
   height: 40%;
   width: 46.25%;
+  min-height: 225px;
+  min-width: 350px;
+  max-width: 360px;
+  margin-bottom: 2rem;
+  border-color: rgb(232-117-0);
+  border-width: 1rem;
+  display: flex;
+  flex-direction: row;  
 }
 
 .page-section {
@@ -11489,7 +11502,7 @@ html {
     flex-direction: row;
   }
   .dashboard-left {
-    width: 20%;
+    width: 30%;
     height: 100%;
     flex-direction: column;
     align-content: space-around;
@@ -11497,10 +11510,14 @@ html {
   }
   .dashboard-right {
     width: 80%;
-    height: 100%
+    height: 100%;
+    margin-left: -1.5rem;
   }
   .dash-label {
     height: 50%;
+  }
+  .dash-content {
+    justify-content: space-between;
   }
 }
 
