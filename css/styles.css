@@ -11725,3 +11725,32 @@ html {
   background: white;
   border-radius: 50%;
 }
+
+.course-name {
+  border-style: double;
+  border-width: 1px;
+  border-radius: 20px;
+  border-color: rgb(232, 117, 0);
+  width: fit-content;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: x-small;
+  height: fit-content;
+}
+
+.course-name-green {
+  border-style: double;
+  border-width: 1px;
+  border-radius: 20px;
+  border-color: rgb(18, 71, 52);
+  width: max-content;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: small;
+  height: fit-content;
+}
+
+.blackiconcolor {
+  color: black;
+}
