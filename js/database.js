@@ -4,14 +4,14 @@ var con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "COMMERCIAL_GYM"
+    database: "ONLINE_TUTORING"
 });
 
 con.connect(function (err) {
     if (err) 
         throw err;
 
-  con.query('SELECT * FROM STAIR_MASTER', function(err, result, fields) {
+  con.query('SELECT * FROM student', function(err, result, fields) {
     if (err)
         throw err;
     

@@ -5,6 +5,7 @@ const mysql = require('mysql');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+/*
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
@@ -12,6 +13,15 @@ const pool = mysql.createPool({
     database: 'your_mysql_database',
     connectionLimit: 10
 });
+*/
+
+const pool = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "ONLINE_TUTORING"
+});
+
 
 app.use(cors());
 
