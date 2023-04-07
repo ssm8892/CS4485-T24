@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="/styles.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -46,7 +46,7 @@
         <header class="masthead text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Avatar Image-->
-                <img class="masthead-avatar mb-5" src="assets/img/new_logo" alt="..." style="width: 20rem;">
+                <img class="masthead-avatar mb-5" src="/new_logo" alt="..." style="width: 20rem;">
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">COMET TUTOR</h1>
                 <!-- Icon Divider-->
@@ -449,7 +449,104 @@
                                     <i class="fas fa-portrait me-2"></i>
                                     SKIP LOGIN
                                 </a>
+                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">
+                                    <i class="fas fa-portrait me-2"></i>
+                                    SIGN UP
+                                </a>
+                                <button class="btn btn-primary" data-bs-dismiss="modal">
+                                    <i class="fas fa-xmark fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="portfolio-modal modal fade" id="signUpModal" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Sign Up</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                    <!-- First Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email"
+                                            placeholder="John" data-sb-validations="required" />
+                                        <label for="fname">First Name</label>
+                                        <div class="invalid-feedback" data-sb-feedback="fname:required">A first name is
+                                            required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="fname:fname">First name is not valid.
+                                        </div>
+                                    </div>
+                                    <!-- Last Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email"
+                                            placeholder="Doe" data-sb-validations="required" />
+                                        <label for="lname">Last Name</label>
+                                        <div class="invalid-feedback" data-sb-feedback="lname:required">A last name is
+                                            required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="lname:fname">Last name is not valid.
+                                        </div>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email"
+                                            placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <label for="email">Email address</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is
+                                            required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.
+                                        </div>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="password" type="password" placeholder="password"
+                                            data-sb-validations="required,password" />
+                                        <label for="password">Password</label>
+                                        <div class="invalid-feedback" data-sb-feedback="password:required">An email is
+                                            required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="password:email">Email is not
+                                            valid.</div>
+                                    </div>
+                                    <!-- Submit success message-->
+                                    <!---->
+                                    <!-- This is what your users will see when the form-->
+                                    <!-- has successfully submitted-->
+                                    <div class="d-none" id="submitSuccessMessage">
+                                        <div class="text-center mb-3">
+                                            <div class="fw-bolder">Form submission successful!</div>
+                                            To activate this form, sign up at
+                                            <br />
+                                            <a
+                                                href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                                        </div>
+                                    </div>
+                                    <!-- Submit error message-->
+                                    <!---->
+                                    <!-- This is what your users will see when there is-->
+                                    <!-- an error submitting the form-->
+                                    <div class="d-none" id="submitErrorMessage">
+                                        <div class="text-center text-danger mb-3">Error sending message!</div>
+                                    </div>
+                                    <!-- Submit Button-->
+                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit">SIGN UP</button>
+                                </form>
                                 <button class="btn btn-primary" data-bs-dismiss="modal">
                                     <i class="fas fa-xmark fa-fw"></i>
                                     Close Window
