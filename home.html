@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>COMET TUTOR</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet"  href="styles/styles.css" type="text/css"/>
+</head>
+
+<body id="page-top">
+    <div id="backdrop" class="backdrop background-tint">
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">COMET TUTOR</a>
+                <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-portrait"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item mx-0 mx-lg-1 " data-bs-toggle="modal" data-bs-target="#profileModal"><a
+                                class="nav-link py-3 px-0 px-lg-3 rounded">Profile</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                href="/CS4485-T24/settings.html">Settings</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                href="/CS4485-T24/index.html">EXIT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Masthead-->
+        <header class="masthead text-black text-center">
+            <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Heading-->
+                <h1 class="page-section-heading text-uppercase mb-0 text-white">WELCOME BACK USER!</h1>
+            </div>
+        </header>
+
+        <section class="home-dashboard bg-primary text-white" id="dashboard" style="height: 70vh; display: flex;">
+            <div class="dashboard-left" id="dash-left" style="display: flex;">
+                <div class="dash-label bg-white text-primary" style="display: flex; border-radius: 1rem;">TUTORS</div>
+                <div class="dash-label bg-primary text-white" style="display: flex;">CLASSES</div>
+            </div>
+            <div class="dashboard-right bg-white text-secondary" id="dash-right"
+                style="width: 100%; height: inherit; border-radius: 1rem; font-weight: bolder;">
+                <div class="dash-menu" style="display: flex; flex-direction: row; position: fixed-top;">
+                    <div class="dash-menu-left"
+                        style="width: 60%; text-align: left; margin: 1rem; padding-left: 0.5rem;">
+                        FILTER:
+                        <btn class="filter-all-btn" style="margin: 1rem;">ALL (6)</btn>
+                        <btn class="filter-favs-btn">FAVORITES (0)</btn>
+                    </div>
+                    <div class="dash-menu-right"
+                        style="width: 40%; text-align: right; margin: 1rem; padding-right: 0.5rem;">
+                        <btn class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </btn>
+                    </div>
+                </div>
+                <div class="dash-content" style="display: flex; flex-direction: row;">
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal1">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Sai Motukuri</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">ssm190012@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal2">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Kevin Boudreaux</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">kcb180002@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal3">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Thomas Kahng</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">ttk190003@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal4">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/F_PROFILE.png" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Hima Cheruvu</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">hbc190000@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal5">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/F_PROFILE.png" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Navya Esanakarra</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">nne190000@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal6">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/img/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">Rishi Vontivillu</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">rrv180001@utdallas.edu</h2> 
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div> 
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="home-calendar bg-secondary text-white mt-4" id="dashboard">
+            <div class="calendar-left bg-primary">
+                <div class="calendar bg-transparent">
+                    <div class="calendar__picture">
+                        <h2>20, Monday</h2>
+                        <h3>February</h3>
+                    </div>
+                    <div class="calendar__date">
+                        <div class="calendar__day">S</div>
+                        <div class="calendar__day">M</div>
+                        <div class="calendar__day">T</div>
+                        <div class="calendar__day">W</div>
+                        <div class="calendar__day">T</div>
+                        <div class="calendar__day">F</div>
+                        <div class="calendar__day">S</div>
+                        <div class="calendar__number"></div>
+                        <div class="calendar__number"></div>
+                        <div class="calendar__number"></div>
+                        <div class="calendar__number">1</div>
+                        <div class="calendar__number">2</div>
+                        <div class="calendar__number">3</div>
+                        <div class="calendar__number">4</div>
+                        <div class="calendar__number">5</div>
+                        <div class="calendar__number">6</div>
+                        <div class="calendar__number">7</div>
+                        <div class="calendar__number">8</div>
+                        <div class="calendar__number">9</div>
+                        <div class="calendar__number">10</div>
+                        <div class="calendar__number">11</div>
+                        <div class="calendar__number">12</div>
+                        <div class="calendar__number">13</div>
+                        <div class="calendar__number">14</div>
+                        <div class="calendar__number">15</div>
+                        <div class="calendar__number">16</div>
+                        <div class="calendar__number">17</div>
+                        <div class="calendar__number">18</div>
+                        <div class="calendar__number">19</div>
+                        <div class="calendar__number calendar__number--current">20</div>
+                        <div class="calendar__number">21</div>
+                        <div class="calendar__number">22</div>
+                        <div class="calendar__number">23</div>
+                        <div class="calendar__number">24</div>
+                        <div class="calendar__number">25</div>
+                        <div class="calendar__number">26</div>
+                        <div class="calendar__number">27</div>
+                        <div class="calendar__number">28</div>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-right flex-column justify-content-center">
+                <div class="">
+                    You have no appointments today!
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="footer text-center mt-4" style="margin-left: 2rem; margin-right: 2rem;">
+            <div class="container">
+                <div class="row">
+                    <!-- Footer Location-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Location</h4>
+                        <p class="lead mb-0">
+                            800 W Campbell Rd
+                            <br />
+                            Richardson, TX 75080
+                        </p>
+                    </div>
+                    <!-- Footer Social Icons-->
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <h4 class="text-uppercase mb-4">Around the Web</h4>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
+                                class="fab fa-fw fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
+                                class="fab fa-fw fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
+                                class="fab fa-fw fa-instagram"></i></a>
+                    </div>
+                    <!-- Footer About Text-->
+                    <div class="col-lg-4">
+                        <h4 class="text-uppercase mb-4">About Comet Tutor</h4>
+                        <p class="lead mb-0">
+                            Freelance is a free to use, MIT licensed Bootstrap theme created by
+                            <a href="http://startbootstrap.com">Start Bootstrap</a>
+                            .
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+        <div class="copyright py-4 text-center text-primary">
+            <div class="container"><small>Copyright &copy; Your Website 2022</small></div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="profileModal" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Profile</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."
+                                        style="width: 15rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h1 class="masthead-heading text-uppercase mb-0">INSERT PERSONAL INFO</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    <p class="masthead-subheading font-weight-light mb-0">ADD TUTORING STATS</p>
+                                </div>
+                                <button class="btn btn-primary mt-4">
+                                    BECOME A TUTOR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal1" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Sai Motukuri</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Days</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">ssm190012@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal2" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Kevin Boudreaux</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Days</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">kcb180002@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal3" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Thomas Kahng</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Days</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">ttk190003@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal4" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Hima Cheruvu</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/F_PROFILE.png" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Days</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">hbc190000@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal5" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Navya Esanakarra</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/F_PROFILE.png" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Days</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">nne190000@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="portfolio-modal modal fade" id="tutorProfileModal6" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary mb-0">Rishi Vontivillu</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <div class="container d-flex align-items-center flex-column">
+                                    <!-- Masthead Avatar Image-->
+                                    <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="..."
+                                        style="width: 10rem;" />
+                                    <!-- Masthead Heading-->
+                                    <h4 class="text-uppercase mb-0">CS MAJOR - SENIOR</h1>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">S</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">M</div>
+                                        <div class="text-secondary text-uppercase course-name-green">T</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">W</div> 
+                                        <div class="text-secondary course-name-green">Tr</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">F</div> 
+                                        <div class="text-secondary course-name-green">Sa</div> 
+                                    </div>
+                                    
+                                    
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available Classes</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2337</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
+                                        <div class="text-secondary text-uppercase course-name-green">CS 3301</div> 
+                                        <div class="text-secondary text-uppercase course-name-green">CS 2340</div> 
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">rrv180001@utdallas.edu</div> 
+                                        <div class="text-secondary course-name-green">+1(000)-000-0000</div>
+                                    </div>
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
+                                    <div style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i></div>
+                                    </div>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary">
+                                        BOOK APPOINTMENT
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/scripts.js" async defer></script>
+</body>
+
+</html>
