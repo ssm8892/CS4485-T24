@@ -34,15 +34,15 @@ app.use(express.static(__dirname + "/css"));
 app.use(express.static(__dirname + "/assets"));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/html/index.html");
+    res.sendFile(__dirname + "/index.html");
 })
 
 app.get('/settings', (req, res) => {
-    res.sendFile(__dirname + "/html/settings.html");
+    res.sendFile(__dirname + "/settings.html");
 })
 
 app.get('/home', (req, res) => {
-    res.sendFile(__dirname + "/html/home.html");
+    res.sendFile(__dirname + "/home.html");
 })
 
 app.get('/:word/echo', (req, res) => {
