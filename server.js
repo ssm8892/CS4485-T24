@@ -30,7 +30,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(__dirname + "/css"));
+app.use(express.static(__dirname + "/styles"));
 app.use(express.static(__dirname + "/assets"));
 
 app.get('/', (req, res) => {
