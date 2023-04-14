@@ -11,6 +11,7 @@ const pool = mysql.createPool({
 
 // Create an Express app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // List all tutors
 app.get('/tutors', (req, res) => {
@@ -143,6 +144,7 @@ pool.query('SELECT * FROM tutor')
       });
   }
 */
+
 
 const express = require("express");
 const cors = require("cors");
