@@ -1,3 +1,149 @@
+/*const express = require('express');
+const mysql = require('mysql2/promise');
+
+// Create a MySQL pool
+const pool = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "password",
+    database: "online_tutoring"
+});
+
+// Create an Express app
+const app = express();
+
+// List all tutors
+app.get('/tutors', (req, res) => {
+    pool.query('SELECT * FROM tutors')
+        .then(([rows]) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error getting tutors' });
+        });
+});
+
+// Show information about one specific tutor
+app.get('/tutors/:id', (req, res) => {
+    const { id } = req.params;
+    pool.query('SELECT * FROM tutors WHERE id = ?', [id])
+        .then(([rows]) => {
+            if (rows.length > 0) {
+                res.json(rows[0]);
+            } else {
+                res.status(404).json({ error: 'Tutor not found' });
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error getting tutor' });
+        });
+});
+
+// Show "signup to be a tutor" page
+app.get('/tutors/new', (req, res) => {
+    // Render the signup form
+    res.render('tutor_signup_form');
+});
+
+// Create new tutor account
+app.post('/tutors', (req, res) => {
+    const { name, email, subjects } = req.body;
+    pool.query('INSERT INTO tutors (name, email, subjects) VALUES (?, ?, ?)', [name, email, subjects])
+        .then(() => {
+            res.status(201).json({ message: 'Tutor created' });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error creating tutor' });
+        });
+});
+
+// List all reservations
+app.get('/reservations', (req, res) => {
+    pool.query('SELECT * FROM reservations')
+        .then(([rows]) => {
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error getting reservations' });
+        });
+});
+
+// Show information about one specific reservation
+app.get('/reservations/:id', (req, res) => {
+    const { id } = req.params;
+    pool.query('SELECT * FROM reservations WHERE id = ?', [id])
+        .then(([rows]) => {
+            if (rows.length > 0) {
+                res.json(rows[0]);
+            } else {
+                res.status(404).json({ error: 'Reservation not found' });
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error getting reservation' });
+        });
+});
+
+// Show new reservation form
+app.get('/reservations/new', (req, res) => {
+    // Render the reservation form
+    res.render('reservation_form');
+});
+
+// Create new reservation
+app.post('/reservations', (req, res) => {
+    const { tutor_id, student_name, date, time } = req.body;
+    pool.query('INSERT INTO reservations (tutor_id, student_name, date, time) VALUES (?, ?, ?, ?)', [tutor_id, student_name, date, time])
+        .then(() => {
+            res.status(201).json({ message: 'Reservation created' });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Error creating reservation' });
+        });
+});
+
+//app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+// Query the database
+pool.query('SELECT * FROM tutor')
+  .then(([rows]) => {
+    // Do something with the rows
+    console.log(rows);
+  })
+  .catch((err) => {
+    // Handle errors
+    console.error(err);
+  });
+
+
+  function generateTutorDivs() {
+    fetch('/tutors')
+      .then(response => response.json())
+      .then(tutors => {
+        const tutorContainer = document.querySelector('#tutor-container');
+        for (const tutor of tutors) {
+          const tutorDiv = document.createElement('div');
+          tutorDiv.classList.add('tutor');
+          tutorDiv.dataset.id = tutor.id;
+          tutorDiv.innerHTML = `
+            <h2>${tutor.name}</h2>
+            <p>${tutor.description}</p>
+            <button class="book-appointment">Book Appointment</button>
+          `;
+          tutorContainer.appendChild(tutorDiv);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+*/
+
 const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql');
@@ -30,19 +176,19 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(__dirname + "/css"));
+app.use(express.static(__dirname + "/styles"));
 app.use(express.static(__dirname + "/assets"));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/html/index.html");
+    res.sendFile(__dirname + "/index.html");
 })
 
 app.get('/settings', (req, res) => {
-    res.sendFile(__dirname + "/html/settings.html");
+    res.sendFile(__dirname + "/settings.html");
 })
 
 app.get('/home', (req, res) => {
-    res.sendFile(__dirname + "/html/home.html");
+    res.sendFile(__dirname + "/home.html");
 })
 
 app.get('/:word/echo', (req, res) => {
