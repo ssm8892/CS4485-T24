@@ -57,16 +57,21 @@
                 style="width: 100%; height: inherit; border-radius: 1rem; font-weight: bolder;">
                 <div class="dash-menu" style="display: flex; flex-direction: row; position: fixed-top;">
                     <div class="dash-menu-left"
-                        style="width: 60%; text-align: left; margin: 1rem; padding-left: 0.5rem;">
+                        style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle;">
                         FILTER:
                         <btn class="filter-all-btn" style="margin: 1rem;">ALL (6)</btn>
                         <btn class="filter-favs-btn">FAVORITES (0)</btn>
                     </div>
                     <div class="dash-menu-right"
-                        style="width: 40%; text-align: right; margin: 1rem; padding-right: 0.5rem;">
-                        <btn class="search-btn">
-                            <i class="fas fa-search"></i>
-                        </btn>
+                        style="display: flex; flex-direction: row; width: 50%; text-align: right; margin: 0.5rem;">
+                        <div class="input-group">
+                            <div class="form-outline" style="width: 80%">
+                              <input type="search" id="form1" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary bg-primary" style="width:20%">
+                              <i class="fas fa-search"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="dash-content dash-tutor" id="dash-content-tutor" style="display: flex; flex-direction: row;">
