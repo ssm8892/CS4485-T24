@@ -50,6 +50,38 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
-
 });
 
+const tutorButton = document.getElementById("dash-label-tutor");
+const classButton = document.getElementById("dash-label-class");
+const tutorDiv = document.getElementById("dash-content-tutor");
+const classDiv = document.getElementById("dash-content-class");
+tutorButton.onclick = function() {
+    tutorDiv.style.display = "flex";
+    classDiv.style.display = "none";
+    classButton.classList.remove("bg-white");
+    classButton.classList.remove("text-primary");
+    classButton.style.borderRadius = "0rem";
+    tutorButton.style.borderRadius = "1rem";
+    classButton.classList.add("bg-primary");
+    classButton.classList.add("text-white");
+    tutorButton.classList.remove("bg-primary");
+    tutorButton.classList.remove("text-white");
+    tutorButton.classList.add("bg-white");
+    tutorButton.classList.add("text-primary");
+};
+
+classButton.onclick = function() {
+    tutorDiv.style.display = "none";
+    classDiv.style.display = "flex";
+    tutorButton.classList.remove("bg-white");
+    tutorButton.classList.remove("text-primary");
+    tutorButton.style.borderRadius = "0rem";
+    classButton.style.borderRadius = "1rem";
+    tutorButton.classList.add("bg-primary");
+    tutorButton.classList.add("text-white");
+    classButton.classList.remove("bg-primary");
+    classButton.classList.remove("text-white");
+    classButton.classList.add("bg-white");
+    classButton.classList.add("text-primary");
+};

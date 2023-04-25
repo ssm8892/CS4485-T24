@@ -1,217 +1,70 @@
-/*const express = require('express');
-const mysql = require('mysql2/promise');
+import express from "express";
+import mysql from 'mysql';
+import path from 'path';
+import axios from "axios";
+import { fileURLToPath } from 'url';
 
-// Create a MySQL pool
-const pool = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "password",
-    database: "online_tutoring"
-});
-
-// Create an Express app
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// List all tutors
-app.get('/tutors', (req, res) => {
-    pool.query('SELECT * FROM tutors')
-        .then(([rows]) => {
-            res.json(rows);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error getting tutors' });
-        });
-});
-
-// Show information about one specific tutor
-app.get('/tutors/:id', (req, res) => {
-    const { id } = req.params;
-    pool.query('SELECT * FROM tutors WHERE id = ?', [id])
-        .then(([rows]) => {
-            if (rows.length > 0) {
-                res.json(rows[0]);
-            } else {
-                res.status(404).json({ error: 'Tutor not found' });
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error getting tutor' });
-        });
-});
-
-// Show "signup to be a tutor" page
-app.get('/tutors/new', (req, res) => {
-    // Render the signup form
-    res.render('tutor_signup_form');
-});
-
-// Create new tutor account
-app.post('/tutors', (req, res) => {
-    const { name, email, subjects } = req.body;
-    pool.query('INSERT INTO tutors (name, email, subjects) VALUES (?, ?, ?)', [name, email, subjects])
-        .then(() => {
-            res.status(201).json({ message: 'Tutor created' });
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error creating tutor' });
-        });
-});
-
-// List all reservations
-app.get('/reservations', (req, res) => {
-    pool.query('SELECT * FROM reservations')
-        .then(([rows]) => {
-            res.json(rows);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error getting reservations' });
-        });
-});
-
-// Show information about one specific reservation
-app.get('/reservations/:id', (req, res) => {
-    const { id } = req.params;
-    pool.query('SELECT * FROM reservations WHERE id = ?', [id])
-        .then(([rows]) => {
-            if (rows.length > 0) {
-                res.json(rows[0]);
-            } else {
-                res.status(404).json({ error: 'Reservation not found' });
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error getting reservation' });
-        });
-});
-
-// Show new reservation form
-app.get('/reservations/new', (req, res) => {
-    // Render the reservation form
-    res.render('reservation_form');
-});
-
-// Create new reservation
-app.post('/reservations', (req, res) => {
-    const { tutor_id, student_name, date, time } = req.body;
-    pool.query('INSERT INTO reservations (tutor_id, student_name, date, time) VALUES (?, ?, ?, ?)', [tutor_id, student_name, date, time])
-        .then(() => {
-            res.status(201).json({ message: 'Reservation created' });
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ error: 'Error creating reservation' });
-        });
-});
-
-//app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-// Query the database
-pool.query('SELECT * FROM tutor')
-  .then(([rows]) => {
-    // Do something with the rows
-    console.log(rows);
-  })
-  .catch((err) => {
-    // Handle errors
-    console.error(err);
-  });
-
-
-  function generateTutorDivs() {
-    fetch('/tutors')
-      .then(response => response.json())
-      .then(tutors => {
-        const tutorContainer = document.querySelector('#tutor-container');
-        for (const tutor of tutors) {
-          const tutorDiv = document.createElement('div');
-          tutorDiv.classList.add('tutor');
-          tutorDiv.dataset.id = tutor.id;
-          tutorDiv.innerHTML = `
-            <h2>${tutor.name}</h2>
-            <p>${tutor.description}</p>
-            <button class="book-appointment">Book Appointment</button>
-          `;
-          tutorContainer.appendChild(tutorDiv);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
+/*
+const express = require("express");
+const mysql = require("mysql");
+const axios = require("axios");
 */
 
-
-const express = require("express");
-const cors = require("cors");
-const mysql = require('mysql');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const pool = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "ONLINE_TUTORING"
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'online_tutoring'
 });
 
-
-app.use(cors());
-
-app.options("*", (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Acesss-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Authorization, Content-Length, X-Requested-With');
-    res.send(200);
-})
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path} - ${req.ip}`);
-    next();
+app.get('/tutor', (req, res) => {
+  pool.query('SELECT * FROM tutor', (error, results) => {
+    if (error) {
+      return res.status(500).json({ error });
+    }
+    res.json(results);
+  });
 });
 
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
+app.use(express.static(__dirname + "/js"));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/index.html");
 })
 
 app.get('/settings', (req, res) => {
-    res.sendFile(__dirname + "/settings.html");
+  res.sendFile(__dirname + "/settings.html");
 })
 
 app.get('/home', (req, res) => {
-    res.sendFile(__dirname + "/home.html");
+  res.sendFile(__dirname + "/home.html");
 })
 
 app.get('/:word/echo', (req, res) => {
-    res.json({ "echo": req.params.word })
+  res.json({ "echo": req.params.word })
 });
 
 app.all('*', (req, res) => {
-    res.send("Invalid route");
+  res.send("Invalid route");
 })
 
-// List all tutors
-app.get('/tutors', async (req, res) => {
-    try {
-        // Query the database for all tutors
-        const [rows] = await pool.query('SELECT * FROM tutors');
-        // Return the list of tutors as JSON
-        res.json(rows);
-    } catch (err) {
-        // Return an error response if something goes wrong
-        res.status(500).json({ error: 'An error occurred while retrieving the tutors' });
+//Show information about all tutors
+app.get('/tutors', (req, res) => {
+  pool.query('SELECT * FROM tutor', (error, results) => {
+    if (error) {
+      return res.status(500).json({ error });
     }
+    res.json(results);
+    console.log(res);
+  });
 });
 
 // Show information about one specific tutor
@@ -321,4 +174,20 @@ app.post('/reservations', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+
+async function generateTutorDivs() {
+  try {
+    const response = await axios.get('http://localhost:3000/tutor');
+    const data = await response.data;
+
+    // Log the data to the console
+    console.log(data);
+ } catch (error) {
+    console.error(error);
+  }
+}
+
+generateTutorDivs();
