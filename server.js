@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'online_tutoring'
 });
 
