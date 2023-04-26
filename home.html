@@ -479,24 +479,24 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form id="contactForm" action="/become-tutor" data-sb-form-api-token="API_TOKEN" method="post">
                                     <!-- Profile Bio input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="bio" type="bio"
+                                        <input class="form-control" id="bio" type="bio" name="bio"
                                             placeholder="..." data-sb-validations="required" required/>
                                         <label for="bio">Description</label>
                                     </div>
 
                                     <!-- Subject Expertise  input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="subjects" type="subjects"
+                                        <input class="form-control" id="subjects" type="subjects" name="subjects"
                                             placeholder="..." data-sb-validations="required" required/>
                                         <label for="subjects">Subject Expertise</label>
                                     </div>
 
                                     <!-- Available input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="hours" type="hours"
+                                        <input class="form-control" id="hours" type="hours" name="timings"
                                             placeholder="..." data-sb-validations="required" required/>
                                         <label for="hours">Available Timings</label>
                                     </div>

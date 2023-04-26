@@ -478,34 +478,34 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form id="contactForm" action="/signup" data-sb-form-api-token="API_TOKEN" method="post">
                                     <!-- First Name input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email"
+                                        <input class="form-control" id="email" name="firstname"
                                             placeholder="John" data-sb-validations="required" required/>
                                         <label for="fname">First Name</label>
                                     </div>
                                     <!-- Last Name input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email"
+                                        <input class="form-control" id="email" name="lastname"
                                             placeholder="Doe" data-sb-validations="required" required/>
                                         <label for="lname">Last Name</label>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email"
+                                        <input class="form-control" id="email" type="email" name="email"
                                             placeholder="name@example.com" data-sb-validations="required,email" required/>
                                         <label for="email">Email address</label>
                                     </div>
                                     <!-- Phone No. input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email"
+                                        <input class="form-control" id="email" name="phone"
                                             placeholder="000-000-0000" data-sb-validations="required,phone" required/>
                                         <label for="phone">Phone Number</label>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="password" type="password" placeholder="password"
+                                        <input class="form-control" id="password" type="password" name="password" placeholder="password"
                                             data-sb-validations="required,password" required/>
                                         <label for="password">Password</label>
                                     </div>

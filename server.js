@@ -51,20 +51,49 @@ app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
 
-// Login as user
+// Login as user (still working)
 app.post('/login', async (req, res) => {
   // Email and password
-  const email = req.body.user_email
-  const password = req.body.user_password
+  const email = req.body.user_email;
+  const password = req.body.user_password;
 
   // Get query pertaining to email and password
-  const query = 
+  // const query = `select * from student where email = ${email} and student_password = ${password}`;
+  console.log(email);
+  console.log(password);
+  res.sendFile(__dirname + "/index.html");
+});
+
+// Sign up as a user (still working)
+app.post('/signup', async (req, res) => {
+  // Info to sign up
+  const first_name = req.body.firstname;
+  const last_name = req.body.lastname;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const password = req.body.password;
+
+  console.log(first_name);
+  console.log(last_name);
+  console.log(email);
+  console.log(phone);
+  console.log(password);
 
   res.sendFile(__dirname + "/index.html");
 });
 
-app.get('/:word/echo', (req, res) => {
-  res.json({ "echo": req.params.word })
+// Become a tutor (still working)
+app.post('/become-tutor', async(req, res) => {
+  // Info to become a tutor
+  const bio = req.body.bio;
+  const subjects = req.body.subjects;
+  const timings = req.body.timings;
+
+  console.log(bio);
+  console.log(subjects);
+  console.log(timings);
+
+  res.sendFile(__dirname + "/home.html");
 });
 
 app.listen(3000, () => {
