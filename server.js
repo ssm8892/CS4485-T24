@@ -106,8 +106,20 @@ app.post('/tutors', async (req, res) => {
     }
 });
 
-app.get('/login', async (req, res) => {
-  
+// Login as user
+app.post('/login', async (req, res, next) => {
+  // Username and password
+  const email_address = req.body.user_email;
+  const password = req.body.user_password;
+
+  const [rows] = await pool.query('SELECT * FROM reservations WHERE email = ? and student_password = ?', 
+    [email_address], [password]);
+
+  const row_elems = rows.map(row => ({
+    email: row.email,
+    student_password: row.student_password
+  }))
+  res.json(row_elems)
 });
 
 // Lists all the reservations
