@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'online_tutoring'
 });
 
@@ -58,22 +58,18 @@ app.post('/login', async (req, res) => {
   const password = req.body.user_password;
   
   // Get query pertaining to email and password
-  const query = `select * from student;`;
+  //const query = `select * from student where email = ${email} and student_password = ${password};`;
+  const query = `select * from student`;
+  var rows = [];
 
-  var result1 = "";
-
-  con.connect(function(err) {
-    if (err) 
+  con.query(query, function(err, results) {
+    if (err)
       throw err;
-
-    con.query(query, function (err, result) {
-      if (err) 
-        throw err;
-
-      result1 = result;
-      console.log(result1);
-    });
+    
+    rows = results;
   });
+
+  console.log(rows);
   
   // console.log(email);
   // console.log(password);
