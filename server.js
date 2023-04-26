@@ -48,22 +48,20 @@ app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
 
-app.get('/:word/echo', (req, res) => {
-  res.json({ "echo": req.params.word })
+// Login as user
+app.post('/login', async (req, res) => {
+  // Username and password
+  /*
+  const email = req.body.user_email;
+  const password = req.body.user_password;
+  */
+ 
+  console.log(req.body)
+  res.sendFile(__dirname + "/index.html");
 });
 
-app.all('*', (req, res) => {
-  res.send("Invalid route");
-})
-
-// Login as user
-app.post('/login', async (req, res, next) => {
-  // Username and password
-  const email_address = req.body.user_email;
-  const password = req.body.user_password;
-
-  console.log(email_address);
-  console.log(password);
+app.get('/:word/echo', (req, res) => {
+  res.json({ "echo": req.params.word })
 });
 
 app.listen(3000, () => {
