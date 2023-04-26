@@ -3,6 +3,8 @@ import mysql from 'mysql';
 import path from 'path';
 import axios from "axios";
 import { fileURLToPath } from 'url';
+import cheerio from "cheerio";
+import fs from "fs";
 
 /*
 const express = require("express");
@@ -19,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'online_tutoring'
 });
 
@@ -41,10 +43,6 @@ app.use(express.static(__dirname + "/js"));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html");
-})
-
-app.get('/settings', (req, res) => {
-  res.sendFile(__dirname + "/settings.html");
 })
 
 app.get('/home', (req, res) => {
@@ -128,4 +126,4 @@ async function generateTutorDivs() {
   }
 }
 
-generateTutorDivs();
+//generateTutorDivs();
