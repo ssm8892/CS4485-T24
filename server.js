@@ -106,6 +106,10 @@ app.post('/tutors', async (req, res) => {
     }
 });
 
+app.get('/login', async (req, res) => {
+  
+});
+
 // Lists all the reservations
 app.get('/reservations', async (req, res) => {
     try {

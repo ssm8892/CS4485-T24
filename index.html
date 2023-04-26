@@ -427,26 +427,18 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="/login" method="POST">
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="email" type="email"
                                             placeholder="name@example.com" data-sb-validations="required,email" />
                                         <label for="email">Email address</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is
-                                            required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.
-                                        </div>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="password" type="password" placeholder="password"
                                             data-sb-validations="required,password" />
                                         <label for="password">Password</label>
-                                        <div class="invalid-feedback" data-sb-feedback="password:required">An email is
-                                            required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="password:email">Email is not
-                                            valid.</div>
                                     </div>
                                     <!-- Submit success message-->
                                     <!---->
@@ -455,18 +447,7 @@
                                     <div class="d-none" id="submitSuccessMessage">
                                         <div class="text-center mb-3">
                                             <div class="fw-bolder">Form submission successful!</div>
-                                            To activate this form, sign up at
-                                            <br />
-                                            <a
-                                                href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                                         </div>
-                                    </div>
-                                    <!-- Submit error message-->
-                                    <!---->
-                                    <!-- This is what your users will see when there is-->
-                                    <!-- an error submitting the form-->
-                                    <div class="d-none" id="submitErrorMessage">
-                                        <div class="text-center text-danger mb-3">Error sending message!</div>
                                     </div>
                                     <!-- Submit Button-->
                                     <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit">LOG
