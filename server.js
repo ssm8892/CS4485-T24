@@ -58,7 +58,7 @@ app.post('/login', async (req, res) => {
   // Get query pertaining to email and password
   const query = `select * from student;`;
 
-  const result1 = None;
+  var result1 = "";
 
   con.connect(function(err) {
     if (err) 
@@ -69,10 +69,9 @@ app.post('/login', async (req, res) => {
         throw err;
 
       result1 = result;
+      console.log(result1);
     });
   });
-
-  console.log(result);
   res.sendFile(__dirname + "/index.html");
 });
 
