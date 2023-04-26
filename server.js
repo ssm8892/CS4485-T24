@@ -51,12 +51,7 @@ app.get('/home', (req, res) => {
 // Login as user
 app.post('/login', async (req, res) => {
   // Username and password
-  /*
-  const email = req.body.user_email;
-  const password = req.body.user_password;
-  */
- 
-  console.log(req.body)
+  console.log("Hello")
   res.sendFile(__dirname + "/index.html");
 });
 
