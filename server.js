@@ -96,6 +96,22 @@ app.post('/become-tutor', async(req, res) => {
   res.sendFile(__dirname + "/home.html");
 });
 
+// Contact us (still working)
+app.post('/contact', async(req, res) => {
+  // Contact form info
+  const name = req.body.name;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const message = req.body.message;
+
+  console.log(name);
+  console.log(email);
+  console.log(phone);
+  console.log(message);
+
+  res.sendFile(__dirname + "/index.html");
+});
+
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
