@@ -58,7 +58,12 @@ app.post('/login', async (req, res) => {
   const password = req.body.user_password;
 
   // Get query pertaining to email and password
-  // const query = `select * from student where email = ${email} and student_password = ${password}`;
+  const query = `select * from student where email = ${email} and student_password = ${password}`;
+
+  pool.query(query, (error, results) => {
+    
+  });
+
   console.log(email);
   console.log(password);
   res.sendFile(__dirname + "/index.html");
