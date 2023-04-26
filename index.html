@@ -73,12 +73,21 @@
                     </div>
                 </div>
                 <!-- About Section Button-->
-                <div class="text-center mt-4">
-                    <a class="btn btn-xl btn-outline-light" data-bs-toggle="modal" data-bs-target="#signUpModal">
-                        <i class="fas fa-portrait me-2"></i>
-                        SIGN UP
-                    </a>
+                <div class="signuplinks" style="display: flex; flex-direction: row; justify-content: center; gap: 1rem;">
+                    <div class="text-center mt-4">
+                        <a class="btn btn-xl btn-outline-light" data-bs-toggle="modal" data-bs-target="#signUpModal">
+                            <i class="fas fa-portrait me-2"></i>
+                            SIGN UP
+                        </a>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a class="btn btn-xl btn-outline-light" data-bs-toggle="modal" data-bs-target="#tutorsignUpModal">
+                            <i class="fas fa-portrait me-2"></i>
+                            BECOME A TUTOR
+                        </a>
+                    </div>
                 </div>
+                
             </div>
         </section>
 
@@ -424,6 +433,10 @@
                                     <i class="fas fa-portrait me-2"></i>
                                     SIGN UP
                                 </a>
+                                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorsignUpModal">
+                                    <i class="fas fa-portrait me-2"></i>
+                                    BECOME A TUTOR
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -480,6 +493,87 @@
                                         <input class="form-control" id="password" type="password" name="password" placeholder="password"
                                             data-sb-validations="required,password" required/>
                                         <label for="password">Password</label>
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit">SIGN UP</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-modal modal fade" id="tutorsignUpModal" tabindex="-1" aria-labelledby="portfolioModal1"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"
+                        aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Sign Up</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <form id="contactForm" action="/signup" data-sb-form-api-token="API_TOKEN" method="post">
+                                    <!-- First Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="firstname"
+                                            placeholder="John" data-sb-validations="required" required/>
+                                        <label for="fname">First Name</label>
+                                    </div>
+                                    <!-- Last Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="lastname"
+                                            placeholder="Doe" data-sb-validations="required" required/>
+                                        <label for="lname">Last Name</label>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" type="email" name="email"
+                                            placeholder="name@example.com" data-sb-validations="required,email" required/>
+                                        <label for="email">Email address</label>
+                                    </div>
+                                    <!-- Phone No. input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="phone"
+                                            placeholder="000-000-0000" data-sb-validations="required,phone" required/>
+                                        <label for="phone">Phone Number</label>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="password" type="password" name="password" placeholder="password"
+                                            data-sb-validations="required,password" required/>
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <!-- Profile Bio input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="bio" type="bio" name="bio" placeholder="..."
+                                            data-sb-validations="required" required />
+                                        <label for="bio">Description</label>
+                                    </div>
+
+                                    <!-- Subject Expertise  input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="subjects" type="subjects" name="subjects"
+                                            placeholder="..." data-sb-validations="required" required />
+                                        <label for="subjects">Subject Expertise</label>
+                                    </div>
+
+                                    <!-- Available input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="hours" type="hours" name="timings"
+                                            placeholder="..." data-sb-validations="required" required />
+                                        <label for="hours">Available Timings</label>
                                     </div>
 
                                     <!-- Submit Button-->
