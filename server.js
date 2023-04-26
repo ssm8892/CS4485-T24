@@ -23,6 +23,9 @@ const pool = mysql.createPool({
   database: 'online_tutoring'
 });
 
+// Magic for POST requests
+app.use(express.urlencoded({extended:false}));
+
 app.get('/tutor', (req, res) => {
   pool.query('SELECT * FROM tutor', (error, results) => {
     if (error) {
@@ -50,8 +53,13 @@ app.get('/home', (req, res) => {
 
 // Login as user
 app.post('/login', async (req, res) => {
-  // Username and password
-  console.log("Hello")
+  // Email and password
+  const email = req.body.user_email
+  const password = req.body.user_password
+
+  // Get query pertaining to email and password
+  const query = 
+
   res.sendFile(__dirname + "/index.html");
 });
 
