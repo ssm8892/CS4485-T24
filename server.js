@@ -56,7 +56,7 @@ app.post('/login', async (req, res) => {
   // Email and password
   const email = req.body.user_email;
   const password = req.body.user_password;
-  /*
+  
   // Get query pertaining to email and password
   const query = `select * from student;`;
 
@@ -74,9 +74,9 @@ app.post('/login', async (req, res) => {
       console.log(result1);
     });
   });
-  */
-  console.log(email);
-  console.log(password);
+  
+  // console.log(email);
+  // console.log(password);
   res.sendFile(__dirname + "/index.html");
 });
 
