@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const pool = mysql.createPool({
+const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -26,6 +26,7 @@ const pool = mysql.createPool({
 // Magic for POST requests
 app.use(express.urlencoded({extended:false}));
 
+/*
 app.get('/tutor', (req, res) => {
   pool.query('SELECT * FROM tutor', (error, results) => {
     if (error) {
@@ -34,6 +35,7 @@ app.get('/tutor', (req, res) => {
     res.json(results);
   });
 });
+*/
 
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
@@ -41,10 +43,6 @@ app.use(express.static(__dirname + "/js"));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html");
-})
-
-app.get('/settings', (req, res) => {
-  res.sendFile(__dirname + "/settings.html");
 })
 
 app.get('/home', (req, res) => {
@@ -58,14 +56,23 @@ app.post('/login', async (req, res) => {
   const password = req.body.user_password;
 
   // Get query pertaining to email and password
-  const query = `select * from student where email = ${email} and student_password = ${password}`;
+  const query = `select * from student;`;
 
-  pool.query(query, (error, results) => {
-    
+  const result1 = None;
+
+  con.connect(function(err) {
+    if (err) 
+      throw err;
+
+    con.query(query, function (err, result) {
+      if (err) 
+        throw err;
+
+      result1 = result;
+    });
   });
 
-  console.log(email);
-  console.log(password);
+  console.log(result);
   res.sendFile(__dirname + "/index.html");
 });
 
