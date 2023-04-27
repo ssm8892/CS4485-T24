@@ -125,14 +125,14 @@ app.post('/become-tutor', async(req, res) => {
   else {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstname}', '${lastname}', '${email}', '${phone}', LOAD_FILE(''), '${bio}', '${subjects}', '${timings}', ${0});`;
-
+    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstname}', '${lastname}', '${email}', '${phone}', LOAD_FILE(''), "${bio}", "${subjects}", '${timings}', ${0});`;
+    
     // Execute query insertion
     con.query(new_query, (err, rows) => {
       if(err) 
         console.log("Error");
     });
-
+    
     res.sendFile(__dirname + "/index.html");
   }
 });
