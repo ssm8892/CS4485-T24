@@ -6,19 +6,13 @@ import { fileURLToPath } from 'url';
 import cheerio from "cheerio";
 import fs from "fs";
 
-/*
-const express = require("express");
-const mysql = require("mysql");
-const axios = require("axios");
-*/
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const con = mysql.createConnection({
+var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -27,17 +21,6 @@ const con = mysql.createConnection({
 
 // Magic for POST requests
 app.use(express.urlencoded({extended:false}));
-
-/*
-app.get('/tutor', (req, res) => {
-  pool.query('SELECT * FROM tutor', (error, results) => {
-    if (error) {
-      return res.status(500).json({ error });
-    }
-    res.json(results);
-  });
-});
-*/
 
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
@@ -50,7 +33,6 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
-
 // Login as user (still working)
 app.post('/login', async (req, res) => {
   // Email and password
@@ -58,21 +40,31 @@ app.post('/login', async (req, res) => {
   const password = req.body.user_password;
   
   // Get query pertaining to email and password
-  //const query = `select * from student where email = ${email} and student_password = ${password};`;
-  const query = `select * from student`;
-  var rows = [];
+  const query = `select * from student where email = '${email}' and student_password = '${password}';`
 
-  con.query(query, function(err, results) {
-    if (err)
-      throw err;
-    
-    rows = results;
+  con.connect(async(err) => {
+    if (err) {
+      console.log("Connection failed!");
+      return;
+    }
+
+    con.query(query, function(err, results) {
+      var login = [];
+
+      if (err) {
+        console.log("Internal error");
+        return;
+      }
+      for (var i=0; i<results.length; i++) 
+        login.push(results[i]);
+
+      if (login.length > 0)
+        res.sendFile(__dirname + "/home.html");
+      else
+        return;
+    });
   });
 
-  console.log(rows);
-  
-  // console.log(email);
-  // console.log(password);
   res.sendFile(__dirname + "/index.html");
 });
 
