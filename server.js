@@ -41,7 +41,6 @@ function execute_rows(query){
         // Returning the error
         reject(err);
       }
-
       resolve(result);
     });
   });
@@ -58,6 +57,7 @@ app.post('/login', async (req, res) => {
   const dbResult = await execute_rows(query);
   
   if (dbResult.length > 0) {
+    // Send name to welcome page
     const name_to_send = dbResult[0]['first_name'].toUpperCase();
     console.log(name_to_send);
     res.sendFile(__dirname + "/home.html", {name_sent: name_to_send});
@@ -75,25 +75,42 @@ app.post('/signup', async (req, res) => {
   const phone = req.body.phone;
   const password = req.body.password;
 
-  console.log(first_name);
-  console.log(last_name);
-  console.log(email);
-  console.log(phone);
-  console.log(password);
+  // Get query to see if student exists
+  const query = `select * from student where email = '${email}' or student_password = '${password}' or phone_no = '${phone}';`;
+  const dbResult = await execute_rows(query);
 
-  res.sendFile(__dirname + "/index.html");
+  // Student already exists
+  if (dbResult.length > 0) {
+    console.log("User is already registered!"); 1383957937
+    res.sendFile(__dirname + "/index.html");
+  }
+  // New student
+  else {
+    // Get random ID and insert row into table
+    var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
+    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', '${password}', '${first_name}', '${last_name}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
+
+    // Execute query insertion
+    con.query(new_query, (err,rows) => {
+      if(err) 
+        console.log("Error!");
+    });
+
+    res.sendFile(__dirname + "/index.html");
+  }
 });
 
 // Become a tutor (still working)
 app.post('/become-tutor', async(req, res) => {
   // Info to become a tutor
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const password = req.body.password;
   const bio = req.body.bio;
   const subjects = req.body.subjects;
   const timings = req.body.timings;
-
-  console.log(bio);
-  console.log(subjects);
-  console.log(timings);
 
   res.sendFile(__dirname + "/home.html");
 });
@@ -106,11 +123,6 @@ app.post('/contact', async(req, res) => {
   const phone = req.body.phone;
   const message = req.body.message;
 
-  console.log(name);
-  console.log(email);
-  console.log(phone);
-  console.log(message);
-
   res.sendFile(__dirname + "/index.html");
 });
 
@@ -120,11 +132,6 @@ app.post('/book', async(req, res) => {
   const date = req.body.date;
   const time = req.body.time;
   const email = req.body.email;
-
-  console.log(subject);
-  console.log(date);
-  console.log(time);
-  console.log(email);
 
   res.sendFile(__dirname + "/home.html");
 })
