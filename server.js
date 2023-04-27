@@ -57,8 +57,11 @@ app.post('/login', async (req, res) => {
   const query = `select * from student where email = '${email}' and student_password = '${password}';`;
   const dbResult = await execute_rows(query);
   
-  if (dbResult.length > 0)
-    res.sendFile(__dirname + "/home.html", {name: dbResult[0]['first_name']});
+  if (dbResult.length > 0) {
+    const name_to_send = dbResult[0]['first_name'].toUpperCase();
+    console.log(name_to_send);
+    res.sendFile(__dirname + "/home.html", {name_sent: name_to_send});
+  }
   else
     res.sendFile(__dirname + "/index.html");
 });
