@@ -34,6 +34,19 @@ app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
 
+function execute_rows(query){
+  return new Promise((resolve, reject) => {
+    con.query(query, function(err, result) {
+      if (err) {
+        // Returning the error
+        reject(err);
+      }
+
+      resolve(result);
+    });
+  });
+ }
+
 // Login as user (still working)
 app.post('/login', async (req, res) => {
   // Email and password
@@ -42,21 +55,12 @@ app.post('/login', async (req, res) => {
   
   // Get query pertaining to email and password
   const query = `select * from student where email = '${email}' and student_password = '${password}';`;
-
-  var login = [];
+  const dbResult = await execute_rows(query);
   
-  con.query(query, function(err, results) {
-    if (err) {
-      console.log("Internal error");
-      return;
-    }
-    results.forEach((result) => {
-      login.push(result);
-    });
-  });
-  console.log(login);
-  
-  res.sendFile(__dirname + "/index.html");
+  if (dbResult.length > 0)
+    res.sendFile(__dirname + "/home.html", {name: dbResult[0]['first_name']});
+  else
+    res.sendFile(__dirname + "/index.html");
 });
 
 // Sign up as a user (still working)
