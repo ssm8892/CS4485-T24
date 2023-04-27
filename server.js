@@ -81,7 +81,7 @@ app.post('/signup', async (req, res) => {
 
   // Student already exists
   if (dbResult.length > 0) {
-    console.log("User is already registered!"); 1383957937
+    console.log("User is already registered!"); 
     res.sendFile(__dirname + "/index.html");
   }
   // New student
@@ -91,7 +91,7 @@ app.post('/signup', async (req, res) => {
     const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', '${password}', '${first_name}', '${last_name}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
 
     // Execute query insertion
-    con.query(new_query, (err,rows) => {
+    con.query(new_query, (err, rows) => {
       if(err) 
         console.log("Error!");
     });
@@ -112,7 +112,29 @@ app.post('/become-tutor', async(req, res) => {
   const subjects = req.body.subjects;
   const timings = req.body.timings;
 
-  res.sendFile(__dirname + "/home.html");
+  // Get query to see if tutor exists
+  const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
+  const dbResult = await execute_rows(query);
+
+  // Tutor already exists
+  if (dbResult.length > 0) {
+    console.log("Tutor is already registered!"); 
+    res.sendFile(__dirname + "/index.html");
+  }
+  // New tutor
+  else {
+    // Get random ID and insert row into table
+    var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
+    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstname}', '${lastname}', '${email}', '${phone}', LOAD_FILE(''), '${bio}', '${subjects}', '${timings}', ${0});`;
+
+    // Execute query insertion
+    con.query(new_query, (err, rows) => {
+      if(err) 
+        console.log("Error");
+    });
+
+    res.sendFile(__dirname + "/index.html");
+  }
 });
 
 // Contact us (still working)
