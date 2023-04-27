@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
+
 // Login as user (still working)
 app.post('/login', async (req, res) => {
   // Email and password
@@ -40,31 +41,21 @@ app.post('/login', async (req, res) => {
   const password = req.body.user_password;
   
   // Get query pertaining to email and password
-  const query = `select * from student where email = '${email}' and student_password = '${password}';`
+  const query = `select * from student where email = '${email}' and student_password = '${password}';`;
 
-  con.connect(async(err) => {
+  var login = [];
+  
+  con.query(query, function(err, results) {
     if (err) {
-      console.log("Connection failed!");
+      console.log("Internal error");
       return;
     }
-
-    con.query(query, function(err, results) {
-      var login = [];
-
-      if (err) {
-        console.log("Internal error");
-        return;
-      }
-      for (var i=0; i<results.length; i++) 
-        login.push(results[i]);
-
-      if (login.length > 0)
-        res.sendFile(__dirname + "/home.html");
-      else
-        return;
+    results.forEach((result) => {
+      login.push(result);
     });
   });
-
+  console.log(login);
+  
   res.sendFile(__dirname + "/index.html");
 });
 
