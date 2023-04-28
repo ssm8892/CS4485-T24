@@ -37,9 +37,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/index', (req, res) => {
-  if (firstName != "" && lastName != "" && email != "" && accountType != "")
-    resetUser();
-    
+  resetUser();
   res.sendFile(__dirname + "/index.html");
 })
 
