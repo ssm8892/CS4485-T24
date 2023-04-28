@@ -173,5 +173,3 @@ async function generateTutorDivs() {
     console.error(error);
   }
 }
-
-//generateTutorDivs();
