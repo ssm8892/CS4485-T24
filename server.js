@@ -27,10 +27,12 @@ app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/js"));
 
 app.get('/', (req, res) => {
+  // res.render('index');
   res.sendFile(__dirname + "/index.html");
 })
 
 app.get('/home', (req, res) => {
+  // res.render('home');
   res.sendFile(__dirname + "/home.html");
 })
 
@@ -60,6 +62,7 @@ app.post('/login', async (req, res) => {
     // Send name to welcome page
     const name_to_send = dbResult[0]['first_name'].toUpperCase();
     console.log(name_to_send);
+    // res.render('home', { name_to_send: name_to_send });
     res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
   else
@@ -82,6 +85,7 @@ app.post('/signup', async (req, res) => {
   // Student already exists
   if (dbResult.length > 0) {
     console.log("User is already registered!"); 
+    // res.render('index');
     res.sendFile(__dirname + "/index.html");
   }
   // New student
@@ -95,7 +99,7 @@ app.post('/signup', async (req, res) => {
       if(err) 
         console.log("Error!");
     });
-
+    // res.render('index');
     res.sendFile(__dirname + "/index.html");
   }
 });
@@ -119,6 +123,7 @@ app.post('/become-tutor', async(req, res) => {
   // Tutor already exists
   if (dbResult.length > 0) {
     console.log("Tutor is already registered!"); 
+    // res.render('index');
     res.sendFile(__dirname + "/index.html");
   }
   // New tutor
@@ -132,7 +137,7 @@ app.post('/become-tutor', async(req, res) => {
       if(err) 
         console.log("Error");
     });
-    
+    // res.render('index');
     res.sendFile(__dirname + "/index.html");
   }
 });
@@ -144,8 +149,8 @@ app.post('/contact', async(req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const message = req.body.message;
-
-  res.sendFile(__dirname + "/index.html");
+  res.render('index');
+  // res.sendFile(__dirname + "/index.html");
 });
 
 // Book appointment with tutor (still working)
@@ -154,7 +159,7 @@ app.post('/book', async(req, res) => {
   const date = req.body.date;
   const time = req.body.time;
   const email = req.body.email;
-
+  // res.render('home');
   res.sendFile(__dirname + "/home.html");
 })
 
