@@ -26,6 +26,11 @@ app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/js"));
 
+app.use((req, res, next) => {
+  res.sendFile(__dirname + "/index.html");
+});
+
+// Handle Cannot GET
 app.get('/', (req, res) => {
   // res.render('index');
   res.sendFile(__dirname + "/index.html");
@@ -62,8 +67,15 @@ app.post('/login', async (req, res) => {
     // Send name to welcome page
     const name_to_send = dbResult[0]['first_name'].toUpperCase();
     console.log(name_to_send);
-    // res.render('home', { name_to_send: name_to_send });
-    res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
+    
+    fs.readFile('home.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      const html = data.replace('{name}', name_to_send);
+      res.send(html);
+    })
+    // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
   else
     res.sendFile(__dirname + "/index.html");
@@ -149,8 +161,8 @@ app.post('/contact', async(req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const message = req.body.message;
-  res.render('index');
-  // res.sendFile(__dirname + "/index.html");
+  // res.render('index');
+  res.sendFile(__dirname + "/index.html");
 });
 
 // Book appointment with tutor (still working)
