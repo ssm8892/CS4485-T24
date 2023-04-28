@@ -33,7 +33,13 @@ app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/js"));
 
 app.get('/', (req, res) => {
-  resetUser();
+  res.sendFile(__dirname + "/index.html");
+})
+
+app.get('/index', (req, res) => {
+  if (firstName != "" && lastName != "" && email != "" && accountType != "")
+    resetUser();
+    
   res.sendFile(__dirname + "/index.html");
 })
 
@@ -41,7 +47,7 @@ app.get('/home', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType != "")
     res.sendFile(__dirname + "/home.html");
   else
-  res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "/index.html");
 })
 
 function executeRows(query) {
@@ -63,10 +69,7 @@ function resetUser(first_name, last_name, email, account_type) {
   email = "";
   account_type = "";
 
-  console.log(first_name);
-  console.log(last_name);
-  console.log(email);
-  console.log(account_type);
+  console.log("reset");
 }
 
 function setUser(first_name, last_name, email, account_type) {
