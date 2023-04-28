@@ -60,7 +60,7 @@ app.post('/login', async (req, res) => {
     // Send name to welcome page
     const name_to_send = dbResult[0]['first_name'].toUpperCase();
     console.log(name_to_send);
-    res.sendFile(__dirname + "/home.html", {name_sent: name_to_send});
+    res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
   else
     res.sendFile(__dirname + "/index.html");
