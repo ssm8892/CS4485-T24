@@ -19,6 +19,12 @@ var con = mysql.createConnection({
   database: 'online_tutoring'
 });
 
+// Information of logged on user
+var first_name = "";
+var last_name = "";
+var email = "";
+var account_type = "";
+
 // Magic for POST requests
 app.use(express.urlencoded({extended:false}));
 
@@ -41,7 +47,7 @@ app.get('/home', (req, res) => {
   res.sendFile(__dirname + "/home.html");
 })
 
-function execute_rows(query){
+function execute_rows(query) {
   return new Promise((resolve, reject) => {
     con.query(query, function(err, result) {
       if (err) {
@@ -51,7 +57,15 @@ function execute_rows(query){
       resolve(result);
     });
   });
- }
+}
+
+function reset_user(first_name, last_name, email) {
+
+}
+
+function set_user(first_name, last_name, email) {
+
+}
 
 // Login as user (still working)
 app.post('/login', async (req, res) => {
