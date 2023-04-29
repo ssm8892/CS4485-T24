@@ -85,3 +85,38 @@ classButton.onclick = function() {
     classButton.classList.add("bg-white");
     classButton.classList.add("text-primary");
 };
+
+
+const tutorButtonForm = document.getElementById("form-label-tutor");
+const classButtonForm = document.getElementById("form-label-class");
+const tutorDivForm = document.getElementById("form-content-tutor");
+const classDivForm = document.getElementById("form-content-class");
+tutorButtonForm.onclick = function() {
+    tutorDivForm.style.display = "flex";
+    classDivForm.style.display = "none";
+    classButtonForm.classList.remove("bg-white");
+    classButtonForm.classList.remove("text-primary");
+    classButtonForm.style.borderRadius = "0rem";
+    tutorButtonForm.style.borderRadius = "1rem";
+    classButtonForm.classList.add("bg-primary");
+    classButtonForm.classList.add("text-white");
+    tutorButtonForm.classList.remove("bg-primary");
+    tutorButtonForm.classList.remove("text-white");
+    tutorButtonForm.classList.add("bg-white");
+    tutorButtonForm.classList.add("text-primary");
+};
+
+classButtonForm.onclick = function() {
+    tutorDivForm.style.display = "none";
+    classDivForm.style.display = "flex";
+    tutorButtonForm.classList.remove("bg-white");
+    tutorButtonForm.classList.remove("text-primary");
+    tutorButtonForm.style.borderRadius = "0rem";
+    classButtonForm.style.borderRadius = "1rem";
+    tutorButtonForm.classList.add("bg-primary");
+    tutorButtonForm.classList.add("text-white");
+    classButtonForm.classList.remove("bg-primary");
+    classButtonForm.classList.remove("text-white");
+    classButtonForm.classList.add("bg-white");
+    classButtonForm.classList.add("text-primary");
+};

@@ -11643,6 +11643,17 @@ html {
   min-height: max-content;
 }
 
+.tutor-history {
+  margin: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: max-content;
+}
+
 .calendar-left {
   display: flex;
   justify-content: center;
