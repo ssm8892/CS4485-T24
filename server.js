@@ -50,21 +50,6 @@ app.get('/index', (req, res) => {
   })
 })
 
-app.post('/index', (req, res) => {
-  resetUser();
-  
-  // Send data to HTML
-  fs.readFile('index.html', 'utf8', (err, data) => {
-    if (err)
-      console.log("Error");
-    
-    // Send invalid login to HTML
-    const html = data.replace('{invalid}', "No");
-    res.send(html);
-  })
-})
-
-
 app.get('/home', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType != "")
     res.sendFile(__dirname + "/home.html");
