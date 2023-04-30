@@ -485,6 +485,12 @@
                                                     IN</button>
                                             </form>
                                         </div>
+
+                                        {% if invalid == "Yes": %}
+                                            <script>
+                                                alert("Invalid username or password!");
+                                            </script>
+                                        {% endif %}
                                     </div>
                                 </div>
 

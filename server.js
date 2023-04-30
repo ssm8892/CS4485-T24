@@ -106,7 +106,18 @@ app.post('/tutor-login', async (req, res) => {
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
-  else
+  else if (dbResult.length == 0 && email != "" && password != "") {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{invalid}', "Yes");
+      res.send(html);
+    })
+  }
+  else 
     res.sendFile(__dirname + "/index.html");
 });
 
@@ -134,13 +145,24 @@ app.post('/login', async (req, res) => {
       if (err)
         console.log("Error");
       
-        // Send variable to HTML
+      // Send variable to HTML
       const html = data.replace('{name}', nameToSend);
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
-  else
+  else if (dbResult.length == 0 && email != "" && password != "") {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{invalid}', "Yes");
+      res.send(html);
+    })
+  }
+  else 
     res.sendFile(__dirname + "/index.html");
 });
 
@@ -245,8 +267,6 @@ app.post('/contact', async(req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const message = req.body.message;
-
-  
 
   // res.render('index');
   res.sendFile(__dirname + "/index.html");
