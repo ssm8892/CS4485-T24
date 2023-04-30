@@ -66,27 +66,21 @@ function resetUser(first_name, last_name, email, account_type) {
   last_name = "";
   email = "";
   account_type = "";
-
-  console.log("reset");
 }
 
+// Set current user
 function setUser(first_name, last_name, email, account_type) {
   first_name = first_name;
   last_name = last_name;
   email = email;
   account_type = account_type;
-
-  console.log(first_name);
-  console.log(last_name);
-  console.log(email);
-  console.log(account_type);
 }
 
 app.get('/tutor-login', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
 
-// Login as tutor (still working)
+// Login as tutor 
 app.post('/tutor-login', async (req, res) => {
   // Email and password
   const email = req.body.tutor_email;
@@ -120,7 +114,7 @@ app.get('/login', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
 
-// Login as student (still working)
+// Login as student
 app.post('/login', async (req, res) => {
   // Email and password
   const email = req.body.user_email;
@@ -154,7 +148,7 @@ app.get('/signup', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
 
-// Sign up as a user (still working)
+// Sign up as a user
 app.post('/signup', async (req, res) => {
   // Info to sign up
   const firstName = req.body.firstname;
@@ -193,7 +187,7 @@ app.get('/become-tutor', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
 
-// Become a tutor (still working)
+// Become a tutor
 app.post('/become-tutor', async(req, res) => {
   // Info to become a tutor
   const firstName = req.body.firstname;
