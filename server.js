@@ -159,7 +159,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "Yes");
+      const html = data.replace('{invalid}', "Incorrect username or password!");
       res.send(html);
     })
   }
