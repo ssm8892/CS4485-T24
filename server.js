@@ -5,7 +5,6 @@ import axios from "axios";
 import { fileURLToPath } from 'url';
 import cheerio from "cheerio";
 import fs from "fs";
-import crypto from "crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -181,13 +180,16 @@ function checkValidPassword(password) {
 
     // If original character equal to lowercase, increment
     for (let i = 0; i < password.length; i++) {
+      // Is lowercase
       if (password[i] === password[i].toUpperCase()) 
         ++numUpper;
-
-      else if (password[i] === password[i].toLowerCase()) 
+      
+      // Is uppercase
+      if (password[i] === password[i].toLowerCase()) 
         ++numLower;
       
-      else if (!isNaN(password[i]))
+      // Is a number
+      if (!isNaN(password[i]))
         ++numNumbers;
     }
 
@@ -224,7 +226,7 @@ app.post('/signup', async (req, res) => {
   const dbResult2 = await executeRows(query2);
 
   // Student already exists
-  if (dbResult.length > 0 || dbResul2 > 0) {
+  if (dbResult.length > 0 || dbResult2 > 0) {
     // Send data to HTML
     fs.readFile('index.html', 'utf8', (err, data) => {
       if (err)
@@ -309,7 +311,6 @@ app.post('/become-tutor', async(req, res) => {
       const html = data.replace('{welcome}', "Email, phone, and/or password already in use!");
       res.send(html);
     })
-    console.log("User is already registered!"); 
   }
   else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) {
     // Send data to HTML
