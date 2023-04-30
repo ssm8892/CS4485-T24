@@ -82,11 +82,45 @@ function setUser(first_name, last_name, email, account_type) {
   console.log(account_type);
 }
 
+app.get('/tutor-login', (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+})
+
+// Login as tutor (still working)
+app.post('/tutor-login', async (req, res) => {
+  // Email and password
+  const email = req.body.tutor_email;
+  const password = req.body.tutor_password;
+  
+  // Get query pertaining to email and password
+  const query = `select * from tutor where email = '${email}' and tutor_password = '${password}';`;
+  const dbResult = await executeRows(query);
+  
+  if (dbResult.length > 0) {
+    // Save login info and send first name
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor");
+    const nameToSend = dbResult[0]['first_name'].toUpperCase();
+    
+    // Send data to HTML
+    fs.readFile('tutor.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+        // Send variable to HTML
+      const html = data.replace('{name}', nameToSend);
+      res.send(html);
+    })
+    // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
+  }
+  else
+    res.sendFile(__dirname + "/index.html");
+});
+
 app.get('/login', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
 
-// Login as user (still working)
+// Login as student (still working)
 app.post('/login', async (req, res) => {
   // Email and password
   const email = req.body.user_email;
