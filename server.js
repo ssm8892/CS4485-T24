@@ -112,7 +112,7 @@ app.post('/tutor-login', async (req, res) => {
         console.log("Error");
       
         // Send variable to HTML
-      const html = data.replace('{name}', nameToSend);
+      const html = data.replace('{name}', nameToSend).replace('{invalid}', "No");
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
@@ -124,7 +124,7 @@ app.post('/tutor-login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "Yes");
+      const html = data.replace('{invalid}', "No");
       res.send(html);
     })
   }
@@ -157,7 +157,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send variable to HTML
-      const html = data.replace('{name}', nameToSend);
+      const html = data.replace('{name}', nameToSend).replace('{invalid}', "No");
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
@@ -169,7 +169,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "Yes");
+      const html = data.replace('{invalid}', "No");
       res.send(html);
     })
   }
