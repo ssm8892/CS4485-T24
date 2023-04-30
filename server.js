@@ -196,7 +196,7 @@ app.post('/signup', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "User is already registered!");
+      const html = data.replace('{invalid}', "Email, phone, and/or password already in use!");
       res.send(html);
     })
   }
@@ -248,7 +248,7 @@ app.post('/become-tutor', async(req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "User is already registered!");
+      const html = data.replace('{invalid}', "Email, phone, and/or password already in use!");
       res.send(html);
     })
     console.log("User is already registered!"); 
