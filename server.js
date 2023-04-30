@@ -124,7 +124,7 @@ app.post('/tutor-login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "No");
+      const html = data.replace('{invalid}', "Yes");
       res.send(html);
     })
   }
@@ -169,7 +169,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "No");
+      const html = data.replace('{invalid}', "Yes");
       res.send(html);
     })
   }
