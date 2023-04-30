@@ -174,14 +174,10 @@ function checkValidPassword(password) {
     return false
 
   else {
-    // Get number of lowercase, uppercase, numbers, and special characters
+    // Get number of lowercase, uppercase, and numbers
     var numUpper = 0;
     var numLower = 0;
     var numNumbers = 0;
-    var numSpecial = 0;
-
-    // Special characters
-    const specialChars = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
 
     // If original character equal to lowercase, increment
     for (let i = 0; i < password.length; i++) {
@@ -193,13 +189,10 @@ function checkValidPassword(password) {
       
       else if (!isNaN(str[i]))
         ++numNumbers;
-
-      else if (specialChars.test(password[i]))
-        ++numSpecial
     }
 
     // Must have at least one of each, else false
-    if (numUpper >= 1 && numLower >= 1 && numNumbers >= 1 && numSpecial >= 1)
+    if (numUpper >= 1 && numLower >= 1 && numNumbers >= 1)
       return true;
     else
       return false;
@@ -219,13 +212,16 @@ app.post('/signup', async (req, res) => {
   const phone = req.body.phone;
   const password = req.body.password;
 
+  // Password evaluation
+  const passwordEval = checkValidPassword(password);
+
   // Get query to see if student exists
   const query = `select * from student where email = '${email}' or student_password = '${password}' or phone_no = '${phone}';`;
   const dbResult = await executeRows(query);
 
   // Get query to see if tutor exists
   const query2 = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
-  const dbResul2 = await executeRows(query2);
+  const dbResult2 = await executeRows(query2);
 
   // Student already exists
   if (dbResult.length > 0 || dbResul2 > 0) {
@@ -239,8 +235,20 @@ app.post('/signup', async (req, res) => {
       res.send(html);
     })
   }
+  // Password evaluation fails
+  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{welcome}', "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter");
+      res.send(html);
+    })
+  }
   // New student
-  else {
+  else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
     const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
@@ -271,6 +279,9 @@ app.post('/become-tutor', async(req, res) => {
   const subjects = req.body.subjects;
   const timings = req.body.timings;
 
+  // Password evaluation
+  const passwordEval = checkValidPassword(password);
+
   // Get query to see if tutor exists
   const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
   const dbResult = await executeRows(query);
@@ -292,8 +303,19 @@ app.post('/become-tutor', async(req, res) => {
     })
     console.log("User is already registered!"); 
   }
+  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{welcome}', "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter");
+      res.send(html);
+    })
+  }
   // New tutor
-  else {
+  else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
     const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), "${bio}", "${subjects}", '${timings}', ${0});`;
