@@ -299,7 +299,7 @@ app.post('/contact', async(req, res) => {
   // Try to send email
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) 
-      console.log("Error");
+      console.log(err);
     else 
       console.log(`Email sent: ${info.response}`);
   });
