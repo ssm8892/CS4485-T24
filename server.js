@@ -5,6 +5,7 @@ import axios from "axios";
 import { fileURLToPath } from 'url';
 import cheerio from "cheerio";
 import fs from "fs";
+import nodemailer from 'nodemailer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -277,6 +278,31 @@ app.post('/contact', async(req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const message = req.body.message;
+
+  // Host info
+  const transporter = nodemailer.createTransport({
+    host: 'thomaskahng1@gmail.com',
+    port: 25,
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+
+  // Send email
+  const mailOptions = {
+    from: 'thomaskahng1@gmail.com',
+    to: email,
+    subject: `Message from ${name} (Phone number: ${phone})`,
+    text: message,
+  };
+
+  // Try to send email
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) 
+      console.log("Error");
+    else 
+      console.log(`Email sent: ${info.response}`);
+  });
 
   // res.render('index');
   res.sendFile(__dirname + "/index.html");
