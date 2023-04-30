@@ -245,6 +245,9 @@ app.post('/contact', async(req, res) => {
   const email = req.body.email;
   const phone = req.body.phone;
   const message = req.body.message;
+
+  
+
   // res.render('index');
   res.sendFile(__dirname + "/index.html");
 });
