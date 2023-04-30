@@ -484,13 +484,13 @@
                                                     type="submit">STUDENT LOG
                                                     IN</button>
                                             </form>
-                                        </div>
 
-                                        {% if invalid == "Yes": %}
-                                            <script>
-                                                alert("Invalid username or password!");
-                                            </script>
-                                        {% endif %}
+                                            {{#if invalid == "Yes"}}
+                                                <script>
+                                                    alert("Invalid username or password!");
+                                                </script>
+                                            {{/if}}
+                                        </div>
                                     </div>
                                 </div>
 

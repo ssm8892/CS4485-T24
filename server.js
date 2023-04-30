@@ -38,7 +38,16 @@ app.get('/', (req, res) => {
 
 app.get('/index', (req, res) => {
   resetUser();
-  res.sendFile(__dirname + "/index.html");
+  
+  // Send data to HTML
+  fs.readFile('index.html', 'utf8', (err, data) => {
+    if (err)
+      console.log("Error");
+    
+    // Send invalid login to HTML
+    const html = data.replace('{invalid}', "No");
+    res.send(html);
+  })
 })
 
 app.get('/home', (req, res) => {
@@ -61,19 +70,21 @@ function executeRows(query) {
 }
 
 // Rest user information
-function resetUser(first_name, last_name, email, account_type) {
-  first_name = "";
-  last_name = "";
+function resetUser() {
+  // Reset user info
+  firstName = "";
+  lastName = "";
   email = "";
-  account_type = "";
+  accountType = "";
 }
 
 // Set current user
-function setUser(first_name, last_name, email, account_type) {
-  first_name = first_name;
-  last_name = last_name;
+function setUser(firstName, lastName, email, accountType) {
+  // Set user info
+  firstName = firstName;
+  lastName = lastName;
   email = email;
-  account_type = account_type;
+  accountType = accountType;
 }
 
 app.get('/tutor-login', (req, res) => {
@@ -231,8 +242,7 @@ app.post('/become-tutor', async(req, res) => {
 
   // Get query to see if student exists
   const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = '${password}';`
-  const dbResul2 = await executeRows(query);
-
+  const dbResult2 = await executeRows(query2);
 
   // Tutor already exists
   if (dbResult.length > 0 || dbResult2.length > 0) {
