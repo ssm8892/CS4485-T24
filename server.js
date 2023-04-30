@@ -199,7 +199,6 @@ app.post('/signup', async (req, res) => {
       const html = data.replace('{invalid}', "User is already registered!");
       res.send(html);
     })
-    console.log("User is already registered!"); 
   }
   // New student
   else {
