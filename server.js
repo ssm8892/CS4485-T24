@@ -38,16 +38,7 @@ app.get('/', (req, res) => {
 
 app.get('/index', (req, res) => {
   resetUser();
-  
-  // Send data to HTML
-  fs.readFile('index.html', 'utf8', (err, data) => {
-    if (err)
-      console.log("Error");
-    
-    // Send invalid login to HTML
-    const html = data.replace('{invalid}', "No");
-    res.send(html);
-  })
+  res.sendFile(__dirname + "/index.html");
 })
 
 app.get('/home', (req, res) => {
@@ -115,7 +106,6 @@ app.post('/tutor-login', async (req, res) => {
       const html = data.replace('{name}', nameToSend);
       res.send(html);
     })
-    // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
   }
   else if (dbResult.length == 0 && email != "" && password != "") {
     // Send data to HTML
@@ -124,7 +114,7 @@ app.post('/tutor-login', async (req, res) => {
         console.log("Error");
       
       // Send invalid login to HTML
-      const html = data.replace('{invalid}', "Yes");
+      const html = data.replace('{invalid}', "Incorrect username or password!");
       res.send(html);
     })
   }
