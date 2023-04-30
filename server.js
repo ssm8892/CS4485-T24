@@ -168,6 +168,44 @@ app.post('/login', async (req, res) => {
     res.sendFile(__dirname + "/index.html");
 });
 
+function checkValidPassword(password) {
+  // If password less than 8 characters, false
+  if (password.length < 8)
+    return false
+
+  else {
+    // Get number of lowercase, uppercase, numbers, and special characters
+    var numUpper = 0;
+    var numLower = 0;
+    var numNumbers = 0;
+    var numSpecial = 0;
+
+    // Special characters
+    const specialChars = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+
+    // If original character equal to lowercase, increment
+    for (let i = 0; i < password.length; i++) {
+      if (str[i] === str[i].toUpperCase()) 
+        ++numUpper;
+
+      else if (str[i] === str[i].toLowerCase()) 
+        ++numLower;
+      
+      else if (!isNaN(str[i]))
+        ++numNumbers;
+
+      else if (specialChars.test(password[i]))
+        ++numSpecial
+    }
+
+    // Must have at least one of each, else false
+    if (numUpper >= 1 && numLower >= 1 && numNumbers >= 1 && numSpecial >= 1)
+      return true;
+    else
+      return false;
+  }
+}
+
 app.get('/signup', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
