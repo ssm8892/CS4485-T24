@@ -5,6 +5,7 @@ import axios from "axios";
 import { fileURLToPath } from 'url';
 import cheerio from "cheerio";
 import fs from "fs";
+import crypto from "crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,10 +87,10 @@ app.get('/tutor-login', (req, res) => {
 app.post('/tutor-login', async (req, res) => {
   // Email and password
   const email = req.body.tutor_email;
-  const password = req.body.tutor_password;
+  var password = req.body.tutor_password;
   
   // Get query pertaining to email and password
-  const query = `select * from tutor where email = '${email}' and tutor_password = '${password}';`;
+  const query = `select * from tutor where email = '${email}' and tutor_password = PASSWORD('${password}');`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
@@ -130,10 +131,10 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
   // Email and password
   const email = req.body.user_email;
-  const password = req.body.user_password;
+  var password = req.body.user_password;
   
   // Get query pertaining to email and password
-  const query = `select * from student where email = '${email}' and student_password = '${password}';`;
+  const query = `select * from student where email = '${email}' and student_password = PASSWORD('${password}');`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
