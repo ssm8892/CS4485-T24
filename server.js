@@ -181,13 +181,13 @@ function checkValidPassword(password) {
 
     // If original character equal to lowercase, increment
     for (let i = 0; i < password.length; i++) {
-      if (str[i] === str[i].toUpperCase()) 
+      if (password[i] === password[i].toUpperCase()) 
         ++numUpper;
 
-      else if (str[i] === str[i].toLowerCase()) 
+      else if (password[i] === password[i].toLowerCase()) 
         ++numLower;
       
-      else if (!isNaN(str[i]))
+      else if (!isNaN(password[i]))
         ++numNumbers;
     }
 
