@@ -258,8 +258,16 @@ app.post('/signup', async (req, res) => {
       if(err) 
         console.log("Error!");
     });
-    // res.render('index');
-    res.sendFile(__dirname + "/index.html");
+    
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{welcome}', "Student successfully registered!");
+      res.send(html);
+    })
   }
 });
 
@@ -325,8 +333,16 @@ app.post('/become-tutor', async(req, res) => {
       if(err) 
         console.log("Error");
     });
-    // res.render('index');
-    res.sendFile(__dirname + "/index.html");
+    
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{welcome}', "Tutor successfully registered!");
+      res.send(html);
+    })
   }
 });
 
