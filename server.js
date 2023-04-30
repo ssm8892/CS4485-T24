@@ -190,9 +190,16 @@ app.post('/signup', async (req, res) => {
 
   // Student already exists
   if (dbResult.length > 0 || dbResul2 > 0) {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{invalid}', "User is already registered!");
+      res.send(html);
+    })
     console.log("User is already registered!"); 
-    // res.render('index');
-    res.sendFile(__dirname + "/index.html");
   }
   // New student
   else {
@@ -236,9 +243,16 @@ app.post('/become-tutor', async(req, res) => {
 
   // Tutor already exists
   if (dbResult.length > 0 || dbResult2.length > 0) {
+    // Send data to HTML
+    fs.readFile('index.html', 'utf8', (err, data) => {
+      if (err)
+        console.log("Error");
+      
+      // Send invalid login to HTML
+      const html = data.replace('{invalid}', "User is already registered!");
+      res.send(html);
+    })
     console.log("User is already registered!"); 
-    // res.render('index');
-    res.sendFile(__dirname + "/index.html");
   }
   // New tutor
   else {
