@@ -484,12 +484,6 @@
                                                     type="submit">STUDENT LOG
                                                     IN</button>
                                             </form>
-
-                                            {{#if invalid == "Yes"}}
-                                                <script>
-                                                    alert("Invalid username or password!");
-                                                </script>
-                                            {{/if}}
                                         </div>
                                     </div>
                                 </div>
@@ -1167,6 +1161,12 @@
             </div>
         </div>
     </div>
+
+    {{#if invalid == "Yes"}}
+        <script>
+            alert("Invalid username or password!");
+        </script>
+    {{/if}}
 
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
