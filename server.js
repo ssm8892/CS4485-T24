@@ -161,8 +161,12 @@ app.post('/signup', async (req, res) => {
   const query = `select * from student where email = '${email}' or student_password = '${password}' or phone_no = '${phone}';`;
   const dbResult = await executeRows(query);
 
+  // Get query to see if tutor exists
+  const query2 = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
+  const dbResul2 = await executeRows(query2);
+
   // Student already exists
-  if (dbResult.length > 0) {
+  if (dbResult.length > 0 || dbResul2 > 0) {
     console.log("User is already registered!"); 
     // res.render('index');
     res.sendFile(__dirname + "/index.html");
@@ -203,9 +207,14 @@ app.post('/become-tutor', async(req, res) => {
   const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
   const dbResult = await executeRows(query);
 
+  // Get query to see if student exists
+  const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = '${password}';`
+  const dbResul2 = await executeRows(query);
+
+
   // Tutor already exists
-  if (dbResult.length > 0) {
-    console.log("Tutor is already registered!"); 
+  if (dbResult.length > 0 || dbResult2.length > 0) {
+    console.log("User is already registered!"); 
     // res.render('index');
     res.sendFile(__dirname + "/index.html");
   }
