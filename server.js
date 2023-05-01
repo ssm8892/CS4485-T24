@@ -96,14 +96,18 @@ app.post('/tutor-login', async (req, res) => {
     // Save login info and send first name
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor");
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
+
+    // Get full name and total number of hours completed
+    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
+    const total_tutoring_hours = dbResult[0]['total_tutoring_hours'];
     
     // Send data to HTML
     fs.readFile('tutor.html', 'utf8', (err, data) => {
       if (err)
         console.log("Error");
       
-        // Send variable to HTML
-      const html = data.replace('{name}', nameToSend);
+      // Send variable to HTML
+      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName).replace('{hours}', total_tutoring_hours);
       res.send(html);
     })
   }
@@ -140,15 +144,18 @@ app.post('/login', async (req, res) => {
     // Save login info and send first name
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student");
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
-    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     
+    // Get full name and total number of hours completed
+    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
+    const total_tutoring_hours = dbResult[0]['total_tutoring_hours'];
+
     // Send data to HTML
     fs.readFile('home.html', 'utf8', (err, data) => {
       if (err)
         console.log("Error");
       
       // Send variable to HTML
-      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName);
+      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName).replace('{hours}', total_tutoring_hours);
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
