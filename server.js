@@ -174,9 +174,9 @@ app.post('/tutor-login', async (req, res) => {
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-    res.sendFile(__dirname + "/home.html");
+  res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: displayTutors });
   else
-    res.sendFile(__dirname + "/index.html");
+    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
 
 // Login as student
@@ -199,7 +199,7 @@ app.post('/login', async (req, res) => {
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tuturs: displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: displayTutors });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
@@ -306,6 +306,7 @@ app.post('/signup', async (req, res) => {
   }
 });
 
+/*
 app.get('/book', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
@@ -319,6 +320,7 @@ app.post('/book', async(req, res) => {
   // res.render('home');
   res.sendFile(__dirname + "/home.html");
 })
+*/
 
 app.listen(3000, () => {
   console.log(`Server running on port ${PORT}`);
