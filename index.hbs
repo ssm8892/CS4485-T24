@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -122,36 +123,37 @@
                         </div>
                     </div>
                 </div>
-                
-                {{#each tutors}}
-                    <div class="dash-content dash-tutor" id="dash-content-tutor"
-                        style="display: flex; flex-direction: row;">
-                        <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                            data-bs-target="#tutorProfileModal1">
-                            <div class="container d-flex align-items-center flex-row"
-                                style="justify-content: space-around;">
-                                <!-- Masthead Avatar Image-->
-                                <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
-                                    style="width: 5rem;" />
-                                <!-- Masthead Heading-->
-                                <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                    <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}</h1>
-                                    <h2 class="text-white mb-0" style="font-size:x-small;">{{this.email}}</h2>
-                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                    <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
-                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                    <div
-                                        style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                        <div class="text-primary text-uppercase course-name">CS 2337</div>
-                                        <div class="text-primary text-uppercase course-name">CS 2301</div>
-                                        <div class="text-primary text-uppercase course-name">CS 3301</div>
-                                        <div class="text-primary text-uppercase course-name">CS 2340</div>
-                                    </div>
+
+
+                <div class="dash-content dash-tutor" id="dash-content-tutor"
+                    style="display: flex; flex-direction: row;">
+                    {{#each tutors}}
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal{{this.index}}">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.email}}</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div
+                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div>
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {{/each}}
+                    {{/each}}
+                </div>
             </div>
         </section>
         <!-- Footer-->
@@ -213,21 +215,26 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                 </div>
 
-                                <div class="signin_div bg-primary" style="display: flex; flex-direction: column; border-radius: 1rem; border-width: 0.4rem; border-color: rgb(232, 117, 0); border-style: solid;">
-                                    <div class="signin-left" id="dash-left" style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
+                                <div class="signin_div bg-primary"
+                                    style="display: flex; flex-direction: column; border-radius: 1rem; border-width: 0.4rem; border-color: rgb(232, 117, 0); border-style: solid;">
+                                    <div class="signin-left" id="dash-left"
+                                        style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
                                         <div id="form-label-tutor" class="label-tutors bg-white text-primary"
-                                            style="border-radius: 1rem; width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">TUTORS</div>
+                                            style="border-radius: 1rem; width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">
+                                            TUTORS</div>
                                         <div id="form-label-class" class="label-students bg-primary text-white"
-                                            style="width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">STUDENT</div>
+                                            style="width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">
+                                            STUDENT</div>
                                     </div>
-                                    <div class="signin-right bg-white text-secondary justify-content-center" id="dash-right"
+                                    <div class="signin-right bg-white text-secondary justify-content-center"
+                                        id="dash-right"
                                         style="width: 100%; height: inherit; border-radius: 1rem; font-weight: bolder; margin-top: -1.5rem;">
                                         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
 
                                         <div class="" id="form-content-tutor"
                                             style="display: flex; flex-direction: row; width: 80%; margin-left: 10%; margin-right: 10%;">
-                                            <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="/tutor-login"
-                                                method="post" style="width: 100%;">
+                                            <form id="contactForm" data-sb-form-api-token="API_TOKEN"
+                                                action="/tutor-login" method="post" style="width: 100%;">
                                                 <!-- Email address input-->
                                                 <div class="form-floating mb-3">
                                                     <input class="form-control" id="email" name="tutor_email"
@@ -279,11 +286,13 @@
                                 </div>
 
                                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <a class="btn btn-primary bg-secondary" data-bs-toggle="modal" data-bs-target="#signUpModal" style="border-style: none;">
+                                <a class="btn btn-primary bg-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#signUpModal" style="border-style: none;">
                                     <i class="fas fa-portrait me-2"></i>
                                     SIGN UP
                                 </a>
-                                <a class="btn btn-primary bg-secondary" data-bs-toggle="modal" data-bs-target="#tutorsignUpModal" style="border-style: none;">
+                                <a class="btn btn-primary bg-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#tutorsignUpModal" style="border-style: none;">
                                     <i class="fas fa-portrait me-2"></i>
                                     BECOME A TUTOR
                                 </a>
@@ -348,7 +357,8 @@
                                     </div>
 
                                     <!-- Submit Button-->
-                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit" onclick="return confirm('Confirn registration?')">
+                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit"
+                                        onclick="return confirm('Confirn registration?')">
                                         SIGN UP</button>
                                 </form>
                             </div>
@@ -424,15 +434,46 @@
                                         <label for="subjects">Subject Expertise</label>
                                     </div>
 
-                                    <!-- Available input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="hours" type="hours" name="timings"
-                                            placeholder="..." data-sb-validations="required" required />
-                                        <label for="hours">Available Timings</label>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+
+                                    <div class="days&times"
+                                        style="display: flex; flex-direction:row; justify-content: space-around;">
+                                        <div id="list1" class="dropdown-check-list" style="width:40%" tabindex="100">
+                                            <span class="anchor anchor1" id="anchor1"
+                                                style="border-radius: 0.5rem; width:100%">Select Days</span>
+                                            <ul class="items" style="text-align: left; border-radius:0.5rem">
+                                                <li><input type="checkbox" />Sunday </li>
+                                                <li><input type="checkbox" />Monday</li>
+                                                <li><input type="checkbox" />Tuesday </li>
+                                                <li><input type="checkbox" />Wednesday </li>
+                                                <li><input type="checkbox" />Thursday </li>
+                                                <li><input type="checkbox" />Friday </li>
+                                                <li><input type="checkbox" />Saturday</li>
+                                            </ul>
+                                        </div>
+                                        <div id="list2" class="dropdown-check-list" style="width:40%" tabindex="100">
+                                            <span class="anchor anchor2" id="anchor2"
+                                                style="border-radius: 0.5rem; width:100%">Select
+                                                Times</span>
+                                            <ul class="items" style="text-align:left; border-radius:0.5rem">
+                                                <li><input type="checkbox" />10:00 - 12:00 </li>
+                                                <li><input type="checkbox" />12:00 - 2:00</li>
+                                                <li><input type="checkbox" />2:00 - 4:00 </li>
+                                                <li><input type="checkbox" />4:00 - 6:00 </li>
+                                                <li><input type="checkbox" />6:00 - 8:00 </li>
+                                                <li><input type="checkbox" />8:00 - 10:00 </li>
+                                            </ul>
+                                        </div>
                                     </div>
 
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
                                     <!-- Submit Button-->
-                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit" onclick="return confirm('Confirn registration?')">SIGN
+                                    <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit"
+                                        onclick="return confirm('Confirn registration?')">SIGN
                                         UP</button>
                                 </form>
                             </div>
@@ -444,8 +485,8 @@
     </div>
 
     {{#each tutors}}
-    <div class="portfolio-modal modal fade" id="tutorProfileModal1" tabindex="-1" aria-labelledby="portfolioModal1"
-        aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="tutorProfileModal{{this.index}}" tabindex="-1"
+        aria-labelledby="portfolioModal1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"

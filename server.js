@@ -19,7 +19,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'online_tutoring'
 });
 
@@ -50,7 +50,8 @@ for (let i=0; i<dbTutors.length; i++) {
     email: dbTutors[i]['email'],
     phone: dbTutors[i]['phone_no'],
     bio: dbTutors[i]['bio'],
-    expertise: dbTutors[i]['subject_expertise']
+    expertise: dbTutors[i]['subject_expertise'],
+    index: i
   }
   displayTutors.push(tutorDict);
 }
