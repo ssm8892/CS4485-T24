@@ -1,9 +1,9 @@
-#DROP DATABASE IF EXISTS ONLINE_TUTORING;
+DROP DATABASE IF EXISTS ONLINE_TUTORING;
 CREATE DATABASE ONLINE_TUTORING;
 
 USE ONLINE_TUTORING;
 
-#DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS student;
 CREATE TABLE student (
 	student_id varchar(10) NOT NULL,
 	student_password varchar(20) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE student (
 	PRIMARY KEY (student_id)
 );
 
-#DROP TABLE IF EXISTS tutor;
+DROP TABLE IF EXISTS tutor;
 CREATE TABLE tutor (
 	tutor_id varchar(10) NOT NULL,
 	tutor_password varchar(20) NOT NULL,
@@ -27,12 +27,13 @@ CREATE TABLE tutor (
 	profile_pic VARBINARY(500),
 	bio varchar(250) NOT NULL,
 	subject_expertise varchar(100) NOT NULL, 
+    days_available varchar(100) NOT NULL,
 	hours_avaliable varchar(100) NOT NULL,
 	total_tutoring_hours time NOT NULL,
 	PRIMARY KEY (tutor_id)
 );
 
-#DROP TABLE IF EXISTS subject;
+DROP TABLE IF EXISTS subject;
 CREATE TABLE subject (
 	subject_id varchar(10) NOT NULL,
     tutor_id varchar(10) NOT NULL,
@@ -42,7 +43,7 @@ CREATE TABLE subject (
 	PRIMARY KEY (subject_id)
 );
 
-#DROP TABLE IF EXISTS appointments;
+DROP TABLE IF EXISTS appointments;
 CREATE TABLE appointments (
 	appointment_id varchar(10) NOT NULL,
 	date_and_time datetime NOT NULL,
@@ -66,13 +67,13 @@ VALUES
     ('2783920483', 'iLoveCupcakes', 'Linda', 'Moore', 'linda.moore@utdallas.edu', '1245612232', LOAD_FILE('E:/Images/LindaMore.jpg'), 52);
 
 INSERT INTO tutor
-	(tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours)
+	(tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours)
 VALUES
-	('5802759208', 'ChemGod', 'Helen', 'Clyde', 'helen.cylde@yahoo.com', '4589728976', LOAD_FILE('E:/Images/helen.jpg'), 'Hello, my name is Helen Clyde and I am a senior at UTD. I cannot wait to teach you guys!', 'General Chemistry, Organic Chemistry', '2:00 pm - 4:00 pm Tuesday/Thursday, 5:00 pm - 7:00 pm Monday/Wednesday', 45),
-    ('0123456789', 'HelloWorld123!', 'Josh', 'Burrim', 'JoshBurrim@utdallas.edu', '1234567890', LOAD_FILE('E:/Images/Josh.jpg'), 'Nice to meet yall, I am super new to this!', 'Intro to CompSCI, Data Structures', '12am-12pm Everyday', 40),
-    ('0123436280', 'HelloWorld123!!!', 'Jason', 'Brim', 'Jasonbrim@utdallas.edu','2344567890', LOAD_FILE('E:/Images/Jason.jpg'), 'Nice to meet yall, I am not super new to this, I have years of experience!', 'Linear Algebra, Calculus, and Calculus 2', '2am-6am Thursday', 5),
-    ('589201838', 'STEMGirlzRule', 'Samantha', 'Garcia', 'hellosam@gmail.com', '4752288599', LOAD_FILE('E:/Images/sam.jpg'), 'Hey y’all, I am Sam. I am a Bio Major and super excited to get to know you guys!', 'Microbiology, Modern Biology', '8:00 am - 11:00 am Monday/Wednesday, 1:00 pm - 3:00 pm Monday/Wednesday', 45),
-    ('0127455739', 'IamaRobot@', 'Randy', 'Calcium', 'Radnycalcium@utdallas.edu', '2783491029', LOAD_FILE('E:/Images/Randy.jpg'), 'I am the best tutor in the whole world!', 'Intro to Physics, Databases, Organic Chemistry', '3pm-7pm Monday/Wednesday', 16);
+	('5802759208', 'ChemGod', 'Helen', 'Clyde', 'helen.cylde@yahoo.com', '4589728976', LOAD_FILE('E:/Images/helen.jpg'), 'Hello, my name is Helen Clyde and I am a senior at UTD. I cannot wait to teach you guys!', 'General Chemistry, Organic Chemistry', 'Monday, Tuesday, Wednesday, Thursday', '2:00 - 4:00, 4:00 - 6:00', 45),
+    ('0123456789', 'HelloWorld123!', 'Josh', 'Burrim', 'JoshBurrim@utdallas.edu', '1234567890', LOAD_FILE('E:/Images/Josh.jpg'), 'Nice to meet yall, I am super new to this!', 'Intro to CompSCI, Data Structures', 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', '10:00 - 12:00, 12:00 - 2:00, 2:00 - 4:00, 4:00 - 6:00, 6:00 - 8:00, 8:00 - 10:00', 40),
+    ('0123436280', 'HelloWorld123!!!', 'Jason', 'Brim', 'Jasonbrim@utdallas.edu','2344567890', LOAD_FILE('E:/Images/Jason.jpg'), 'Nice to meet yall, I am not super new to this, I have years of experience!', 'Linear Algebra, Calculus, and Calculus 2', 'Thursday', '2:00 - 4:00', 5),
+    ('589201838', 'STEMGirlzRule', 'Samantha', 'Garcia', 'hellosam@gmail.com', '4752288599', LOAD_FILE('E:/Images/sam.jpg'), 'Hey y’all, I am Sam. I am a Bio Major and super excited to get to know you guys!', 'Microbiology, Modern Biology', 'Monday, Wednesday', '10:00 - 12:00, 12:00 - 2:00, 2:00 - 4:00', 45),
+    ('0127455739', 'IamaRobot@', 'Randy', 'Calcium', 'Radnycalcium@utdallas.edu', '2783491029', LOAD_FILE('E:/Images/Randy.jpg'), 'I am the best tutor in the whole world!', 'Intro to Physics, Databases, Organic Chemistry','Monday, Wednesday', '2:00 - 4:00, 4:00 - 6:00, 6:00 - 8:00', 16);
     
 INSERT INTO subject
 	(subject_id, tutor_id, course_name, course_prefix_no, course_info)

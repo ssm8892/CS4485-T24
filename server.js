@@ -30,7 +30,7 @@ var email = "";
 var accountType = "";
 
 // Magic for POST requests
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({extended:true}));
 
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
@@ -150,7 +150,7 @@ app.post('/tutor-login', async (req, res) => {
   var password = req.body.tutor_password;
   
   // Get query pertaining to email and password
-  const query = `select * from tutor where email = '${email}' and tutor_password = PASSWORD('${password}');`;
+  const query = `select * from tutor where email = '${email}' and tutor_password = '${password}';`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
@@ -224,8 +224,13 @@ app.post('/become-tutor', async(req, res) => {
   const password = req.body.password;
   const bio = req.body.bio;
   const subjects = req.body.subjects;
-  const timings = req.body.timings;
+  var days = req.body.days;
+  var timings = req.body.shifts;
 
+  days = days.join(', ');
+  timings = timings.join(', ')
+
+  console.log(days);
   // Password evaluation
   const passwordEval = checkValidPassword(password);
 
@@ -249,7 +254,7 @@ app.post('/become-tutor', async(req, res) => {
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), "${bio}", "${subjects}", '${timings}', ${0});`;
+    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), "${bio}", "${subjects}", $'{days}', '${timings}', ${0});`;
     
     // Execute query insertion
     con.query(new_query, (err, rows) => {
@@ -259,6 +264,7 @@ app.post('/become-tutor', async(req, res) => {
     res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Tutor successfully registered!"});
   }
 });
+
 
 app.get('/signup', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
