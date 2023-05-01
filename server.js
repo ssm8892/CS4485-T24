@@ -1,6 +1,8 @@
 import express from 'express';
 import hbs from 'hbs';
 import mysql from 'mysql';
+import fileUpload from 'express-fileupload';
+import bodyParser from 'body-parser';
 import { totalmem } from 'os';
 
 import path from 'path';
@@ -32,6 +34,7 @@ var accountType = "";
 // Magic for POST requests
 app.use(express.urlencoded({extended:true}));
 
+app.use(fileUpload());
 app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/js"));
@@ -214,6 +217,22 @@ app.get('/become-tutor', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
 
+app.post('/upload-pic', async(req, res) => {
+  if(!req.files){
+    res.send('File was not found');
+    return;
+  }
+  
+  const avatar = req.files.avatar;
+  if(!avatar) return res.sendStatus(400);
+
+  var img = __dirname+"/profile_pics/"+avatar.name;
+  console.log(img);
+  avatar.mv(__dirname+"/profile_pics/"+avatar.name);
+  console.log(img)
+  res.render(__dirname + "\\tutor.hbs");
+})
+
 // Become a tutor
 app.post('/become-tutor', async(req, res) => {
   // Info to become a tutor
@@ -224,13 +243,14 @@ app.post('/become-tutor', async(req, res) => {
   const password = req.body.password;
   const bio = req.body.bio;
   const subjects = req.body.subjects;
-  const days = req.body.days;
-  const timings = req.body.shifts;
+
+  var days = req.body.days;
+  var timings = req.body.shifts;
+  var img = "";
 
   days = days.join(', ');
   timings = timings.join(', ')
 
-  console.log(days);
   // Password evaluation
   const passwordEval = checkValidPassword(password);
 
@@ -254,8 +274,9 @@ app.post('/become-tutor', async(req, res) => {
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), "${bio}", "${subjects}", $'{days}', '${timings}', ${0});`;
+    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', '${img}', "${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
     
+
     // Execute query insertion
     con.query(new_query, (err, rows) => {
       if(err) 
