@@ -51,15 +51,31 @@ for (let i=0; i<dbTutors.length; i++) {
   displayTutors.push(tutorDict);
 }
 
-console.log(displayTutors);
-
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  // res.sendFile(__dirname + "/index.html");
+  // Send data to HTML
+  fs.readFile('index.html', 'utf8', (err, data) => {
+    if (err)
+      console.log("Error");
+    
+    // Send variable to HTML
+    const html = data.replace('{tutors}', displayTutors);
+    res.send(html);
+  })
 })
 
 app.get('/index', (req, res) => {
   resetUser();
-  res.sendFile(__dirname + "/index.html");
+  // res.sendFile(__dirname + "/index.html");
+  // Send data to HTML
+  fs.readFile('index.html', 'utf8', (err, data) => {
+    if (err)
+      console.log("Error");
+    
+    // Send variable to HTML
+    const html = data.replace('{tutors}', displayTutors);
+    res.send(html);
+  })
 })
 
 app.get('/home', (req, res) => {
@@ -100,7 +116,10 @@ function setUser(firstName, lastName, email, accountType) {
 }
 
 app.get('/tutor-login', (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
+    res.sendFile(__dirname + "/tutor.html");
+  else
+    res.sendFile(__dirname + "/index.html");
 })
 
 // Login as tutor 
@@ -148,7 +167,10 @@ app.post('/tutor-login', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
+    res.sendFile(__dirname + "/home.html");
+  else
+    res.sendFile(__dirname + "/index.html");
 })
 
 // Login as student
@@ -176,7 +198,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send variable to HTML
-      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName).replace('{hours}', total_tutoring_hours);
+      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName).replace('{hours}', total_tutoring_hours).replace('{tutors}', displayTutors);
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
