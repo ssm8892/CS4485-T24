@@ -1,6 +1,7 @@
 import express from 'express';
 import hbs from 'hbs';
 import mysql from 'mysql';
+import { totalmem } from 'os';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -49,7 +50,7 @@ for (let i=0; i<dbTutors.length; i++) {
     email: dbTutors[i]['email'],
     phone: dbTutors[i]['phone_no'],
     bio: dbTutors[i]['bio'],
-    expretise: dbTutors[i]['subject_expertise']
+    expertise: dbTutors[i]['subject_expertise']
   }
   displayTutors.push(tutorDict);
 }
@@ -66,6 +67,58 @@ function executeRows(query) {
   });
 }
 
+// Rest user information
+function resetUser() {
+  // Reset user info
+  firstName = "";
+  lastName = "";
+  email = "";
+  accountType = "";
+}
+
+// Set current user
+function setUser(firstName, lastName, email, accountType) {
+  // Set user info
+  firstName = firstName;
+  lastName = lastName;
+  email = email;
+  accountType = accountType;
+}
+
+function checkValidPassword(password) {
+  // If password less than 8 characters, false
+  if (password.length < 8)
+    return false
+
+  else {
+    // Get number of lowercase, uppercase, and numbers
+    var numUpper = 0;
+    var numLower = 0;
+    var numNumbers = 0;
+
+    // If original character equal to lowercase, increment
+    for (let i = 0; i < password.length; i++) {
+      // Is lowercase
+      if (password[i] === password[i].toUpperCase()) 
+        ++numUpper;
+      
+      // Is uppercase
+      if (password[i] === password[i].toLowerCase()) 
+        ++numLower;
+      
+      // Is a number
+      if (!isNaN(password[i]))
+        ++numNumbers;
+    }
+
+    // Must have at least one of each, else false
+    if (numUpper >= 1 && numLower >= 1 && numNumbers >= 1)
+      return true;
+    else
+      return false;
+  }
+}
+
 app.get('/', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
@@ -78,6 +131,87 @@ app.get('/index', (req, res) => {
   resetUser();
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
+
+app.get('/home', (req, res) => {
+  if (firstName != "" && lastName != "" && email != "" && accountType != "")
+    res.render(__dirname + "\\home.hbs", { tutors: displayTutors });
+  else
+    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+})
+
+app.get('/tutor-login', (req, res) => {
+  if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
+    res.render(__dirname + "\\tutor.html");
+  else
+    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+})
+
+// Login as tutor 
+app.post('/tutor-login', async (req, res) => {
+  // Email and password
+  const email = req.body.tutor_email;
+  var password = req.body.tutor_password;
+  
+  // Get query pertaining to email and password
+  const query = `select * from tutor where email = '${email}' and tutor_password = PASSWORD('${password}');`;
+  const dbResult = await executeRows(query);
+  
+  if (dbResult.length > 0) {
+    // Save login info and send first name
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor");
+    const nameToSend = dbResult[0]['first_name'].toUpperCase();
+
+    // Get full name and total number of hours completed
+    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
+    const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
+
+    // Send data to HTML
+    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours});
+  }
+  // Send invalid login to HTML
+  else if (dbResult.length == 0 && email != "" && password != "")
+    res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
+  // Reload index 
+  else 
+    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+});
+
+app.get('/login', (req, res) => {
+  if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
+    res.sendFile(__dirname + "/home.html");
+  else
+    res.sendFile(__dirname + "/index.html");
+})
+
+// Login as student
+app.post('/login', async (req, res) => {
+  // Email and password
+  const email = req.body.user_email;
+  var password = req.body.user_password;
+  
+  // Get query pertaining to email and password
+  const query = `select * from student where email = '${email}' and student_password = PASSWORD('${password}');`;
+  const dbResult = await executeRows(query);
+  
+  if (dbResult.length > 0) {
+    // Save login info and send first name
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student");
+    const nameToSend = dbResult[0]['first_name'].toUpperCase();
+    
+    // Get full name and total number of hours completed
+    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
+    const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
+
+    // Send data to HTML
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tuturs: displayTutors });
+  }
+  // Send invalid login to HTML
+  else if (dbResult.length == 0 && email != "" && password != "")
+    res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
+  // Reload index 
+  else 
+    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+});
 
 /*
 import express from "express";
@@ -167,36 +301,6 @@ app.get('/home', (req, res) => {
   else
     res.sendFile(__dirname + "/index.html");
 })
-
-function executeRows(query) {
-  return new Promise((resolve, reject) => {
-    con.query(query, function(err, result) {
-      if (err) {
-        // Returning the error
-        reject(err);
-      }
-      resolve(result);
-    });
-  });
-}
-
-// Rest user information
-function resetUser() {
-  // Reset user info
-  firstName = "";
-  lastName = "";
-  email = "";
-  accountType = "";
-}
-
-// Set current user
-function setUser(firstName, lastName, email, accountType) {
-  // Set user info
-  firstName = firstName;
-  lastName = lastName;
-  email = email;
-  accountType = accountType;
-}
 
 app.get('/tutor-login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
@@ -300,40 +404,6 @@ app.post('/login', async (req, res) => {
   else 
     res.sendFile(__dirname + "/index.html");
 });
-
-function checkValidPassword(password) {
-  // If password less than 8 characters, false
-  if (password.length < 8)
-    return false
-
-  else {
-    // Get number of lowercase, uppercase, and numbers
-    var numUpper = 0;
-    var numLower = 0;
-    var numNumbers = 0;
-
-    // If original character equal to lowercase, increment
-    for (let i = 0; i < password.length; i++) {
-      // Is lowercase
-      if (password[i] === password[i].toUpperCase()) 
-        ++numUpper;
-      
-      // Is uppercase
-      if (password[i] === password[i].toLowerCase()) 
-        ++numLower;
-      
-      // Is a number
-      if (!isNaN(password[i]))
-        ++numNumbers;
-    }
-
-    // Must have at least one of each, else false
-    if (numUpper >= 1 && numLower >= 1 && numNumbers >= 1)
-      return true;
-    else
-      return false;
-  }
-}
 
 app.get('/signup', (req, res) => {
   res.sendFile(__dirname + "/index.html");
