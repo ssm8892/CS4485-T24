@@ -244,22 +244,22 @@ app.post('/become-tutor', async(req, res) => {
   const bio = req.body.bio;
   const subjects = req.body.subjects;
 
-  var days = req.body.days;
-  var timings = req.body.shifts;
+  var daysInput = req.body.days;
+  var timingsInput = req.body.shifts;
   var img = "";
 
-  days = days.join(', ');
-  timings = timings.join(', ')
+  var days = daysInput.join(', ');
+  var timings = timingsInput.join(', ')
 
   // Password evaluation
   const passwordEval = checkValidPassword(password);
 
   // Get query to see if tutor exists
-  const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
+  const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
   const dbResult = await executeRows(query);
 
   // Get query to see if student exists
-  const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = '${password}';`
+  const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = PASSWORD('${password}');`
   const dbResult2 = await executeRows(query2);
 
   // Tutor already exists
@@ -274,7 +274,7 @@ app.post('/become-tutor', async(req, res) => {
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', '${img}', "${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
+    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', PASSWORD('${password}'), '${firstName}', '${lastName}', '${email}', '${phone}', '${img}', "${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
     
 
     // Execute query insertion
@@ -304,11 +304,11 @@ app.post('/signup', async (req, res) => {
   const passwordEval = checkValidPassword(password);
 
   // Get query to see if student exists
-  const query = `select * from student where email = '${email}' or student_password = '${password}' or phone_no = '${phone}';`;
+  const query = `select * from student where email = '${email}' or student_password = PASSWORD('${password}') or phone_no = '${phone}';`;
   const dbResult = await executeRows(query);
 
   // Get query to see if tutor exists
-  const query2 = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = '${password}';`
+  const query2 = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
   const dbResult2 = await executeRows(query2);
 
   // Student already exists
@@ -323,7 +323,7 @@ app.post('/signup', async (req, res) => {
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', '${password}', '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
+    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', PASSWORD('${password}'), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
 
     // Execute query insertion
     con.query(new_query, (err, rows) => {
