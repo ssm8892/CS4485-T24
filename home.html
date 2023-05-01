@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-
+                {% for tutor in tutors %}
                 <div class="dash-content dash-tutor" id="dash-content-tutor"
                     style="display: flex; flex-direction: row;">
                     <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
@@ -87,8 +87,8 @@
                                 style="width: 5rem;" />
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">Sai Motukuri</h1>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">ssm190012@utdallas.edu</h2>
+                                <h1 class="text-white mb-0" style="font-size: large;">{{ tutor.fullName }}</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{ tutor.email }}</h2>
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
                                 <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                
+                {% endfor %}
             </div>
         </section>
 
