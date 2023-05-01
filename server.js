@@ -50,6 +50,7 @@ for (let i=0; i<dbTutors.length; i++) {
   }
   displayTutors.push(tutorDict);
 }
+console.log(displayTutors);
 
 app.get('/', (req, res) => {
   // res.sendFile(__dirname + "/index.html");
