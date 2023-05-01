@@ -9,18 +9,8 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Set the view engine to Handlebars
-app.set('view engine', 'handlebars');
-
-// Set the views directory to the "views" folder
-app.set('views', __dirname + '/views');
-
-// Configure the Handlebars instance
-app.engine('handlebars', hbs.engine);
 
 var con = mysql.createConnection({
   host: 'localhost',
@@ -60,7 +50,7 @@ for (let i=0; i<dbTutors.length; i++) {
   }
   displayTutors.push(tutorDict);
 }
-console.log(displayTutors);
+console.log(displayTutors)
 
 app.get('/', (req, res) => {
   // res.sendFile(__dirname + "/index.html");
