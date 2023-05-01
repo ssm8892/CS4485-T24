@@ -19,7 +19,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'online_tutoring'
 });
 
@@ -224,8 +224,8 @@ app.post('/become-tutor', async(req, res) => {
   const password = req.body.password;
   const bio = req.body.bio;
   const subjects = req.body.subjects;
-  var days = req.body.days;
-  var timings = req.body.shifts;
+  const days = req.body.days;
+  const timings = req.body.shifts;
 
   days = days.join(', ');
   timings = timings.join(', ')
