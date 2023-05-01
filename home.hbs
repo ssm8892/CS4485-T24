@@ -33,8 +33,8 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1 " data-bs-toggle="modal" data-bs-target="#profileModal"><a
                                 class="nav-link py-3 px-0 px-lg-3 rounded">Profile</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="/index" onclick="return confirm('Sign Out?')">SIGN OUT</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/index"
+                                onclick="return confirm('Sign Out?')">SIGN OUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -77,33 +77,33 @@
                 </div>
 
                 {{#each tutors}}
-                    <div class="dash-content dash-tutor" id="dash-content-tutor"
-                        style="display: flex; flex-direction: row;">
-                        <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                            data-bs-target="#tutorProfileModal1">
-                            <div class="container d-flex align-items-center flex-row"
-                                style="justify-content: space-around;">
-                                <!-- Masthead Avatar Image-->
-                                <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
-                                    style="width: 5rem;" />
-                                <!-- Masthead Heading-->
-                                <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                    <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}</h1>
-                                    <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}</h2>
-                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                    <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
-                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                    <div
-                                        style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                        <div class="text-primary text-uppercase course-name">CS 2337</div>
-                                        <div class="text-primary text-uppercase course-name">CS 2301</div>
-                                        <div class="text-primary text-uppercase course-name">CS 3301</div>
-                                        <div class="text-primary text-uppercase course-name">CS 2340</div>
-                                    </div>
+                <div class="dash-content dash-tutor" id="dash-content-tutor"
+                    style="display: flex; flex-direction: row;">
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal1">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size: small;">S M T W Tr F Sa</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div
+                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">CS 2337</div>
+                                    <div class="text-primary text-uppercase course-name">CS 2301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 3301</div>
+                                    <div class="text-primary text-uppercase course-name">CS 2340</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 {{/each}}
             </div>
         </section>
@@ -227,7 +227,8 @@
                                     <img class="masthead-avatar mb-5" src="assets/avataaars.svg" alt="..."
                                         style="width: 15rem;" />
                                     <!-- Masthead Heading-->
-                                    <h1 class="masthead-heading text-uppercase mb-0">TOTAL TUTORING HOURS: {{hours}}</h1>
+                                    <h1 class="masthead-heading text-uppercase mb-0">TOTAL TUTORING HOURS: {{hours}}
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -236,7 +237,7 @@
             </div>
         </div>
     </div>
-    
+
     {{#each tutors}}
     <div class="portfolio-modal modal fade" id="tutorProfileModal1" tabindex="-1" aria-labelledby="portfolioModal1"
         aria-hidden="true">
@@ -250,75 +251,90 @@
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
                                 <h2 class="portfolio-modal-title text-secondary mb-0">{{this.fullName}}/h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <div class="container d-flex align-items-center flex-column">
-                                    <!-- Masthead Avatar Image-->
-                                    <img class="masthead-avatar mb-5" src="assets/avataaars.svg" alt="..."
-                                        style="width: 10rem;" />
-                                    <!-- Masthead Heading-->
-                                    <h4 class="text-uppercase mb-0">{{this.expertise}}</h1>
-                                        <!-- Icon Divider-->
-                                        <!-- Masthead Subheading-->
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <div class="container d-flex align-items-center flex-column">
+                                        <!-- Masthead Avatar Image-->
+                                        <img class="masthead-avatar mb-5" src="assets/avataaars.svg" alt="..."
+                                            style="width: 10rem;" />
+                                        <!-- Masthead Heading-->
+                                        <h4 class="text-uppercase mb-0">{{this.expertise}}</h1>
+                                            <!-- Icon Divider-->
+                                            <!-- Masthead Subheading-->
 
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
-                                            Days</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="text-secondary text-uppercase course-name-green">S</div>
-                                            <div class="text-secondary text-uppercase course-name-green">M</div>
-                                            <div class="text-secondary text-uppercase course-name-green">T</div>
-                                            <div class="text-secondary text-uppercase course-name-green">W</div>
-                                            <div class="text-secondary course-name-green">Tr</div>
-                                            <div class="text-secondary text-uppercase course-name-green">F</div>
-                                            <div class="text-secondary course-name-green">Sa</div>
-                                        </div>
-
-
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
-                                            Classes</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="text-secondary text-uppercase course-name-green">CS 2337</div>
-                                            <div class="text-secondary text-uppercase course-name-green">CS 2301</div>
-                                            <div class="text-secondary text-uppercase course-name-green">CS 3301</div>
-                                            <div class="text-secondary text-uppercase course-name-green">CS 2340</div>
-                                        </div>
-
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="text-secondary course-name-green">{{this.email}}</div>
-                                            <div class="text-secondary course-name-green">{{this.phone}}</div>
-                                        </div>
-
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
+                                            <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                            </h2>
+                                            <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
+                                                Days</p>
+                                            <div
+                                                style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                                <div class="text-secondary text-uppercase course-name-green">S</div>
+                                                <div class="text-secondary text-uppercase course-name-green">M</div>
+                                                <div class="text-secondary text-uppercase course-name-green">T</div>
+                                                <div class="text-secondary text-uppercase course-name-green">W</div>
+                                                <div class="text-secondary course-name-green">Tr</div>
+                                                <div class="text-secondary text-uppercase course-name-green">F</div>
+                                                <div class="text-secondary course-name-green">Sa</div>
                                             </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                        </div>
 
-                                        <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#bookAppointmentModal">
-                                            BOOK APPOINTMENT
-                                        </button>
-                                </div>
+
+                                            <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                            </h2>
+                                            <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
+                                                Classes</p>
+                                            <div
+                                                style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                                <div class="text-secondary text-uppercase course-name-green">CS 2337
+                                                </div>
+                                                <div class="text-secondary text-uppercase course-name-green">CS 2301
+                                                </div>
+                                                <div class="text-secondary text-uppercase course-name-green">CS 3301
+                                                </div>
+                                                <div class="text-secondary text-uppercase course-name-green">CS 2340
+                                                </div>
+                                            </div>
+
+                                            <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                            </h2>
+                                            <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact
+                                            </p>
+                                            <div
+                                                style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                                <div class="text-secondary course-name-green">{{this.email}}</div>
+                                                <div class="text-secondary course-name-green">{{this.phone}}</div>
+                                            </div>
+
+                                            <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                            </h2>
+                                            <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating
+                                            </p>
+                                            <div
+                                                style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                                <div class="divider-custom-icon"><i
+                                                        class="fas fa-star blackiconcolor"></i>
+                                                </div>
+                                                <div class="divider-custom-icon"><i
+                                                        class="fas fa-star blackiconcolor"></i>
+                                                </div>
+                                                <div class="divider-custom-icon"><i
+                                                        class="fas fa-star blackiconcolor"></i>
+                                                </div>
+                                                <div class="divider-custom-icon"><i
+                                                        class="fas fa-star blackiconcolor"></i>
+                                                </div>
+                                                <div class="divider-custom-icon"><i
+                                                        class="fas fa-star blackiconcolor"></i>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#bookAppointmentModal">
+                                                BOOK APPOINTMENT
+                                            </button>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -351,15 +367,15 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <form id="contactForm" action="/book" data-sb-form-api-token="API_TOKEN"
-                                    method="post">
+                                <form id="contactForm" action="/book" data-sb-form-api-token="API_TOKEN" method="post">
                                     <!-- Subject input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="subject" type="text" name="subject"
                                             placeholder="..." data-sb-validations="required,subject" required />
                                         <label for="subject">Subject</label>
                                     </div>
-                                    <div class="date&time" style="display: flex; flex-direction: row; justify-content: space-between;">
+                                    <div class="date&time"
+                                        style="display: flex; flex-direction: row; justify-content: space-between;">
                                         <!-- Date input-->
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="date" type="date" name="date"
@@ -394,6 +410,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="server.js"></script>
     <script src="/js/scripts.js"></script>
