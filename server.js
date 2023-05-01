@@ -140,6 +140,7 @@ app.post('/login', async (req, res) => {
     // Save login info and send first name
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student");
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
+    const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     
     // Send data to HTML
     fs.readFile('home.html', 'utf8', (err, data) => {
@@ -147,7 +148,7 @@ app.post('/login', async (req, res) => {
         console.log("Error");
       
       // Send variable to HTML
-      const html = data.replace('{name}', nameToSend);
+      const html = data.replace('{name}', nameToSend).replace('{full_name}', fullName);
       res.send(html);
     })
     // res.sendFile(__dirname + "/home.html", {name_to_send: name_to_send});
