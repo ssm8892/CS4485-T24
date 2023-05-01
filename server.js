@@ -1,3 +1,85 @@
+import express from 'express';
+import hbs from 'hbs';
+import mysql from 'mysql';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Set up view engine and views directory
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
+
+var con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'online_tutoring'
+});
+
+// Information of logged on user
+var firstName = "";
+var lastName = "";
+var email = "";
+var accountType = "";
+
+// Magic for POST requests
+app.use(express.urlencoded({extended:false}));
+
+app.use(express.static(__dirname));
+app.use(express.static(__dirname + "/assets"));
+app.use(express.static(__dirname + "/js"));
+
+// Get query pertaining to tutors
+const tutorsQuery = `select * from tutor;`;
+const dbTutors = await executeRows(tutorsQuery);
+
+// Store dictionaries of tutor info
+var displayTutors = [];
+
+for (let i=0; i<dbTutors.length; i++) {
+  // Dictionary of tutor info
+  const tutorDict = {
+    fullName: dbTutors[i]['first_name'] + " " + dbTutors[i]['last_name'],
+    email: dbTutors[i]['email'],
+    phone: dbTutors[i]['phone_no'],
+    bio: dbTutors[i]['bio'],
+    expretise: dbTutors[i]['subject_expertise']
+  }
+  displayTutors.push(tutorDict);
+}
+
+function executeRows(query) {
+  return new Promise((resolve, reject) => {
+    con.query(query, function(err, result) {
+      if (err) {
+        // Returning the error
+        reject(err);
+      }
+      resolve(result);
+    });
+  });
+}
+
+app.get('/', (req, res) => {
+  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+})
+
+app.listen(3000, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+app.get('/index', (req, res) => {
+  resetUser();
+  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+})
+
+/*
 import express from "express";
 import mysql from 'mysql';
 import path from 'path';
@@ -416,3 +498,4 @@ app.post('/book', async(req, res) => {
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
+*/
