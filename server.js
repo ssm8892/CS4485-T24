@@ -32,6 +32,27 @@ app.use(express.static(__dirname));
 app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/js"));
 
+// Get query pertaining to tutors
+const tutorsQuery = `select * from tutor;`;
+const dbTutors = await executeRows(tutorsQuery);
+
+// Store dictionaries of tutor info
+var displayTutors = [];
+
+for (let i=0; i<dbTutors.length; i++) {
+  // Dictionary of tutor info
+  const tutorDict = {
+    fullName: dbTutors[i]['first_name'] + " " + dbTutors[0]['last_name'],
+    email: dbTutors[i]['email'],
+    phone: dbTutors[i]['phone_no'],
+    bio: dbTutors[i]['bio'],
+    expretise: dbTutors[i]['subject_expertise']
+  }
+  displayTutors.push(tutorDict);
+}
+
+console.log(displayTutors);
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html");
 })
