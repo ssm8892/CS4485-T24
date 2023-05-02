@@ -323,7 +323,7 @@ app.post('/signup', async (req, res) => {
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', PASSWORD('${password}'), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
+    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
 
     // Execute query insertion
     con.query(new_query, (err, rows) => {
