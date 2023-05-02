@@ -21,7 +21,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'online_tutoring'
 });
 
@@ -190,7 +190,7 @@ app.post('/login', async (req, res) => {
   var password = req.body.user_password;
   
   // Get query pertaining to email and password
-  const query = `select * from student where email = '${email}' and student_password = PASSWORD('${password}');`;
+  const query = `select * from student where email = '${email}' and student_password = '${password}';`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
