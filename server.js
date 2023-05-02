@@ -153,7 +153,7 @@ app.post('/tutor-login', async (req, res) => {
   var password = req.body.tutor_password;
   
   // Get query pertaining to email and password
-  const query = `select * from tutor where email = '${email}' and tutor_password = PASSWORD('${password}');`;
+  const query = `select * from tutor where email = '${email}' and tutor_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
@@ -190,7 +190,7 @@ app.post('/login', async (req, res) => {
   var password = req.body.user_password;
   
   // Get query pertaining to email and password
-  const query = `select * from student where email = '${email}' and student_password = PASSWORD('${password}');`;
+  const query = `select * from student where email = '${email}' and student_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`;
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
@@ -255,11 +255,11 @@ app.post('/become-tutor', async(req, res) => {
   const passwordEval = checkValidPassword(password);
 
   // Get query to see if tutor exists
-  const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
+  const query = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`
   const dbResult = await executeRows(query);
 
   // Get query to see if student exists
-  const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = PASSWORD('${password}');`
+  const query2 = `select * from student where email = '${email}' or phone_no = '${phone}' or student_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`
   const dbResult2 = await executeRows(query2);
 
   // Tutor already exists
@@ -304,11 +304,11 @@ app.post('/signup', async (req, res) => {
   const passwordEval = checkValidPassword(password);
 
   // Get query to see if student exists
-  const query = `select * from student where email = '${email}' or student_password = PASSWORD('${password}') or phone_no = '${phone}';`;
+  const query = `select * from student where email = '${email}' or student_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))) or phone_no = '${phone}';`;
   const dbResult = await executeRows(query);
 
   // Get query to see if tutor exists
-  const query2 = `select * from tutor where email = '${email}' or phcone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
+  const query2 = `select * from tutor where email = '${email}' or phcone_no = '${phone}' or tutor_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`
   const dbResult2 = await executeRows(query2);
 
   // Student already exists
