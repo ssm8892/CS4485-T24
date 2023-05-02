@@ -137,3 +137,24 @@ checkList2.getElementsByClassName('anchor2')[0].onclick = function(evt) {
   else
     checkList2.classList.add('visible');
 }
+
+function handleData()
+{
+    var form_data = new FormData(document.querySelector("#tutor-signup-form"));
+    
+    if(!form_data.has("days[]"))
+    {
+        document.getElementById("chk_option_error_days").style.visibility = "visible";
+        return false;
+    }else if(!form_data.has("shifts[]")){
+        document.getElementById("chk_option_error_shifts").style.visibility = "visible";
+        return false;
+    }
+    else
+    {
+        document.getElementById("chk_option_error_days").style.visibility = "hidden";
+        document.getElementById("chk_option_error_shifts").style.visibility = "hidden";
+      return true;
+    }
+    
+}
