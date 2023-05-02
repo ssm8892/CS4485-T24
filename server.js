@@ -308,7 +308,7 @@ app.post('/signup', async (req, res) => {
   const dbResult = await executeRows(query);
 
   // Get query to see if tutor exists
-  const query2 = `select * from tutor where email = '${email}' or phone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
+  const query2 = `select * from tutor where email = '${email}' or phcone_no = '${phone}' or tutor_password = PASSWORD('${password}');`
   const dbResult2 = await executeRows(query2);
 
   // Student already exists
