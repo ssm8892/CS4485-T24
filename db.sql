@@ -28,7 +28,7 @@ CREATE TABLE tutor (
 	bio varchar(250) NOT NULL,
 	subject_expertise varchar(100) NOT NULL, 
     days_available varchar(100) NOT NULL,
-	hours_avaliable varchar(100) NOT NULL,
+	hours_available varchar(100) NOT NULL,
 	total_tutoring_hours int NOT NULL,
 	PRIMARY KEY (tutor_id)
 );
@@ -67,7 +67,7 @@ VALUES
     ('2783920483', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('iLoveCupcakes'))))), 'Linda', 'Moore', 'linda.moore@utdallas.edu', '1245612232', LOAD_FILE('E:/Images/LindaMore.jpg'), 52);
 
 INSERT INTO tutor
-	(tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours)
+	(tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_available, total_tutoring_hours)
 VALUES
 	('5802759208', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('ChemGod'))))), 'Helen', 'Clyde', 'helen.cylde@yahoo.com', '4589728976', LOAD_FILE('E:/Images/helen.jpg'), 'Hello, my name is Helen Clyde and I am a senior at UTD. I cannot wait to teach you guys!', 'General Chemistry, Organic Chemistry', 'Monday, Tuesday, Wednesday, Thursday', '2:00 - 4:00, 4:00 - 6:00', 45),
     ('0123456789', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('HelloWorld123!'))))), 'Josh', 'Burrim', 'JoshBurrim@utdallas.edu', '1234567890', LOAD_FILE('E:/Images/Josh.jpg'), 'Nice to meet yall, I am super new to this!', 'Intro to CompSCI, Data Structures', 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday', '10:00 - 12:00, 12:00 - 2:00, 2:00 - 4:00, 4:00 - 6:00, 6:00 - 8:00, 8:00 - 10:00', 40),
