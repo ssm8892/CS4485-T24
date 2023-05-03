@@ -54,7 +54,9 @@ for (let i=0; i<dbTutors.length; i++) {
     phone: dbTutors[i]['phone_no'],
     bio: dbTutors[i]['bio'],
     expertise: dbTutors[i]['subject_expertise'],
-    index: i
+    days: dbTutors[i]['days_available'].split(', '),
+    times: dbTutors[i]['hours_available'].split(', '),
+    index: i,
   }
   displayTutors.push(tutorDict);
 }
@@ -71,6 +73,8 @@ function updateTutors(dbUpdate) {
       phone: dbUpdate[i]['phone_no'],
       bio: dbUpdate[i]['bio'],
       expertise: dbUpdate[i]['subject_expertise'],
+      days: dbUpdate[i]['days_available'].split(', '),
+      times: dbUpdate[i]['hours_available'].split(', '),
       index: i
     }
     displayTutors.push(tutorDict);
