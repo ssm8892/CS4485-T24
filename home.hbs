@@ -55,11 +55,11 @@
             <div class="dashboard-right bg-white text-secondary" id="dash-right"
                 style="width: 100%; height: inherit; border-radius: 1rem; font-weight: bolder;">
                 <div class="dash-menu" style="display: flex; flex-direction: row; position: fixed-top;">
-                    <div class="dash-menu-left"
+                    <div class="dash-menu-left flex-row"
                         style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle;">
                         FILTER:
-                        <btn class="filter-all-btn" style="margin: 1rem;">ALL (6)</btn>
-                        <btn class="filter-favs-btn">FAVORITES (0)</btn>
+                        <btn id="ALL-BUTTON" onclick="displayAll()">ALL (6)</btn>
+                        <btn id="FAV-BUTTON" onclick="displayFavs()">FAVORITES (0)</btn>
                     </div>
                     <div class="dash-menu-right"
                         style="display: flex; flex-direction: row; width: 50%; text-align: right; margin: 0.5rem;">
@@ -99,6 +99,69 @@
                         </div>
                     </div>
                     {{/each}}
+                </div>
+                <div class="dash-content dash-tutor" id="dash-content-tutor-favs"
+                    style="display: none; flex-direction: row;">
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal1">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div
+                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal1">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div
+                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal1">
+                        <div class="container d-flex align-items-center flex-row"
+                            style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
+                                style="width: 5rem;" />
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
+                                <div
+                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

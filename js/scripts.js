@@ -122,6 +122,20 @@ classButtonForm.onclick = function() {
 };
 
 
+const allButton = document.getElementById("ALL-BUTTON");
+const favButton = document.getElementById("FAV-BUTTON");
+const tutorDash = document.getElementById("dash-content-tutor");
+const favtutors = document.getElementById("dash-content-tutor-favs");
+allButton.onclick = function() {
+    tutorDash.style.display = "flex";
+    favtutors.style.display = "none";
+};
+favButton.onclick = function(){
+    tutorDash.style.display = "none";
+    favtutors.style.display = "flex";
+};
+
+
 var checkList = document.getElementById('list1');
 checkList.getElementsByClassName('anchor1')[0].onclick = function(evt) {
   if (checkList.classList.contains('visible'))
@@ -138,6 +152,7 @@ checkList2.getElementsByClassName('anchor2')[0].onclick = function(evt) {
     checkList2.classList.add('visible');
 }
 
+/*
 function handleData()
 {
     var form_data = new FormData(document.querySelector("#tutor-signup-form"));
@@ -158,3 +173,4 @@ function handleData()
     }
     
 }
+*/
