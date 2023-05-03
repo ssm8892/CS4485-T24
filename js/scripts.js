@@ -121,7 +121,7 @@ classButtonForm.onclick = function() {
     classButtonForm.classList.add("text-primary");
 };
 
-
+/*
 const allButton = document.getElementById("ALL-BUTTON");
 const favButton = document.getElementById("FAV-BUTTON");
 const tutorDash = document.getElementById("dash-content-tutor");
@@ -134,6 +134,7 @@ favButton.onclick = function(){
     tutorDash.style.display = "none";
     favtutors.style.display = "flex";
 };
+*/
 
 
 var checkList = document.getElementById('list1');
@@ -152,7 +153,7 @@ checkList2.getElementsByClassName('anchor2')[0].onclick = function(evt) {
     checkList2.classList.add('visible');
 }
 
-/*
+
 function handleData()
 {
     var form_data = new FormData(document.querySelector("#tutor-signup-form"));
@@ -173,4 +174,4 @@ function handleData()
     }
     
 }
-*/
+
