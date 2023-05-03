@@ -59,6 +59,24 @@ for (let i=0; i<dbTutors.length; i++) {
   displayTutors.push(tutorDict);
 }
 
+function updateTutors(dbUpdate) {
+  // Store dictionaries of tutor info
+  displayTutors = []; 
+
+  for (let i=0; i<dbUpdate.length; i++) {
+    // Dictionary of tutor info
+    const tutorDict = {
+      fullName: dbUpdate[i]['first_name'] + " " + dbUpdate[i]['last_name'],
+      email: dbUpdate[i]['email'],
+      phone: dbUpdate[i]['phone_no'],
+      bio: dbUpdate[i]['bio'],
+      expertise: dbUpdate[i]['subject_expertise'],
+      index: i
+    }
+    displayTutors.push(tutorDict);
+  }
+}
+
 function executeRows(query) {
   return new Promise((resolve, reject) => {
     con.query(query, function(err, result) {
@@ -275,11 +293,16 @@ app.post('/become-tutor', async(req, res) => {
     // Get random ID and insert row into table
     var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
     const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_avaliable, total_tutoring_hours) values ('${random_id}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''),"${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
+
     // Execute query insertion
     con.query(new_query, (err, rows) => {
       if(err) 
         console.log("Error");
     });
+    // Update tutors
+    const newDbTutors = await executeRows(`select * from tutor;`);
+    updateTutors(newDbTutors);
+
     res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Tutor successfully registered!"});
   }
 });
