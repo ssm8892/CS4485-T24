@@ -12714,6 +12714,10 @@ html {
   height: fit-content;
 }
 
+.filter-menu {
+  list-style: none;
+}
+
 .calendar-left {
   display: flex;
   justify-content: center;
