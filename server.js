@@ -313,7 +313,6 @@ app.post('/become-tutor', async(req, res) => {
   }
 });
 
-
 app.get('/signup', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
