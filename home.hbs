@@ -87,8 +87,19 @@
                                 style="width: 5rem;" />
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}</h1>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}</h2>
+                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
+                                    {{#if this.favorite}}
+                                    <span id='clickableAwesomeFont'><i class="fa-solid fa-star"
+                                            style="color: #e87500;"></i></span>
+                                    {{else}}
+                                    <span id='clickableAwesomeFont'><i class="fa-regular fa-star"
+                                            style="color: #e87500;"></i></span>
+                                    {{/if}}
+                                </h1>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
+                                </h2>
+
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
                                 <div
                                     style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">

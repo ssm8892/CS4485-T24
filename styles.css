@@ -12317,6 +12317,10 @@ html {
   gap: 10px;
 }
 
+#clickableAwesomeFont {
+  cursor: pointer
+}
+
 .tutor-card {
   height: 40%;
   width: 46.25%;

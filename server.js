@@ -58,6 +58,7 @@ for (let i=0; i<dbTutors.length; i++) {
     times: dbTutors[i]['hours_available'].split(','),
     courses: dbTutors[i]['subject_expertise'].split(', '),
     index: i,
+    favorite: false
   }
   displayTutors.push(tutorDict);
 }
@@ -77,7 +78,8 @@ function updateTutors(dbUpdate) {
       days: dbUpdate[i]['days_available'].split(','),
       times: dbUpdate[i]['hours_available'].split(','),
       courses: dbUpdate[i]['subject_expertise'].split(', '),
-      index: i
+      index: i,
+      favorite: false
     }
     displayTutors.push(tutorDict);
   }
