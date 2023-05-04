@@ -12737,7 +12737,6 @@ html {
 
 .calendar__number {
   min-width: 14.28%;
-  margin-top: 10%;
 }
 
 .calendar__day {
@@ -12784,6 +12783,12 @@ html {
   box-sizing: border-box;
 }
 
+.week_container {
+  margin-top: 6%;
+  height: fit-content;
+  padding-top: 5%;
+}
+
 .calendar__day {
   display: flex;
   align-items: center;
@@ -12797,14 +12802,19 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 25px;
   color: white;
+  text-align: center;
 }
 
 .calendar__number--current {
-  color: rgb(18, 71, 52);
+  color: rgb(232, 117, 0);
+  min-width: 14.28%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   background: white;
   border-radius: 50%;
+  text-align: center;
+
 }
 
 .course-name {

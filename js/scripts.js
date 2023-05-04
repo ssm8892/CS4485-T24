@@ -89,7 +89,12 @@ function load_calendar() {
         weekDiv.style.display = "flex";
         weekDiv.style.flexDirection = "row";
         while (i < 7) {
-            if (firstDay > 0) {
+            if (j == date.getDate()){
+                var string = "<div class='calendar__number--current'>" + j + "</div>";
+                weekDiv.innerHTML += string;
+                numDays--;
+                j++;
+            } else if (firstDay > 0) {
                 var string = "<div class='calendar__number'></div>";
                 weekDiv.innerHTML += string;
                 firstDay--;
