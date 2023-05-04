@@ -12314,6 +12314,7 @@ html {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .tutor-card {
@@ -12734,6 +12735,16 @@ html {
   flex-wrap: wrap;
 }
 
+.calendar__number {
+  min-width: 14.28%;
+  margin-top: 10%;
+}
+
+.calendar__day {
+  min-width: 14.28%;
+  margin-top: 10%;
+}
+
 @media (min-width: 992px) {
   .home-calendar {
     flex-direction: row;
@@ -12758,7 +12769,6 @@ html {
 
 .calendar__picture {
   position: relative;
-  height: 200px;
   padding: 20px;
   color: #fff;
   text-shadow: 0 2px 2px rgba(#000, 0.2);
