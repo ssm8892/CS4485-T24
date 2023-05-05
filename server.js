@@ -543,7 +543,6 @@ app.post('/favorites', async(req, res) => {
 // Book appointment with tutor (still working)
 app.post('/book', async(req, res) => {
   const tutor = req.body.myH2;
-  const name = req.body.myH3;
 
   const subject = req.body.apptSub;
   const date = req.body.apptDays;
@@ -551,7 +550,6 @@ app.post('/book', async(req, res) => {
   const email = req.body.email;
 
   console.log(tutor);
-  console.log(name);
 
   console.log(subject);
   console.log(date);

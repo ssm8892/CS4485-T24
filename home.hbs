@@ -466,9 +466,8 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <form id="contactForm" action="/book" data-sb-form-api-token="API_TOKEN" method="post">
-                                    <input type="hidden" value="{{this.fullName}}" name="myH2">
-
-                                    <input type="hidden" value="{{fullName}}" name="myH3">
+                                    <input type="hidden" value="{{this.fullName}}" name="myH2"
+                                    value="{{ myH2Value }}">
 
                                     <!-- Subject input-->
                                     <div id="apptSubList" class="dropdown-check-list" style="width:100%" tabindex="100">
