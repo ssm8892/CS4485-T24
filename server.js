@@ -63,8 +63,8 @@ for (let i=0; i<dbTutors.length; i++) {
   var prePicture = "assets/avataaars.svg";
 
   // Update image
-  if (dbUpdate[i]['profile_pic'] != "")
-    prePicture = dbUpdate[i]['profile_pic']
+  if (dbTutors[i]['profile_pic'] != "")
+    prePicture = dbTutors[i]['profile_pic']
 
   // Dictionary of tutor info
   const tutorDict = {
@@ -76,9 +76,9 @@ for (let i=0; i<dbTutors.length; i++) {
     days: dbTutors[i]['days_available'].split(','),
     times: dbTutors[i]['hours_available'].split(','),
     courses: dbTutors[i]['subject_expertise'].split(', '),
-    favorite: false,
     image: prePicture,
-    index: i
+    index: i,
+    favorite: false
   }
   displayTutors.push(tutorDict);
 }
@@ -88,6 +88,13 @@ function updateTutors(dbUpdate) {
   displayTutors = []; 
 
   for (let i=0; i<dbUpdate.length; i++) {
+    // Make default
+    var picture = "assets/avataaars.svg";
+
+    // Update image
+    if (dbUpdate[i]['profile_pic'] != "")
+      picture = dbUpdate[i]['profile_pic']
+
     // Dictionary of tutor info
     const tutorDict = {
       fullName: dbUpdate[i]['first_name'] + " " + dbUpdate[i]['last_name'],
@@ -99,8 +106,8 @@ function updateTutors(dbUpdate) {
       times: dbUpdate[i]['hours_available'].split(','),
       courses: dbUpdate[i]['subject_expertise'].split(', '),
       favorite: false,
-      image: dbUpdate[i]['profile_pic'],
-      index: dbUpdate[i]['profile_pic'],
+      image: picture,
+      index: i,
       favorite: false
     }
     global.displayTutors.push(tutorDict);
