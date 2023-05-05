@@ -179,26 +179,26 @@ function checkValidPassword(password) {
 }
 
 app.get('/', (req, res) => {
-  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+  res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 app.get('/index', (req, res) => {
   resetUser();
-  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+  res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 app.get('/home', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType != "")
-    res.render(__dirname + "\\home.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors });
   else
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 app.get('/tutor-login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
     res.render(__dirname + "\\tutor.html");
   else
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 // Login as tutor 
@@ -235,14 +235,14 @@ app.post('/tutor-login', async (req, res) => {
     res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
   // Reload index 
   else 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-  res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: global.displayTutors });
   else
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 // Login as student
@@ -272,18 +272,18 @@ app.post('/login', async (req, res) => {
       profilePic = dbResult[0]['profile_pic']
 
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: profilePic, tutors: displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: profilePic, tutors: global.displayTutors });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
     res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
   // Reload index 
   else 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
 app.get('/become-tutor', (req, res) => {
-  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+  res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 // Become a tutor
@@ -317,11 +317,11 @@ app.post('/become-tutor', async(req, res) => {
 
   // Tutor already exists
   if (dbResult.length > 0 || dbResult2.length > 0) 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Email, phone, and/or password already in use!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!"});
   
   // Invalid password
   else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
+    res.render(__dirname + "\\index.hbs", { tutors:global. displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
   
   // New tutor
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
@@ -338,12 +338,12 @@ app.post('/become-tutor', async(req, res) => {
     const newDbTutors = await executeRows(`select * from tutor;`);
     updateTutors(newDbTutors);
 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Tutor successfully registered!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Tutor successfully registered!"});
   }
 });
 
 app.get('/signup', (req, res) => {
-  res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
+  res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 })
 
 // Sign up as a user
@@ -368,11 +368,11 @@ app.post('/signup', async (req, res) => {
 
   // Student already exists
   if (dbResult.length > 0 || dbResult2 > 0) 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Email, phone, and/or password already in use!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!"});
   
   // Password evaluation fails
   else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) 
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
   
   // New student
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
@@ -385,7 +385,7 @@ app.post('/signup', async (req, res) => {
       if(err) 
         console.log("Error!");
     });
-    res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Student successfully registered!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Student successfully registered!"});
   }
 });
 
@@ -421,7 +421,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors);
 
-  res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: imgToSend });
+  res.render(__dirname + "\\tutor.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
 })
 
 app.post('/upload-pic', async(req, res) => {
@@ -451,16 +451,18 @@ app.post('/upload-pic', async(req, res) => {
       console.log("Error");
   });
 
-  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
+  res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
 })
 
-
-
-/*
-app.get('/index-search', (req, res) => {
-  
+app.post('/index-search', (req, res) => {
+  // Input of searchbar
+  const search = req.body.search;
 });
-*/
+
+app.post('/home-search', (req, res) => {
+  // Input of searchbar
+  const search = req.body.search;
+});
 
 /*
 app.get('/book', (req, res) => {
