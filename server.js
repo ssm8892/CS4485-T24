@@ -526,7 +526,6 @@ app.post('/home-search', async(req, res) => {
   }
 });
 
-/*
 app.post('/favorites', async(req, res) => {
   // New tutor to add to favorites list
   const val = req.body.myH1;
@@ -540,18 +539,24 @@ app.post('/favorites', async(req, res) => {
   
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
 });
-*/
 
 // Book appointment with tutor (still working)
 app.post('/book', async(req, res) => {
-  const subject = req.body.subject;
-  const date = req.body.date;
-  const time = req.body.time;
+  // Hidden variable
+  const tutor = req.body.myH2;
+
+  // Form input variables
+  const subject = req.body.apptSub;
+  const date = req.body.apptDays;
+  const time = req.body.apptTime;
   const email = req.body.email;
 
+  // Booking queries
+  // const newBooking = `insert into tutor
   
   // res.render('home');
-  res.sendFile(__dirname + "/home.html");
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+
 })
 
 app.listen(3000, () => {
