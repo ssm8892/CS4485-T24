@@ -349,7 +349,15 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">{{this.fullName}}</h2>
+                                <h2 class="portfolio-modal-title text-secondary mb-0">{{this.fullName}}
+                                    {{#if this.favorite}}
+                                    <span id='clickableAwesomeFont'><i class="fa-solid fa-star"
+                                            style="color: #e87500;"></i></span>
+                                    {{else}}
+                                    <span id='clickableAwesomeFont'><i class="fa-regular fa-star"
+                                            style="color: #e87500;"></i></span>
+                                    {{/if}}
+                                </h2>
                                 <!-- Icon Divider-->
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
@@ -360,66 +368,51 @@
                                     <img class="masthead-avatar mb-5" src="assets/avataaars.svg" alt="..."
                                         style="width: 10rem;" />
                                     <!-- Masthead Heading-->
-                                    <h4 class="text-uppercase mb-0">{{this.expertise}}</h1>
-                                        <!-- Icon Divider-->
-                                        <!-- Masthead Subheading-->
+                                    <h4 class="text-uppercase mb-0">{{this.expertise}}</h4>
+                                    <!-- Icon Divider-->
+                                    <!-- Masthead Subheading-->
 
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
-                                        </h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
-                                            Days</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            {{#each this.days}}
-                                            <div class="text-secondary text-uppercase course-name-green">{{this}}</div>
-                                            {{/each}}
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                    </h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
+                                        Days</p>
+                                    <div
+                                        style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        {{#each this.days}}
+                                        <div class="text-secondary text-uppercase course-name-green">{{this}}</div>
+                                        {{/each}}
+                                    </div>
+
+
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                    </h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
+                                        Classes</p>
+                                    <div
+                                        style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        {{#each this.courses}}
+                                        <div class="text-secondary text-uppercase course-name-green">{{this}}
                                         </div>
+                                        {{/each}}
+                                    </div>
 
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                    </h2>
+                                    <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact
+                                    </p>
+                                    <div
+                                        style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                                        <div class="text-secondary course-name-green">{{this.email}}</div>
+                                        <div class="text-secondary course-name-green">{{this.phone}}</div>
+                                    </div>
 
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
-                                        </h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Available
-                                            Classes</p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            {{#each this.courses}}
-                                            <div class="text-secondary text-uppercase course-name-green">{{this}}
-                                            </div>
-                                            {{/each}}
-                                        </div>
+                                    <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
+                                    </h2>
 
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
-                                        </h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Contact
-                                        </p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="text-secondary course-name-green">{{this.email}}</div>
-                                            <div class="text-secondary course-name-green">{{this.phone}}</div>
-                                        </div>
-
-                                        <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;">
-                                        </h2>
-                                        <p class="masthead-subheading font-weight-light mb-0 text-primary">Rating
-                                        </p>
-                                        <div
-                                            style="display: flex; flex-direction: row; font-size: medium; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                            <div class="divider-custom-icon"><i class="fas fa-star blackiconcolor"></i>
-                                            </div>
-                                        </div>
-
-                                        <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#bookAppointmentModal{{this.index}}">
-                                            BOOK APPOINTMENT
-                                        </button>
+                                    <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
+                                        data-bs-target="#bookAppointmentModal{{this.index}}">
+                                        BOOK APPOINTMENT
+                                    </button>
                                 </div>
                             </div>
                         </div>
