@@ -383,7 +383,13 @@ app.post('/upload-tutor-pic', async(req, res) => {
   // Update image name
   const new_query = `update tutor set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
 
-  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
+  // Execute query insertion
+  con.query(new_query, (err, rows) => {
+    if(err) 
+      console.log("Error");
+  });
+  
+  res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: imgToSend });
 })
 
 app.post('/upload-pic', async(req, res) => {
