@@ -91,6 +91,8 @@ function updateTutors(dbUpdate) {
       days: dbUpdate[i]['days_available'].split(','),
       times: dbUpdate[i]['hours_available'].split(','),
       courses: dbUpdate[i]['subject_expertise'].split(', '),
+      favorite: false,
+      image: "",
       index: i,
       favorite: false
     }
