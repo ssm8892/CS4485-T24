@@ -215,10 +215,12 @@
                                     <div class="signin-left" id="dash-left"
                                         style="display: flex; flex-direction: row; width: 100%; justify-content: space-around;">
                                         <div id="form-label-tutor" class="label-tutors bg-white text-primary"
-                                            style="border-radius: 1rem; width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">
+                                            style="border-radius: 1rem; width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;"
+                                            onclick="displayTutorForm();">
                                             TUTORS</div>
                                         <div id="form-label-class" class="label-students bg-primary text-white"
-                                            style="width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;">
+                                            style="width: 50%; text-align: center; padding: 1rem; padding-bottom: 2rem;"
+                                            onclick="displayClassForm();">
                                             STUDENT</div>
                                     </div>
                                     <div class="signin-right bg-white text-secondary justify-content-center"
@@ -440,7 +442,7 @@
                                                 Please select at least one option.
                                             </div>
                                             <span class="anchor anchor1" id="anchor1"
-                                                style="border-radius: 0.5rem; width:100%">Select Days</span>
+                                                style="border-radius: 0.5rem; width:100%" onclick="displayList1();">Select Days</span>
                                             <ul class="items" id="list1-list"
                                                 style="text-align: left; border-radius:0.5rem;">
                                                 <li><input type="checkbox" name="days[]" value="Sunday" />Sunday </li>
@@ -460,7 +462,7 @@
                                                 Please select at least one option.
                                             </div>
                                             <span class="anchor anchor2" id="anchor2"
-                                                style="border-radius: 0.5rem; width:100%">Select Times</span>
+                                                style="border-radius: 0.5rem; width:100%" onclick="displayList2();">Select Times</span>
                                             <ul class="items" id="list2-list"
                                                 style="text-align:left; border-radius:0.5rem;">
                                                 <li><input type="checkbox" name="shifts[]" value="10:00 - 12:00" />10:00

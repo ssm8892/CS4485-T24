@@ -54,9 +54,9 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 function getDaysInMonth(month, year) {
-    console.log(month);
+    //console.log(month);
     const tempDate = new Date(year, month, 0);
-    console.log(tempDate);
+    //console.log(tempDate);
     return tempDate.getDate();
 };
 
@@ -66,14 +66,14 @@ function load_calendar() {
     let months = ['Janurary', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const calendar_div = document.getElementById("calendar_data_container");
     const date = new Date();
-    console.log(new Date());
+    //console.log(new Date());
     var first = new Date(date.getFullYear(), date.getMonth(), 1);
     var firstDay = first.getDay();
-    console.log(firstDay);
+    //console.log(firstDay);
     var numDays = getDaysInMonth(date.getMonth(), date.getFullYear());
-    console.log(numDays);
+    //console.log(numDays);
     var numWeeks = Math.ceil(numDays / 7);
-    console.log(numWeeks);
+    //console.log(numWeeks);
     let j = 1;
     const calendar_title = document.getElementById("calendar__picture");
     let title_string1 = "<h2>" + date.getDate() + ", " + days[date.getDay()] + "</h2>";
@@ -87,7 +87,7 @@ function load_calendar() {
         weekDiv.style.display = "flex";
         weekDiv.style.flexDirection = "row";
         while (i < 7) {
-            if (j == date.getDate()){
+            if (j == date.getDate()) {
                 var string = "<div class='calendar__number--current'>" + j + "</div>";
                 weekDiv.innerHTML += string;
                 numDays--;
@@ -102,24 +102,23 @@ function load_calendar() {
                 numDays--;
                 j++;
             }
-            console.log(firstDay);
+            //console.log(firstDay);
             i++;
         }
-        console.log(weekDiv.innerHTML);
+        //console.log(weekDiv.innerHTML);
         numWeeks--;
         calendar_div.appendChild(weekDiv);
     }
-    console.log(calendar_div.innerHTML);
-}
+    //console.log(calendar_div.innerHTML);
+};
 
 
 
-
-const tutorButtonForm = document.getElementById("form-label-tutor");
-const classButtonForm = document.getElementById("form-label-class");
-const tutorDivForm = document.getElementById("form-content-tutor");
-const classDivForm = document.getElementById("form-content-class");
-tutorButtonForm.onclick = function () {
+function displayTutorForm() {
+    const tutorButtonForm = document.getElementById("form-label-tutor");
+    const classButtonForm = document.getElementById("form-label-class");
+    const tutorDivForm = document.getElementById("form-content-tutor");
+    const classDivForm = document.getElementById("form-content-class");
     tutorDivForm.style.display = "flex";
     classDivForm.style.display = "none";
     classButtonForm.classList.remove("bg-white");
@@ -134,7 +133,11 @@ tutorButtonForm.onclick = function () {
     tutorButtonForm.classList.add("text-primary");
 };
 
-classButtonForm.onclick = function () {
+function displayClassForm() {
+    const tutorButtonForm = document.getElementById("form-label-tutor");
+    const classButtonForm = document.getElementById("form-label-class");
+    const tutorDivForm = document.getElementById("form-content-tutor");
+    const classDivForm = document.getElementById("form-content-class");
     tutorDivForm.style.display = "none";
     classDivForm.style.display = "flex";
     tutorButtonForm.classList.remove("bg-white");
@@ -172,8 +175,8 @@ function displayFavs() {
     allbutton.classList.remove("bg-secondary", "text-white");
 };
 
-var checkList = document.getElementById('list1');
-checkList.getElementsByClassName('anchor1')[0].onclick = function (evt) {
+function displayList1() {
+    var checkList = document.getElementById('list1');
     console.log("function is being called");
     if (checkList.classList.contains('visible'))
         checkList.classList.remove('visible');
@@ -181,14 +184,29 @@ checkList.getElementsByClassName('anchor1')[0].onclick = function (evt) {
         checkList.classList.add('visible');
 }
 
-var checkList2 = document.getElementById('list2');
-checkList2.getElementsByClassName('anchor2')[0].onclick = function (evt) {
+function displayList2() {
+    var checkList2 = document.getElementById('list2');
     if (checkList2.classList.contains('visible'))
         checkList2.classList.remove('visible');
     else
         checkList2.classList.add('visible');
 }
 
+function displayList3() {
+    var checkList3 = document.getElementById('list3');
+    if (checkList3.classList.contains('visible'))
+        checkList3.classList.remove('visible');
+    else
+        checkList3.classList.add('visible');
+}
+
+function onlyOneDay(checkbox) {
+    var checkboxes = document.getElementsByClassName("apptDays");
+    console.log(checkboxes);
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) item.checked = false
+    })
+}
 
 function handleData() {
     var form_data = new FormData(document.querySelector("#tutor-signup-form"));
