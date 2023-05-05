@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import { totalmem } from 'os';
 import multer from 'multer';
 import cheerio from 'cheerio';
+import { add, format } from 'date-fns';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -34,7 +35,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'online_tutoring'
 });
 
@@ -553,9 +554,31 @@ app.post('/book', async(req, res) => {
   const time = req.body.apptTime;
   const email = req.body.email;
 
+  // Create an array of day of week names
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayOfWeekIndex = daysOfWeek.indexOf(date);
+
+  // Get the current date and add one day
+  const today = new Date();
+  const tomorrow = add(today, { days: 1 });
+
+  // Loop until next day is found
+  while (tomorrow.getDay() !== dayOfWeekIndex) { 
+    tomorrow = add(tomorrow, { days: 1 });
+  }
+
+  // Format the resulting date as a written date
+  const writtenDate = format(tomorrow, 'EEEE, MMMM d, yyyy');
+  
+  console.log(writtenDate);
+  console.log(tutor);
+  console.log(global.fullName);
+  console.log(subject)
+
   // Booking queries
-  // const newBooking = `insert into tutor
-  //const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
+  var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
+  // const newBooking = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${}', ${2}, '${tutor}', '${global.fullName}', ${subject});`
+  // const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
   
   // res.render('home');
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
