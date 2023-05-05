@@ -90,13 +90,15 @@
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
                                 <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
+                                    <!--
                                     {{#if this.favorite}}
-                                    <span id='clickableAwesomeFont'><i class="fa-solid fa-star"
+                                    <span href='/favorites' id='clickableAwesomeFont'><i class="fa-solid fa-star"
                                             style="color: #e87500;"></i></span>
                                     {{else}}
-                                    <span id='clickableAwesomeFont'><i class="fa-regular fa-star"
+                                    <span href='/favorites' id='clickableAwesomeFont'><i class="fa-regular fa-star"
                                             style="color: #e87500;"></i></span>
                                     {{/if}}
+                                    -->
                                 </h1>
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
                                 <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
@@ -352,6 +354,7 @@
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
                                 <h2 class="portfolio-modal-title text-secondary mb-0">{{this.fullName}}
+                                    <!--
                                     {{#if this.favorite}}
                                     <span id='clickableAwesomeFont'><i class="fa-solid fa-star"
                                             style="color: #e87500;"></i></span>
@@ -359,6 +362,7 @@
                                     <span id='clickableAwesomeFont'><i class="fa-regular fa-star"
                                             style="color: #e87500;"></i></span>
                                     {{/if}}
+                                    -->
                                 </h2>
                                 <!-- Icon Divider-->
                                 <div class="divider-custom">
@@ -414,6 +418,11 @@
                                     <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
                                         data-bs-target="#bookAppointmentModal{{this.index}}">
                                         BOOK APPOINTMENT
+                                    </button>
+
+                                    <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
+                                        action="/favorites" onclick="return confirm('Add {{this.fullName}} to Favorites?')">
+                                        ADD TO FAVORITES
                                     </button>
                                 </div>
                             </div>
@@ -518,8 +527,6 @@
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <h4 class="text-primary mb-0">MAY 25TH | 2:00 - 4:00 PM</h4>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-
-
 
                                 </div>
                             </div>

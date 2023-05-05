@@ -48,6 +48,7 @@ global.profilePic = "";
 global.nameToSend = "";
 global.fullName = "";
 global.totalTutoringHours = 0;
+global.favorites = [];
 
 // Magic for POST requests
 app.use(express.urlencoded({extended:true}));
@@ -87,7 +88,6 @@ for (let i=0; i<dbTutors.length; i++) {
     courses: dbTutors[i]['subject_expertise'].split(', '),
     image: prePicture,
     index: i,
-    favorite: false
   }
   displayTutors.push(tutorDict);
 }
@@ -121,8 +121,7 @@ function updateTutors(dbUpdate, specific) {
       courses: dbUpdate[i]['subject_expertise'].split(', '),
       favorite: false,
       image: picture,
-      index: i,
-      favorite: false
+      index: i
     }
     // Add to dict of all tutors
     if (specific == "All")
@@ -154,16 +153,16 @@ function resetUser() {
   global.lastName = "";
   global.email = "";
   global.accountType = "";
-  global.profilePic = "";
 
   global.profilePic = "";
   global.nameToSend = "";
   global.fullName = "";
   global.totalTutoringHours = 0;
+  global.favorites = []
 }
 
 // Set current user
-function setUser(firstName, lastName, email, accountType, profilePic, nameToSend, fullName, totalTutoringHours) {
+function setUser(firstName, lastName, email, accountType, profilePic, nameToSend, fullName, totalTutoringHours, favorites) {
   // Default image
   var profile = "assets/avataaars.svg"
 
@@ -182,7 +181,7 @@ function setUser(firstName, lastName, email, accountType, profilePic, nameToSend
   global.nameToSend = nameToSend;
   global.fullName = fullName;
   global.totalTutoringHours = totalTutoringHours;
-
+  global.favorites = favorites;
 }
 
 function checkValidPassword(password) {
@@ -259,7 +258,7 @@ app.post('/tutor-login', async (req, res) => {
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
     // Send info to tutor login
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, []);
 
     // Send data to HTML
     res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours});
@@ -290,12 +289,13 @@ app.post('/login', async (req, res) => {
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
-    // Get first name to send, full name, and total tutoring hours
+    // Get first name to send, full name, total tutoring hours, and favorite tutors
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
+    const favorites = dbResult[0]['favorites'].split(',');
 
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, favorites);
 
     // Send data to HTML
     res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
@@ -525,10 +525,11 @@ app.post('/home-search', async (req, res) => {
   }
 });
 
-/*
-app.get('/book', (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-})
+app.get('/favorites', async(req, res) => {
+  // href="/index" onclick="return confirm('Sign Out?')
+  const h1Value = req.query.h1Value;
+  console.log(h1Value);
+});
 
 // Book appointment with tutor (still working)
 app.post('/book', async(req, res) => {
@@ -536,10 +537,11 @@ app.post('/book', async(req, res) => {
   const date = req.body.date;
   const time = req.body.time;
   const email = req.body.email;
+
+  
   // res.render('home');
   res.sendFile(__dirname + "/home.html");
 })
-*/
 
 app.listen(3000, () => {
   console.log(`Server running on port ${PORT}`);
