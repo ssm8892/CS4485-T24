@@ -34,7 +34,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'online_tutoring'
 });
 
@@ -555,6 +555,7 @@ app.post('/book', async(req, res) => {
 
   // Booking queries
   // const newBooking = `insert into tutor
+  //const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
   
   // res.render('home');
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
