@@ -155,6 +155,10 @@ function displayAll() {
     const favtutors = document.getElementById("dash-content-tutor-favs");
     tutorDiv.style.display = "flex";
     favtutors.style.display = "none";
+    const allbutton = document.getElementById("ALL-BUTTON");
+    const favbutton = document.getElementById("FAV-BUTTON");
+    allbutton.classList.add("bg-secondary", "text-white");
+    favbutton.classList.remove("bg-secondary", "text-white");
 };
 function displayFavs() {
     console.log("Display Favs is being called.");
@@ -162,6 +166,10 @@ function displayFavs() {
     const favtutors = document.getElementById("dash-content-tutor-favs");
     favtutors.style.display = "flex";
     tutorDiv.style.display = "none";
+    const allbutton = document.getElementById("ALL-BUTTON");
+    const favbutton = document.getElementById("FAV-BUTTON");
+    favbutton.classList.add("bg-secondary", "text-white");
+    allbutton.classList.remove("bg-secondary", "text-white");
 };
 
 var checkList = document.getElementById('list1');
