@@ -255,8 +255,8 @@ app.get('/become-tutor', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
 
-app.post('/upload-pic', upload.single('avatar'), async(req, res) => {
-  /*
+app.post('/upload-pic', async(req, res) => {
+  
   if(!req.files){
     res.send('File was not found');
     return;
@@ -272,9 +272,7 @@ app.post('/upload-pic', upload.single('avatar'), async(req, res) => {
   console.log(img)
   res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
   */
-  pic = req.file.filename;
-  console.log(pic);
-  res.render(__dirname + "\\home.hbs", { profilePic: pic });
+  res.render('uploaded', { imageUrl: `/uploads/${req.file.filename}` });
 })
 
 // Become a tutor
