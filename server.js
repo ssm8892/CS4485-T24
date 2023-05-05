@@ -5,6 +5,7 @@ import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 import { totalmem } from 'os';
 import multer from 'multer';
+import cheerio from 'cheerio';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -527,8 +528,8 @@ app.post('/home-search', async (req, res) => {
 
 app.get('/favorites', async(req, res) => {
   // href="/index" onclick="return confirm('Sign Out?')
-  const h1Value = req.query.h1Value;
-  console.log(h1Value);
+  const h2Value = req.query.h2Value;
+  console.log(h2Value);
 });
 
 // Book appointment with tutor (still working)
