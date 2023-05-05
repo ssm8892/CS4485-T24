@@ -403,14 +403,8 @@ app.post('/upload-pic', async(req, res) => {
   avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
   var imgToSend = `profile_pics/${avatar.name}`;
   
-
   // Update image name
-  var imgToUpdate = avatar.name;
-  const new_query = `update student set profile_pic = '${imgToUpdate}' where first_name = '${firstName}' and last_name = '${lastName}' and email = '${email}';`;
-  console.log(imgToUpdate);
-  console.log(global.firstName);
-  console.log(global.lastName);
-  console.log(global.email);
+  const new_query = `update student set profile_pic = '${imgToSend}' where first_name = '${firstName}' and last_name = '${lastName}' and email = '${email}';`;
   
   // Execute query insertion
   con.query(new_query, (err, rows) => {
