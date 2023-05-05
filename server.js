@@ -243,7 +243,7 @@ app.get('/tutor-login', (req, res) => {
 });
 
 // Login as tutor 
-app.post('/tutor-login', async (req, res) => {
+app.post('/tutor-login', async(req, res) => {
   // Email and password
   const email = req.body.tutor_email;
   var password = req.body.tutor_password;
@@ -280,7 +280,7 @@ app.get('/login', (req, res) => {
 });
 
 // Login as student
-app.post('/login', async (req, res) => {
+app.post('/login', async(req, res) => {
   // Email and password
   const email = req.body.user_email;
   var password = req.body.user_password;
@@ -374,7 +374,7 @@ app.get('/signup', (req, res) => {
 });
 
 // Sign up as a user
-app.post('/signup', async (req, res) => {
+app.post('/signup', async(req, res) => {
   // Info to sign up
   const firstName = req.body.firstname;
   const lastName = req.body.lastname;
@@ -486,7 +486,7 @@ app.post('/upload-pic', async(req, res) => {
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
 });
 
-app.post('/index-search', async (req, res) => {
+app.post('/index-search', async(req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
@@ -506,7 +506,7 @@ app.post('/index-search', async (req, res) => {
   }
 });
 
-app.post('/home-search', async (req, res) => {
+app.post('/home-search', async(req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
@@ -526,10 +526,47 @@ app.post('/home-search', async (req, res) => {
   }
 });
 
-app.get('/favorites', async(req, res) => {
-  // href="/index" onclick="return confirm('Sign Out?')
-  const h2Value = req.query.h2Value;
-  console.log(h2Value);
+app.post('/favorites', async(req, res) => {
+  // New tutor to add to favorites list
+  const val = req.body.myH1;
+
+  // Get favorites list 
+  const query = `select favorites from student where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const querySearch = await executeRows(query);
+
+  // Split string on comma
+  const favoritesStr = querySearch[0]['favorites'];
+
+  // Avoid extra comma
+  if (favoritesStr.length > 0)
+    global.favorites = favoritesStr.split(",");
+  else
+    global.favorites = [];
+
+  // Remove element if exists, else append
+  if (global.favorites.includes(val)) {
+    var temp = global.favorites;
+    global.favorites = [];
+
+    for (let i=0; i<temp.length; i++) {
+      if (temp[i] != val)
+        global.favorites.push(val);
+    }
+  }
+  else
+    global.favorites.push(val);
+
+  // Convert back into string and write query
+  var newStringFavorites = global.favorites.join(",");
+  const newQuery = `update student set favorites = '${newStringFavorites}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  
+  // Execute query insertion
+  con.query(newQuery, (err, rows) => {
+    if(err) 
+      console.log("Error");
+  });
+  console.log(global.favorites)
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
 });
 
 // Book appointment with tutor (still working)

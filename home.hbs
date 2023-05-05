@@ -420,10 +420,15 @@
                                         BOOK APPOINTMENT
                                     </button>
 
-                                    <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
-                                        action="/favorites" onclick="return confirm('Add {{this.fullName}} to Favorites?')">
-                                        ADD TO FAVORITES
                                     </button>
+                                    <form action="/favorites" method="POST">
+                                        <input type="hidden" value="{{this.fullName}}" name="myH1" value="{{ myH1Value }}">
+                                        
+                                        <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
+                                        action="/favorites" onclick="return confirm('Add {{this.fullName}} to Favorites?')">
+                                            ADD TO FAVORITES
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
