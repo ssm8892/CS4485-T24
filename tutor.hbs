@@ -70,55 +70,23 @@
                 </div>
             </div>
             <div class="calendar-right justify-content-center" style="padding: 5%;">
-
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
+                {{#each appointments}}
+                    <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
+                        data-bs-target="#appointmentModal1">
+                        <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
+                            <!-- Masthead Avatar Image-->
+                            <div><i class="fa fa-calendar fa-2x"></i></div>
+                            <!-- Masthead Heading-->
+                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
+                                <h1 class="text-white mb-0" style="font-size: large;">{{this.student}}</h1>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.course}}</h2>
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding-top: 5%">
+                            <h2 class="text-white mb-0" style="font-size:small;">{{this.date}} | {{this.time}}</h2>
                         </div>
                     </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-
+                {{/each}}
             </div>
         </section>
 
@@ -126,54 +94,6 @@
             id="dashboard">
             <div class="" style="height:fit-content; width:100%; text-align:center; margin-top: 5%">
                 <h4>Appointments History</h4>
-            </div>
-            <div class=""
-                style="display:flex; flex-direction:row; min-height: 100%; padding: 5%; width: 100%; text-align: center; gap:5%; flex-wrap:wrap; justify-content:center">
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">STUDENT NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -268,28 +188,27 @@
                         aria-label="Close"></button></div>
                 <div class="modal-body text-center pb-5">
                     <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">STUDENT NAME</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <div class="container d-flex align-items-center flex-column">
+                        {{#each appointments}}
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Title-->
+                                    <h2 class="portfolio-modal-title text-secondary mb-0">{{this.student}}</h2>
+                                    <!-- Icon Divider-->
+                                    <div class="divider-custom">
+                                        <div class="divider-custom-line"></div>
+                                        <div class="divider-custom-line"></div>
+                                    </div>
+                                    <div class="container d-flex align-items-center flex-column">
 
-                                    <!-- Masthead Heading-->
-                                    <h4 class="text-uppercase mb-0">MEHCANICS - PHYS 2325</h4>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <h4 class="text-primary mb-0">MAY 25TH | 2:00 - 4:00 PM</h4>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-
-
-
+                                        <!-- Masthead Heading-->
+                                        <h4 class="text-uppercase mb-0">{{this.course}}</h4>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                        <h4 class="text-primary mb-0">{{this.date}} | {{this.time}}</h4>
+                                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>

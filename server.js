@@ -70,6 +70,9 @@ global.displayTutors = [];
 // Searched tutors
 global.searchedTutors = [];
 
+// Store information of appointments
+global.appointments = [];
+
 for (let i=0; i<dbTutors.length; i++) {
   // Make default
   var prePicture = "assets/avataaars.svg";
@@ -135,7 +138,6 @@ function updateTutors(dbUpdate, specific) {
   }
 }
 
-
 function executeRows(query) {
   return new Promise((resolve, reject) => {
     con.query(query, function(err, result) {
@@ -161,6 +163,8 @@ function resetUser() {
   global.fullName = "";
   global.totalTutoringHours = 0;
   global.favorites = []
+
+  global.appointments = [];
 }
 
 // Set current user
@@ -238,7 +242,7 @@ app.get('/home', (req, res) => {
 
 app.get('/tutor-login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
-    res.render(__dirname + "\\tutor.html");
+    res.render(__dirname + "\\tutor.html", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
@@ -259,11 +263,31 @@ app.post('/tutor-login', async(req, res) => {
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-    // Send info to tutor login
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, []);
+    // Set user data
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
+    global.appointments = [];
+    
+    // Get appointments needed
+    const tempFullName = global.firstName + " " + global.lastName;
+    const query = `select * from appointments where tutor_name = '${tempFullName}';`
+    const dbResultAppts = await executeRows(query);
+
+    for (let i=0; i<dbResultAppts.length; i++) {
+      const tutorDict = {
+        ID: dbResultAppts[i]['appointment_id'],
+        date: dbResultAppts[i]['written_date'],
+        time: dbResultAppts[i]['written_time'],
+        duration: dbResultAppts[i]['duration'],
+        tutor: dbResultAppts[i]['tutor_name'],
+        student: dbResultAppts[i]['student_name'],
+        subject: dbResultAppts[i]['subject_name'],
+        index: i
+      }
+      global.appointments.push(tutorDict);
+    }
 
     // Send data to HTML
-    res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours});
+    res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
@@ -275,7 +299,7 @@ app.post('/tutor-login', async(req, res) => {
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors, appointments: global.appointments });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
@@ -295,12 +319,33 @@ app.post('/login', async(req, res) => {
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
-    //const favorites = dbResult[0]['favorites'].split(',');
 
+    // Set user data
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
+    global.appointments = [];
+
+    // Get appointments needed
+    const tempFullName = global.firstName + " " + global.lastName;
+    const query = `select * from appointments where student_name = '${tempFullName}';`
+    const dbResultAppts = await executeRows(query);
+
+    // Add appointments
+    for (let i=0; i<dbResultAppts.length; i++) {
+      const tutorDict = {
+        ID: dbResultAppts[i]['appointment_id'],
+        date: dbResultAppts[i]['written_date'],
+        time: dbResultAppts[i]['written_time'],
+        duration: dbResultAppts[i]['duration'],
+        tutor: dbResultAppts[i]['tutor_name'],
+        student: dbResultAppts[i]['student_name'],
+        subject: dbResultAppts[i]['subject_name'],
+        index: i
+      }
+      global.appointments.push(tutorDict);
+    }
 
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments});
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
@@ -450,7 +495,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors, "All");
 
-  res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours });
+  res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments});
 });
 
 app.post('/upload-pic', async(req, res) => {
@@ -484,7 +529,7 @@ app.post('/upload-pic', async(req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors, "All");
 
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
 });
 
 app.post('/index-search', async(req, res) => {
@@ -514,7 +559,7 @@ app.post('/home-search', async(req, res) => {
 
   // If searched for nothing, reload
   if (len == 0)
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
   
   // Else, try searching
   else {
@@ -523,7 +568,7 @@ app.post('/home-search', async(req, res) => {
     const newDbSearch = await executeRows(searchQuery);
     updateTutors(newDbSearch, "Searched");
 
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors, appointments: global.appointments });
   }
 });
 
@@ -552,7 +597,6 @@ app.post('/book', async(req, res) => {
   const subject = req.body.apptSub;
   const date = req.body.apptDays;
   const time = req.body.apptTime;
-  const email = req.body.email;
 
   // Create an array of day of week names
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -560,7 +604,7 @@ app.post('/book', async(req, res) => {
 
   // Get the current date and add one day
   const today = new Date();
-  const tomorrow = add(today, { days: 1 });
+  var tomorrow = add(today, { days: 1 });
 
   // Loop until next day is found
   while (tomorrow.getDay() !== dayOfWeekIndex) { 
@@ -569,20 +613,39 @@ app.post('/book', async(req, res) => {
 
   // Format the resulting date as a written date
   const writtenDate = format(tomorrow, 'EEEE, MMMM d, yyyy');
+  const tempFullName = global.firstName + " " + global.lastName;
   
-  console.log(writtenDate);
-  console.log(tutor);
-  console.log(global.fullName);
-  console.log(subject)
-
   // Booking queries
   var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-  // const newBooking = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${}', ${2}, '${tutor}', '${global.fullName}', ${subject});`
-  // const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
-  
-  // res.render('home');
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  const newBooking = `insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${writtenDate}', '${time}', ${2}, '${tutor}', '${tempFullName}', '${subject}');`
 
+  // Execute query insertion
+  con.query(newBooking, (err, rows) => {
+    if (err) 
+      console.log("Error");
+  });
+
+  global.appointments = [];
+
+  // Get appointments needed
+  const query = `select * from appointments where student_name = '${tempFullName}';`
+  const dbResultAppts = await executeRows(query);
+
+  for (let i=0; i<dbResultAppts.length; i++) {
+    const tutorDict = {
+      ID: dbResultAppts[i]['appointment_id'],
+      date: dbResultAppts[i]['written_date'],
+      time: dbResultAppts[i]['written_time'],
+      duration: dbResultAppts[i]['duration'],
+      tutor: dbResultAppts[i]['tutor_name'],
+      student: dbResultAppts[i]['student_name'],
+      subject: dbResultAppts[i]['subject_name'],
+      index: i
+    }
+    global.appointments.push(tutorDict);
+  }
+
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
 })
 
 app.listen(3000, () => {
