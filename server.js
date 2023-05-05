@@ -220,8 +220,14 @@ app.post('/tutor-login', async (req, res) => {
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
+
+    // Get image if needed
+    var profilePic = "assets/avataaars.svg"
+    if (dbResult[0]['profile_pic'] != "")
+      profilePic = dbResult[0]['profile_pic']
+
     // Send data to HTML
-    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours});
+    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, profilePic: profilePic, hours: totalTutoringHours});
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
