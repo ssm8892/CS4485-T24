@@ -82,8 +82,8 @@
                 <div class="dash-content dash-tutor" id="dash-content-tutor"
                     style="display: flex; flex-direction: row;">
                     {{#each tutors}}
-                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                        data-bs-target="#tutorProfileModal{{this.index}}">
+                    <div class="tutor-card rounded bg-secondary filter-all" data-bs-toggle="modal"
+                        data-bs-target="#tutorProfileModal{{this.index}}" id="tutorCard{{this.index}}">
                         <div class="container d-flex align-items-center flex-row"
                             style="justify-content: space-around;">
                             <!-- Masthead Avatar Image-->
@@ -91,15 +91,6 @@
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
                                 <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
-                                    <!--
-                                    {{#if this.favorite}}
-                                    <span href='/favorites' id='clickableAwesomeFont'><i class="fa-solid fa-star"
-                                            style="color: #e87500;"></i></span>
-                                    {{else}}
-                                    <span href='/favorites' id='clickableAwesomeFont'><i class="fa-regular fa-star"
-                                            style="color: #e87500;"></i></span>
-                                    {{/if}}
-                                    -->
                                 </h1>
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
                                 <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
@@ -119,66 +110,32 @@
                 </div>
                 <div class="dash-content dash-tutor" id="dash-content-tutor-favs"
                     style="display: none; flex-direction:row">
+                    {{#each tutors}}
                     <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                        data-bs-target="#tutorProfileModal1">
+                        data-bs-target="#tutorProfileModal{{this.index}}">
                         <div class="container d-flex align-items-center flex-row"
                             style="justify-content: space-around;">
                             <!-- Masthead Avatar Image-->
-                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
-                                style="width: 5rem;" />
+                            <img class="masthead-avatar mb-2" src="{{this.image}}" alt="..." style="width: 5rem;" />
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
+                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
+                                </h1>
+                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
+                                </h2>
+
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
                                 <div
                                     style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
+                                    {{#each this.courses}}
+                                    <div class="text-primary text-uppercase course-name">{{this}}</div>
+                                    {{/each}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                        data-bs-target="#tutorProfileModal1">
-                        <div class="container d-flex align-items-center flex-row"
-                            style="justify-content: space-around;">
-                            <!-- Masthead Avatar Image-->
-                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
-                                style="width: 5rem;" />
-                            <!-- Masthead Heading-->
-                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
-                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                <div
-                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                        data-bs-target="#tutorProfileModal1">
-                        <div class="container d-flex align-items-center flex-row"
-                            style="justify-content: space-around;">
-                            <!-- Masthead Avatar Image-->
-                            <img class="masthead-avatar mb-2" src="assets/avataaars.svg" alt="..."
-                                style="width: 5rem;" />
-                            <!-- Masthead Heading-->
-                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">FAV TUTOR</h1>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">SUBJECT EXPERTISE</h2>
-                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                <div
-                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
-                                    <div class="text-primary text-uppercase course-name">SUBJECT</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{/each}}
                 </div>
             </div>
         </section>
@@ -421,17 +378,10 @@
                                         BOOK APPOINTMENT
                                     </button>
 
+                                    <button class="btn btn-secondary mt-4 bg-secondary"
+                                        onclick="addtoFavorites({{this.index}});updateFavs();">
+                                        FAVORITE
                                     </button>
-                                    <form action="/favorites" method="POST">
-                                        <input type="hidden" value="{{this.fullName}}" name="myH1"
-                                            value="{{ myH1Value }}">
-
-                                        <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
-                                            action="/favorites"
-                                            onclick="return confirm('Add {{this.fullName}} to Favorites?')">
-                                            ADD TO FAVORITES
-                                        </button>
-                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -526,6 +526,7 @@ app.post('/home-search', async(req, res) => {
   }
 });
 
+/*
 app.post('/favorites', async(req, res) => {
   // New tutor to add to favorites list
   const val = req.body.myH1;
@@ -539,6 +540,7 @@ app.post('/favorites', async(req, res) => {
   */
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
 });
+*/
 
 // Book appointment with tutor (still working)
 app.post('/book', async(req, res) => {

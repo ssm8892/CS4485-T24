@@ -4,6 +4,8 @@
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
 */
 
+//import { globalAgent } from "http";
+
 //
 // Scripts
 // 
@@ -152,27 +154,39 @@ function displayClassForm() {
     classButtonForm.classList.add("text-primary");
 };
 
+var favToggler = false;
+
 function displayAll() {
-    console.log("Display All is being called.");
-    const tutorDiv = document.getElementById("dash-content-tutor");
-    const favtutors = document.getElementById("dash-content-tutor-favs");
-    tutorDiv.style.display = "flex";
-    favtutors.style.display = "none";
-    const allbutton = document.getElementById("ALL-BUTTON");
-    const favbutton = document.getElementById("FAV-BUTTON");
-    allbutton.classList.add("bg-secondary", "text-white");
-    favbutton.classList.remove("bg-secondary", "text-white");
+    //console.log("Display All is being called.");
+    const cards = document.getElementsByClassName("filter-all");
+    for (var i = 0; i < cards.length; i++) {
+        var s = cards[i].style;
+        s.visibility = "visible";
+    }
+
+    const favcards = document.getElementsByClassName("filter-fav");
+    for (var i = 0; i < favcards.length; i++) {
+        var s = favcards[i].style;
+        s.visibility = "visible";
+    }
+    favToggler = false;
 };
 function displayFavs() {
-    console.log("Display Favs is being called.");
-    const tutorDiv = document.getElementById("dash-content-tutor");
-    const favtutors = document.getElementById("dash-content-tutor-favs");
-    favtutors.style.display = "flex";
-    tutorDiv.style.display = "none";
-    const allbutton = document.getElementById("ALL-BUTTON");
-    const favbutton = document.getElementById("FAV-BUTTON");
-    favbutton.classList.add("bg-secondary", "text-white");
-    allbutton.classList.remove("bg-secondary", "text-white");
+    //console.log("Display Favs is being called.");
+    const cards = document.getElementsByClassName("filter-all");
+    for (var i = 0; i < cards.length; i++) {
+        var s = cards[i].style;
+        s.visibility = "hidden";
+    }
+    favToggler = true;
+};
+
+function updateFavs() {
+    if (favToggler == true) {
+        displayFavs();
+    } else {
+        displayAll();
+    }
 };
 
 function displayList1() {
@@ -182,7 +196,7 @@ function displayList1() {
         checkList.classList.remove('visible');
     else
         checkList.classList.add('visible');
-}
+};
 
 function displayList2() {
     var checkList2 = document.getElementById('list2');
@@ -190,15 +204,7 @@ function displayList2() {
         checkList2.classList.remove('visible');
     else
         checkList2.classList.add('visible');
-}
-
-function displayList3() {
-    var checkList3 = document.getElementById('list3');
-    if (checkList3.classList.contains('visible'))
-        checkList3.classList.remove('visible');
-    else
-        checkList3.classList.add('visible');
-}
+};
 
 function onlyOneDay(checkbox) {
     var checkboxes = document.getElementsByClassName("apptDays");
@@ -206,7 +212,21 @@ function onlyOneDay(checkbox) {
     checkboxes.forEach((item) => {
         if (item !== checkbox) item.checked = false
     })
-}
+};
+
+function addtoFavorites(index) {
+    var name = "tutorCard" + index;
+    const card = document.getElementById(name);
+    if (card.classList.contains("filter-fav")) {
+        //console.log("being removed from favorites");
+        card.classList.remove("filter-fav");
+        card.classList.add("filter-all");
+    } else {
+        //console.log("being added to favorites");
+        card.classList.remove("filter-all");
+        card.classList.add("filter-fav");
+    }
+};
 
 function handleData() {
     var form_data = new FormData(document.querySelector("#tutor-signup-form"));
@@ -224,5 +244,5 @@ function handleData() {
         return true;
     }
 
-}
+};
 
