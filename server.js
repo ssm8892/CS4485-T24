@@ -2,11 +2,11 @@ import express from 'express';
 import hbs from 'hbs';
 import mysql from 'mysql';
 import fileUpload from 'express-fileupload';
-import bodyParser from 'body-parser';
-import { totalmem } from 'os';
+//import bodyParser from 'body-parser';
+//import { totalmem } from 'os';
 import multer from 'multer';
-import cheerio from 'cheerio';
-import { add, format } from 'date-fns';
+//import cheerio from 'cheerio';
+//import { add, format } from 'date-fns';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -75,19 +75,12 @@ global.searchedTutors = [];
 
 global.displayAppointments = [];
 
-async function load_Appointments() {
+
   // Get query pertaining to appointments
-  var apptQuery = ``;
+  const apptQuery = `select * from appointments;`;
 
   console.log("STUDENT type = " + global.accountType);
   console.log("ID =  " + global.id);
-  if (accountType == "Student") {
-    apptQuery = `select * from appointments where student_id = ${global.id};`;
-  } else if (accountType == "Tutor") {
-    apptQuery = `select * from appointments where tutor_id = ${global.id};`;
-  } else {
-    apptQuery = `select * from appointments;`;
-  }
   const dbAppointments = await executeRows(apptQuery);
   console.log(dbAppointments);
 
@@ -113,8 +106,6 @@ async function load_Appointments() {
     }
     global.displayAppointments.push(apptDict);
   }
-
-}
 
 
 for (let i = 0; i < dbTutors.length; i++) {
@@ -313,8 +304,9 @@ app.get('/home', (req, res) => {
 });
 
 app.get('/tutor-login', (req, res) => {
-  if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
-    res.render(__dirname + "\\tutor.html");
+  if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor") {
+    res.render(__dirname + "\\tutor.hbs", { appointments: global.displayAppointments });
+  }
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
@@ -339,8 +331,7 @@ app.post('/tutor-login', async (req, res) => {
     // Send info to tutor login
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['tutor_id'], dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, []);
     // Send data to HTML
-    global.displayAppointments = [];
-    load_Appointments();
+    //load_Appointments();
     res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, id: global.id, appointments: global.displayAppointments });
   }
   // Send invalid login to HTML
@@ -353,7 +344,7 @@ app.post('/tutor-login', async (req, res) => {
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors, appointments: global.displayAppointments });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
@@ -379,7 +370,7 @@ app.post('/login', async (req, res) => {
 
     // Send data to HTML
     global.displayAppointments = [];
-    load_Appointments();
+    //load_Appointments();
     res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.displayAppointments });
   }
   // Send invalid login to HTML
@@ -564,7 +555,7 @@ app.post('/upload-pic', async (req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors, "All");
 
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.displayAppointments });
 });
 
 app.post('/index-search', async (req, res) => {
@@ -594,7 +585,7 @@ app.post('/home-search', async (req, res) => {
 
   // If searched for nothing, reload
   if (len == 0)
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.displayAppointments });
 
   // Else, try searching
   else {
@@ -603,7 +594,7 @@ app.post('/home-search', async (req, res) => {
     const newDbSearch = await executeRows(searchQuery);
     updateTutors(newDbSearch, "Searched");
 
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors, appointments: global.displayAppointments });
   }
 });
 
@@ -660,7 +651,7 @@ app.post('/book', async (req, res) => {
   //const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
 
   // res.render('home');
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.displayAppointments });
 
 })
 
