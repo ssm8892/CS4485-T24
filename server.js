@@ -42,7 +42,12 @@ global.firstName = "";
 global.lastName = "";
 global.email = "";
 global.accountType = "";
+
+// Information of logged on user
 global.profilePic = "";
+global.nameToSend = "";
+global.fullName = "";
+global.totalTutoringHours = 0;
 
 // Magic for POST requests
 app.use(express.urlencoded({extended:true}));
@@ -150,23 +155,34 @@ function resetUser() {
   global.email = "";
   global.accountType = "";
   global.profilePic = "";
+
+  global.profilePic = "";
+  global.nameToSend = "";
+  global.fullName = "";
+  global.totalTutoringHours = 0;
 }
 
 // Set current user
-function setUser(firstName, lastName, email, accountType, profilePic) {
+function setUser(firstName, lastName, email, accountType, profilePic, nameToSend, fullName, totalTutoringHours) {
   // Default image
   var profile = "assets/avataaars.svg"
 
   // Update image if defined
   if (profilePic != "")
-   profile = profilePic
+    profile = profilePic
 
   // Set user info
   global.firstName = firstName;
   global.lastName = lastName;
   global.email = email;
   global.accountType = accountType;
+
+  // Set user info
   global.profilePic = profile;
+  global.nameToSend = nameToSend;
+  global.fullName = fullName;
+  global.totalTutoringHours = totalTutoringHours;
+
 }
 
 function checkValidPassword(password) {
@@ -237,16 +253,16 @@ app.post('/tutor-login', async (req, res) => {
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
-    // Save login info and send first name
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic']);
+    // Get first name to send, full name, and total tutoring hours
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
-
-    // Get full name and total number of hours completed
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
+    // Send info to tutor login
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
+
     // Send data to HTML
-    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, profilePic: global.profilePic, hours: totalTutoringHours});
+    res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours});
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
@@ -258,7 +274,7 @@ app.post('/tutor-login', async (req, res) => {
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-  res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: global.displayTutors });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
@@ -274,13 +290,12 @@ app.post('/login', async (req, res) => {
   const dbResult = await executeRows(query);
   
   if (dbResult.length > 0) {
-    // Save login info and send first name
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic']);
+    // Get first name to send, full name, and total tutoring hours
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
-    
-    // Get full name and total number of hours completed
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
+
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
 
     // Send data to HTML
     res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
@@ -332,13 +347,13 @@ app.post('/become-tutor', async(req, res) => {
   
   // Invalid password
   else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) 
-    res.render(__dirname + "\\index.hbs", { tutors:global. displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
   
   // New tutor
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const newQuery = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_available, total_tutoring_hours) values ('${randomId}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''),"${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
+    const newQuery = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_available, total_tutoring_hours) values ('${randomId}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', "","${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
 
     // Execute query insertion
     con.query(newQuery, (err, rows) => {
@@ -417,10 +432,10 @@ app.post('/upload-tutor-pic', async(req, res) => {
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
   avatar.mv(img);
-  var imgToSend = `profile_pics/${avatar.name}`;
+  global.profilePic = `profile_pics/${avatar.name}`;
 
   // Update image name
-  const newQuery = `update tutor set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const newQuery = `update tutor set profile_pic = '${global.profilePic}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
 
   // Execute query insertion
   con.query(newQuery, (err, rows) => {
@@ -432,7 +447,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors, "All");
 
-  res.render(__dirname + "\\tutor.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
+  res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours });
 });
 
 app.post('/upload-pic', async(req, res) => {
@@ -451,10 +466,10 @@ app.post('/upload-pic', async(req, res) => {
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
   avatar.mv(img);
-  var imgToSend = `profile_pics/${avatar.name}`;
+  global.profilePic = `profile_pics/${avatar.name}`;
   
   // Update image name
-  const newQuery = `update student set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const newQuery = `update student set profile_pic = '${global.profilePic}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
   
   // Execute query insertion
   con.query(newQuery, (err, rows) => {
@@ -462,7 +477,11 @@ app.post('/upload-pic', async(req, res) => {
       console.log("Error");
   });
 
-  res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
+  // Update tutors
+  const newDbTutors = await executeRows(`select * from tutor;`);
+  updateTutors(newDbTutors, "All");
+
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
 });
 
 app.post('/index-search', (req, res) => {
