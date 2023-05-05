@@ -389,6 +389,10 @@ app.post('/upload-tutor-pic', async(req, res) => {
       console.log("Error");
   });
   
+  // Update tutors
+  const newDbTutors = await executeRows(`select * from tutor;`);
+  updateTutors(newDbTutors);
+
   res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: imgToSend });
 })
 
