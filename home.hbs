@@ -59,8 +59,10 @@
                         <div class="dash-menu-left flex-row"
                             style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle; gap:5%">
                             FILTER:
-                            <button type="button" class="filter-button rounded bg-secondary text-white" id="ALL-BUTTON" onclick="displayAll();">ALL</button>
-                            <button type="button" class="filter-button rounded" id="FAV-BUTTON" onclick="displayFavs();">FAVORITES</button>
+                            <button type="button" class="filter-button rounded bg-secondary text-white" id="ALL-BUTTON"
+                                onclick="displayAll();">ALL</button>
+                            <button type="button" class="filter-button rounded" id="FAV-BUTTON"
+                                onclick="displayFavs();">FAVORITES</button>
                         </div>
 
                         <div class="dash-menu-right"
@@ -85,8 +87,7 @@
                         <div class="container d-flex align-items-center flex-row"
                             style="justify-content: space-around;">
                             <!-- Masthead Avatar Image-->
-                            <img class="masthead-avatar mb-2" src="{{this.image}}" alt="..."
-                                style="width: 5rem;" />
+                            <img class="masthead-avatar mb-2" src="{{this.image}}" alt="..." style="width: 5rem;" />
                             <!-- Masthead Heading-->
                             <div class="flex-column" style="text-align: left; margin-left: 1rem;">
                                 <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
@@ -422,10 +423,12 @@
 
                                     </button>
                                     <form action="/favorites" method="POST">
-                                        <input type="hidden" value="{{this.fullName}}" name="myH1" value="{{ myH1Value }}">
-                                        
+                                        <input type="hidden" value="{{this.fullName}}" name="myH1"
+                                            value="{{ myH1Value }}">
+
                                         <button class="btn btn-secondary mt-4 bg-secondary" data-bs-toggle="modal"
-                                        action="/favorites" onclick="return confirm('Add {{this.fullName}} to Favorites?')">
+                                            action="/favorites"
+                                            onclick="return confirm('Add {{this.fullName}} to Favorites?')">
                                             ADD TO FAVORITES
                                         </button>
                                     </form>
@@ -464,27 +467,45 @@
                                 </div>
                                 <form id="contactForm" action="/book" data-sb-form-api-token="API_TOKEN" method="post">
                                     <!-- Subject input-->
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="subject" type="text" name="subject"
-                                            placeholder="..." data-sb-validations="required,subject" required />
-                                        <label for="subject">Subject</label>
+                                    <div id="apptSubList" class="dropdown-check-list" style="width:100%" tabindex="100">
+                                        <label for="apptSub">Select Subject</label>
+                                        <select name="apptSub" id="apptSub">
+                                            <option value="Phsysics">Physics</option>
+                                            <option value="Chemistry">Chemistry</option>
+                                            <option value="Computer Science">Computer Science</option>
+                                        </select>
                                     </div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="date&time"
                                         style="display: flex; flex-direction: row; justify-content: space-between;">
                                         <!-- Date input-->
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="date" type="date" name="date"
-                                                placeholder="..." data-sb-validations="required,time" required />
-                                            <label for="date">Date</label>
+                                        <div id="apptDaysList" class="dropdown-check-list" style="width:40%"
+                                            tabindex="100">
+                                            <label for="apptDays">Select Day</label>
+                                            <select name="apptDays" id="apptDays">
+                                                <option value="Sunday">Sunday</option>
+                                                <option value="Monday">Monday</option>
+                                                <option value="Tuesday">Tuesday</option>
+                                                <option value="Wednesday">Wednesday</option>
+                                                <option value="Thursday">Thursday</option>
+                                                <option value="Wednesday">Friday</option>
+                                                <option value="Wednesday">Saturday</option>
+                                            </select>
                                         </div>
+
                                         <!-- Time input-->
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="time" type="time" name="time"
-                                                placeholder="..." data-sb-validations="required,time" required />
-                                            <label for="time">Time</label>
+                                        <div id="apptTimeList" class="dropdown-check-list" style="width:50%"
+                                            tabindex="100">
+                                            <label for="apptTime">Select Time</label>
+                                            <select name="apptTime" id="apptTime">
+                                                <option value="10:00 - 12:00">10:00 AM - 12:00 PM</option>
+                                                <option value="12:00 - 2:00">12:00 PM - 2:00 PM</option>
+                                                <option value="2:00 - 4:00">2:00 PM - 4:00 PM</option>
+                                                <option value="4:00 - 6:00">4:00 PM - 6:00 PM</option>
+                                            </select>
                                         </div>
                                     </div>
-
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="email" type="email" name="email"

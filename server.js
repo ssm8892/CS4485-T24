@@ -294,7 +294,7 @@ app.post('/login', async(req, res) => {
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
-    const favorites = dbResult[0]['favorites'].split(',');
+    //const favorites = dbResult[0]['favorites'].split(',');
 
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, favorites);
 
