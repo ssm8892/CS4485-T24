@@ -326,11 +326,11 @@ app.post('/become-tutor', async(req, res) => {
   // New tutor
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
-    var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    const new_query = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_available, total_tutoring_hours) values ('${random_id}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''),"${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
+    var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
+    const newQuery = `insert into tutor (tutor_id, tutor_password, first_name, last_name, email, phone_no, profile_pic, bio, subject_expertise, days_available, hours_available, total_tutoring_hours) values ('${randomId}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''),"${bio}", "${subjects}", '${days}', '${timings}', ${0});`;
 
     // Execute query insertion
-    con.query(new_query, (err, rows) => {
+    con.query(newQuery, (err, rows) => {
       if(err) 
         console.log("Error");
     });
@@ -377,11 +377,11 @@ app.post('/signup', async (req, res) => {
   // New student
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
-    var random_id = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-    //const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', PASSWORD('${password}'), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
-    const new_query = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${random_id}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
+    var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
+    const newQuery = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${randomId}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
+    
     // Execute query insertion
-    con.query(new_query, (err, rows) => {
+    con.query(newQuery, (err, rows) => {
       if(err) 
         console.log("Error!");
     });
@@ -409,10 +409,10 @@ app.post('/upload-tutor-pic', async(req, res) => {
   var imgToSend = `profile_pics/${avatar.name}`;
 
   // Update image name
-  const new_query = `update tutor set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const newQuery = `update tutor set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
 
   // Execute query insertion
-  con.query(new_query, (err, rows) => {
+  con.query(newQuery, (err, rows) => {
     if(err) 
       console.log("Error");
   });
@@ -443,10 +443,10 @@ app.post('/upload-pic', async(req, res) => {
   var imgToSend = `profile_pics/${avatar.name}`;
   
   // Update image name
-  const new_query = `update student set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const newQuery = `update student set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
   
   // Execute query insertion
-  con.query(new_query, (err, rows) => {
+  con.query(newQuery, (err, rows) => {
     if(err) 
       console.log("Error");
   });
@@ -455,8 +455,20 @@ app.post('/upload-pic', async(req, res) => {
 })
 
 app.post('/index-search', (req, res) => {
-  // Input of searchbar
+  // Input of searchbar and string length of input
   const search = req.body.find;
+  const len = search.length;
+
+  // Find search keyword
+  const findQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+  
+  // Execute query insertion
+  con.query(findQuery, (err, rows) => {
+    if(err) 
+      console.log("Error");
+  });
+  
+
 });
 
 app.post('/home-search', (req, res) => {
