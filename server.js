@@ -2,11 +2,11 @@ import express from 'express';
 import hbs from 'hbs';
 import mysql from 'mysql';
 import fileUpload from 'express-fileupload';
-import bodyParser from 'body-parser';
-import { totalmem } from 'os';
+//import bodyParser from 'body-parser';
+//import { totalmem } from 'os';
 import multer from 'multer';
-import cheerio from 'cheerio';
-import { add, format } from 'date-fns';
+//import cheerio from 'cheerio';
+//import { add, format } from 'date-fns';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -19,10 +19,10 @@ const PORT = process.env.PORT || 3000;
 
 // Set up Multer and storage to handle file uploads
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, 'uploads/')
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
   }
 });
@@ -35,7 +35,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'password',
   database: 'online_tutoring'
 });
 
@@ -44,6 +44,7 @@ global.firstName = "";
 global.lastName = "";
 global.email = "";
 global.accountType = "";
+global.id = "";
 
 // Information of logged on user
 global.profilePic = "";
@@ -53,7 +54,7 @@ global.totalTutoringHours = 0;
 global.favorites = [];
 
 // Magic for POST requests
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(fileUpload());
 app.use(express.static(__dirname));
@@ -64,14 +65,13 @@ app.use(express.static(__dirname + "/js"));
 const tutorsQuery = `select * from tutor;`;
 const dbTutors = await executeRows(tutorsQuery);
 
+
+
 // Store dictionaries of tutor info
 global.displayTutors = [];
 
 // Searched tutors
 global.searchedTutors = [];
-
-// Store information of appointments
-global.appointments = [];
 
 for (let i=0; i<dbTutors.length; i++) {
   // Make default
@@ -93,20 +93,46 @@ for (let i=0; i<dbTutors.length; i++) {
     courses: dbTutors[i]['subject_expertise'].split(', '),
     image: prePicture,
     index: i,
+    id: dbTutors[i]['tutor_id'],
   }
   displayTutors.push(tutorDict);
+}
+
+
+async function getTutorFullName(tutor_id) {
+  const new_query = `select * from tutor where tutor_id = '${tutor_id}';`;
+  const result = await executeRows(new_query);
+  let name = result[0]['first_name'] + " " + result[0]['last_name'];
+  console.log(name + " tutor");
+  return name;
+}
+
+async function getStudentFullName(student_id) {
+  const new_query = `select * from student where student_id = '${student_id}';`;
+  const result = await executeRows(new_query);
+  let name = result[0]['first_name'] + " " + result[0]['last_name'];
+  console.log(name + " student");
+  return name;
+}
+
+async function getSubjectName(subject_id) {
+  const new_query = `select * from subject where subject_id = '${subject_id}';`;
+  const result = await executeRows(new_query);
+  let name = result[0]['course_name'];
+  console.log(name + " course");
+  return name;
 }
 
 function updateTutors(dbUpdate, specific) {
   // If searching all tutor data, store dictionaries of tutor info
   if (specific == "All")
-    global.displayTutors = []; 
+    global.displayTutors = [];
 
   // If searching searched data, store dictionaries of searched tutor info
   else if (specific == "Searched")
     global.searchedTutors = [];
 
-  for (let i=0; i<dbUpdate.length; i++) {
+  for (let i = 0; i < dbUpdate.length; i++) {
     // Make default
     var picture = "assets/avataaars.svg";
 
@@ -126,8 +152,10 @@ function updateTutors(dbUpdate, specific) {
       courses: dbUpdate[i]['subject_expertise'].split(', '),
       favorite: false,
       image: picture,
-      index: i
+      index: i,
+      id: dbUpdate[i]['tutor_id'],
     }
+
     // Add to dict of all tutors
     if (specific == "All")
       global.displayTutors.push(tutorDict);
@@ -140,7 +168,7 @@ function updateTutors(dbUpdate, specific) {
 
 function executeRows(query) {
   return new Promise((resolve, reject) => {
-    con.query(query, function(err, result) {
+    con.query(query, function (err, result) {
       if (err) {
         // Returning the error
         reject(err);
@@ -157,6 +185,7 @@ function resetUser() {
   global.lastName = "";
   global.email = "";
   global.accountType = "";
+  global.id = "";
 
   global.profilePic = "";
   global.nameToSend = "";
@@ -168,7 +197,7 @@ function resetUser() {
 }
 
 // Set current user
-function setUser(firstName, lastName, email, accountType, profilePic, nameToSend, fullName, totalTutoringHours, favorites) {
+function setUser(firstName, lastName, email, accountType, id, profilePic, nameToSend, fullName, totalTutoringHours, favorites) {
   // Default image
   var profile = "assets/avataaars.svg"
 
@@ -181,6 +210,7 @@ function setUser(firstName, lastName, email, accountType, profilePic, nameToSend
   global.lastName = lastName;
   global.email = email;
   global.accountType = accountType;
+  global.id = id;
 
   // Set user info
   global.profilePic = profile;
@@ -204,13 +234,13 @@ function checkValidPassword(password) {
     // If original character equal to lowercase, increment
     for (let i = 0; i < password.length; i++) {
       // Is lowercase
-      if (password[i] === password[i].toUpperCase()) 
+      if (password[i] === password[i].toUpperCase())
         ++numUpper;
-      
+
       // Is uppercase
-      if (password[i] === password[i].toLowerCase()) 
+      if (password[i] === password[i].toLowerCase())
         ++numLower;
-      
+
       // Is a number
       if (!isNaN(password[i]))
         ++numNumbers;
@@ -242,116 +272,75 @@ app.get('/home', (req, res) => {
 
 app.get('/tutor-login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
-    res.render(__dirname + "\\tutor.html", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments });
+    res.render(__dirname + "\\tutor.html");
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
 // Login as tutor 
-app.post('/tutor-login', async(req, res) => {
+app.post('/tutor-login', async (req, res) => {
   // Email and password
   const email = req.body.tutor_email;
+  console.log(email);
   var password = req.body.tutor_password;
-  
+
   // Get query pertaining to email and password
   const query = `select * from tutor where email = '${email}' and tutor_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`;
   const dbResult = await executeRows(query);
-  
+
   if (dbResult.length > 0) {
     // Get first name to send, full name, and total tutoring hours
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-    // Set user data
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
-    global.appointments = [];
-    
-    // Get appointments needed
-    const tempFullName = global.firstName + " " + global.lastName;
-    const query = `select * from appointments where tutor_name = '${tempFullName}';`
-    const dbResultAppts = await executeRows(query);
-
-    for (let i=0; i<dbResultAppts.length; i++) {
-      const tutorDict = {
-        ID: dbResultAppts[i]['appointment_id'],
-        date: dbResultAppts[i]['written_date'],
-        time: dbResultAppts[i]['written_time'],
-        duration: dbResultAppts[i]['duration'],
-        tutor: dbResultAppts[i]['tutor_name'],
-        student: dbResultAppts[i]['student_name'],
-        subject: dbResultAppts[i]['subject_name'],
-        index: i
-      }
-      global.appointments.push(tutorDict);
-    }
+    // Send info to tutor login
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, []);
 
     // Send data to HTML
-    res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments });
+    res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours});
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
     res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
   // Reload index 
-  else 
+  else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
 app.get('/login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Student")
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors, appointments: global.appointments });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
 // Login as student
-app.post('/login', async(req, res) => {
+app.post('/login', async (req, res) => {
   // Email and password
   const email = req.body.user_email;
   var password = req.body.user_password;
-  
+
   // Get query pertaining to email and password
   const query = `select * from student where email = '${email}' and student_password = CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}')))));`;
   const dbResult = await executeRows(query);
-  
+
   if (dbResult.length > 0) {
     // Get first name to send, full name, total tutoring hours, and favorite tutors
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-    // Set user data
     setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
-    global.appointments = [];
-
-    // Get appointments needed
-    const tempFullName = global.firstName + " " + global.lastName;
-    const query = `select * from appointments where student_name = '${tempFullName}';`
-    const dbResultAppts = await executeRows(query);
-
-    // Add appointments
-    for (let i=0; i<dbResultAppts.length; i++) {
-      const tutorDict = {
-        ID: dbResultAppts[i]['appointment_id'],
-        date: dbResultAppts[i]['written_date'],
-        time: dbResultAppts[i]['written_time'],
-        duration: dbResultAppts[i]['duration'],
-        tutor: dbResultAppts[i]['tutor_name'],
-        student: dbResultAppts[i]['student_name'],
-        subject: dbResultAppts[i]['subject_name'],
-        index: i
-      }
-      global.appointments.push(tutorDict);
-    }
 
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments});
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
     res.render(__dirname + "\\index.hbs", { welcome: "Incorrect username or password!" });
   // Reload index 
-  else 
+  else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
 
@@ -360,7 +349,7 @@ app.get('/become-tutor', (req, res) => {
 })
 
 // Become a tutor
-app.post('/become-tutor', async(req, res) => {
+app.post('/become-tutor', async (req, res) => {
   // Info to become a tutor
   const firstName = req.body.firstname;
   const lastName = req.body.lastname;
@@ -389,13 +378,13 @@ app.post('/become-tutor', async(req, res) => {
   const dbResult2 = await executeRows(query2);
 
   // Tutor already exists
-  if (dbResult.length > 0 || dbResult2.length > 0) 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!"});
-  
+  if (dbResult.length > 0 || dbResult2.length > 0)
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!" });
+
   // Invalid password
-  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
-  
+  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval)
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!" });
+
   // New tutor
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
@@ -404,14 +393,14 @@ app.post('/become-tutor', async(req, res) => {
 
     // Execute query insertion
     con.query(newQuery, (err, rows) => {
-      if(err) 
+      if (err)
         console.log("Error");
     });
     // Update tutors
     const newDbTutors = await executeRows(`select * from tutor;`);
     updateTutors(newDbTutors, "All");
 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Tutor successfully registered!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Tutor successfully registered!" });
   }
 });
 
@@ -420,7 +409,7 @@ app.get('/signup', (req, res) => {
 });
 
 // Sign up as a user
-app.post('/signup', async(req, res) => {
+app.post('/signup', async (req, res) => {
   // Info to sign up
   const firstName = req.body.firstname;
   const lastName = req.body.lastname;
@@ -440,45 +429,45 @@ app.post('/signup', async(req, res) => {
   const dbResult2 = await executeRows(query2);
 
   // Student already exists
-  if (dbResult.length > 0 || dbResult2 > 0) 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!"});
-  
+  if (dbResult.length > 0 || dbResult2 > 0)
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Email, phone, and/or password already in use!" });
+
   // Password evaluation fails
-  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval) 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!"});
-  
+  else if (dbResult.length == 0 && dbResult2.length == 0 && !passwordEval)
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Your password must be at least 8 characters, with at least one number, uppercase letter, and lowercase letter!" });
+
   // New student
   else if (dbResult.length == 0 && dbResult2.length == 0 && passwordEval) {
     // Get random ID and insert row into table
     var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
     const newQuery = `insert into student (student_id, student_password, first_name, last_name, email, phone_no, profile_pic, total_tutoring_hours) values ('${randomId}', CONCAT('*', UPPER(SHA1(UNHEX(SHA1('${password}'))))), '${firstName}', '${lastName}', '${email}', '${phone}', LOAD_FILE(''), ${0});`;
-    
+
     // Execute query insertion
     con.query(newQuery, (err, rows) => {
-      if(err) 
+      if (err)
         console.log("Error!");
     });
 
-    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Student successfully registered!"});
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Student successfully registered!" });
   }
 });
 
-app.post('/upload-tutor-pic', async(req, res) => {
-  
-  if(!req.files){
+app.post('/upload-tutor-pic', async (req, res) => {
+
+  if (!req.files) {
     res.send('File was not found');
     return;
   }
-  
+
   // Get file name
   const avatar = req.files.avatar;
-  
+
   // Catch error
-  if(!avatar) 
+  if (!avatar)
     return res.sendStatus(400);
 
   // Get filename and move it
-  var img = __dirname+"\\profile_pics\\"+avatar.name;
+  var img = __dirname + "\\profile_pics\\" + avatar.name;
   avatar.mv(img);
   global.profilePic = `profile_pics/${avatar.name}`;
 
@@ -487,7 +476,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
 
   // Execute query insertion
   con.query(newQuery, (err, rows) => {
-    if(err) 
+    if (err)
       console.log("Error");
   });
 
@@ -498,9 +487,9 @@ app.post('/upload-tutor-pic', async(req, res) => {
   res.render(__dirname + "\\tutor.hbs", { name: global.nameToSend, fullName: global.fullName, profilePic: global.profilePic, hours: global.totalTutoringHours, appointments: global.appointments});
 });
 
-app.post('/upload-pic', async(req, res) => {
+app.post('/upload-pic', async (req, res) => {
   // Send error message
-  if(!req.files){
+  if (!req.files) {
     res.send('File was not found');
     return;
   }
@@ -508,20 +497,20 @@ app.post('/upload-pic', async(req, res) => {
   const avatar = req.files.avatar;
 
   // Catch error
-  if(!avatar) 
+  if (!avatar)
     return res.sendStatus(400);
 
   // Get filename and move it
-  var img = __dirname+"\\profile_pics\\"+avatar.name;
+  var img = __dirname + "\\profile_pics\\" + avatar.name;
   avatar.mv(img);
   global.profilePic = `profile_pics/${avatar.name}`;
-  
+
   // Update image name
   const newQuery = `update student set profile_pic = '${global.profilePic}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
-  
+
   // Execute query insertion
   con.query(newQuery, (err, rows) => {
-    if(err) 
+    if (err)
       console.log("Error");
   });
 
@@ -529,10 +518,10 @@ app.post('/upload-pic', async(req, res) => {
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors, "All");
 
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
 });
 
-app.post('/index-search', async(req, res) => {
+app.post('/index-search', async (req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
@@ -540,7 +529,7 @@ app.post('/index-search', async(req, res) => {
   // If searched for nothing, reload
   if (len == 0)
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-  
+
   // Else, try searching
   else {
     // Find search keyword
@@ -552,14 +541,14 @@ app.post('/index-search', async(req, res) => {
   }
 });
 
-app.post('/home-search', async(req, res) => {
+app.post('/home-search', async (req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
 
   // If searched for nothing, reload
   if (len == 0)
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
   
   // Else, try searching
   else {
@@ -568,7 +557,7 @@ app.post('/home-search', async(req, res) => {
     const newDbSearch = await executeRows(searchQuery);
     updateTutors(newDbSearch, "Searched");
 
-    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors, appointments: global.appointments });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors });
   }
 });
 
@@ -589,7 +578,7 @@ app.post('/favorites', async(req, res) => {
 */
 
 // Book appointment with tutor (still working)
-app.post('/book', async(req, res) => {
+app.post('/book', async (req, res) => {
   // Hidden variable
   const tutor = req.body.myH2;
 
@@ -617,33 +606,11 @@ app.post('/book', async(req, res) => {
   
   // Booking queries
   var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-  const newBooking = `insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${writtenDate}', '${time}', ${2}, '${tutor}', '${tempFullName}', '${subject}');`
-
-  // Execute query insertion
-  con.query(newBooking, (err, rows) => {
-    if (err) 
-      console.log("Error");
-  });
-
-  global.appointments = [];
-
-  // Get appointments needed
-  const query = `select * from appointments where student_name = '${tempFullName}';`
-  const dbResultAppts = await executeRows(query);
-
-  for (let i=0; i<dbResultAppts.length; i++) {
-    const tutorDict = {
-      ID: dbResultAppts[i]['appointment_id'],
-      date: dbResultAppts[i]['written_date'],
-      time: dbResultAppts[i]['written_time'],
-      duration: dbResultAppts[i]['duration'],
-      tutor: dbResultAppts[i]['tutor_name'],
-      student: dbResultAppts[i]['student_name'],
-      subject: dbResultAppts[i]['subject_name'],
-      index: i
-    }
-    global.appointments.push(tutorDict);
-  }
+  // const newBooking = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${}', ${2}, '${tutor}', '${global.fullName}', ${subject});`
+  // const bookQuery = `insert into appointments (appointment_id, date_and_time, duration_time, tutor_id, student_id, subject_id) values `;
+  
+  // res.render('home');
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
 
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
 })
