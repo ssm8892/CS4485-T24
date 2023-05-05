@@ -361,7 +361,6 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-/*
 app.post('/upload-tutor-pic', async(req, res) => {
   
   if(!req.files){
@@ -379,11 +378,13 @@ app.post('/upload-tutor-pic', async(req, res) => {
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
   avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
+  var imgToSend = `profile_pics/${avatar.name}`;
 
-  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: img });
+  // Update image name
+  const new_query = `update tutor set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+
+  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
 })
-*/
-
 
 app.post('/upload-pic', async(req, res) => {
   // Send error message
@@ -404,7 +405,7 @@ app.post('/upload-pic', async(req, res) => {
   var imgToSend = `profile_pics/${avatar.name}`;
   
   // Update image name
-  const new_query = `update student set profile_pic = '${imgToSend}' where first_name = '${firstName}' and last_name = '${lastName}' and email = '${email}';`;
+  const new_query = `update student set profile_pic = '${imgToSend}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
   
   // Execute query insertion
   con.query(new_query, (err, rows) => {
