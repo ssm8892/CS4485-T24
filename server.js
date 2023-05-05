@@ -456,12 +456,12 @@ app.post('/upload-pic', async(req, res) => {
 
 app.post('/index-search', (req, res) => {
   // Input of searchbar
-  const search = req.body.search;
+  const search = req.body.find;
 });
 
 app.post('/home-search', (req, res) => {
   // Input of searchbar
-  const search = req.body.search;
+  const search = req.body.find;
 });
 
 /*
