@@ -69,8 +69,9 @@ for (let i=0; i<dbTutors.length; i++) {
     days: dbTutors[i]['days_available'].split(','),
     times: dbTutors[i]['hours_available'].split(','),
     courses: dbTutors[i]['subject_expertise'].split(', '),
-    index: i,
     favorite: false,
+    image: ""
+    index: i,
   }
   displayTutors.push(tutorDict);
 }
