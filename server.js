@@ -38,10 +38,10 @@ var con = mysql.createConnection({
 });
 
 // Information of logged on user
-var firstName = "";
-var lastName = "";
-var email = "";
-var accountType = "";
+global.firstName = "";
+global.lastName = "";
+global.email = "";
+global.accountType = "";
 
 // Magic for POST requests
 app.use(express.urlencoded({extended:true}));
@@ -56,7 +56,7 @@ const tutorsQuery = `select * from tutor;`;
 const dbTutors = await executeRows(tutorsQuery);
 
 // Store dictionaries of tutor info
-var displayTutors = [];
+global.displayTutors = [];
 
 for (let i=0; i<dbTutors.length; i++) {
   // Dictionary of tutor info
@@ -96,7 +96,7 @@ function updateTutors(dbUpdate) {
       index: i,
       favorite: false
     }
-    displayTutors.push(tutorDict);
+    global.displayTutors.push(tutorDict);
   }
 }
 
@@ -115,19 +115,19 @@ function executeRows(query) {
 // Rest user information
 function resetUser() {
   // Reset user info
-  firstName = "";
-  lastName = "";
-  email = "";
-  accountType = "";
+  global.firstName = "";
+  global.lastName = "";
+  global.email = "";
+  global.accountType = "";
 }
 
 // Set current user
 function setUser(firstName, lastName, email, accountType) {
   // Set user info
-  firstName = firstName;
-  lastName = lastName;
-  email = email;
-  accountType = accountType;
+  global.firstName = firstName;
+  global.lastName = lastName;
+  global.email = email;
+  global.accountType = accountType;
 }
 
 function checkValidPassword(password) {
@@ -401,7 +401,22 @@ app.post('/upload-pic', async(req, res) => {
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
   avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
-  var imgToSend = `profile_pics/${avatar.name}`
+  var imgToSend = `profile_pics/${avatar.name}`;
+  
+
+  // Update image name
+  var imgToUpdate = avatar.name;
+  const new_query = `update student set profile_pic = '${imgToUpdate}' where first_name = '${firstName}' and last_name = '${lastName}' and email = '${email}';`;
+  console.log(imgToUpdate);
+  console.log(global.firstName);
+  console.log(global.lastName);
+  console.log(global.email);
+  
+  // Execute query insertion
+  con.query(new_query, (err, rows) => {
+    if(err) 
+      console.log("Error");
+  });
 
   res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
 })
