@@ -377,7 +377,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
 
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
-  avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
+  avatar.mv(img);
   var imgToSend = `profile_pics/${avatar.name}`;
 
   // Update image name
@@ -388,7 +388,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
     if(err) 
       console.log("Error");
   });
-  
+
   // Update tutors
   const newDbTutors = await executeRows(`select * from tutor;`);
   updateTutors(newDbTutors);
@@ -411,7 +411,7 @@ app.post('/upload-pic', async(req, res) => {
 
   // Get filename and move it
   var img = __dirname+"\\profile_pics\\"+avatar.name;
-  avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
+  avatar.mv(img);
   var imgToSend = `profile_pics/${avatar.name}`;
   
   // Update image name
