@@ -134,15 +134,24 @@ function resetUser() {
   global.lastName = "";
   global.email = "";
   global.accountType = "";
+  global.profilePic = "";
 }
 
 // Set current user
-function setUser(firstName, lastName, email, accountType) {
+function setUser(firstName, lastName, email, accountType, profilePic) {
+  // Default image
+  var profile = "assets/avataaars.svg"
+
+  // Update image if defined
+  if (profilePic != "")
+   profile = profilePic
+
   // Set user info
   global.firstName = firstName;
   global.lastName = lastName;
   global.email = email;
   global.accountType = accountType;
+  global.profilePic = profile;
 }
 
 function checkValidPassword(password) {
@@ -214,22 +223,15 @@ app.post('/tutor-login', async (req, res) => {
   
   if (dbResult.length > 0) {
     // Save login info and send first name
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor");
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Tutor", dbResult[0]['profile_pic']);
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
 
     // Get full name and total number of hours completed
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-    // Default image
-    var profilePic = "assets/avataaars.svg"
-
-    // Update image if defined
-    if (dbResult[0]['profile_pic'] != "")
-      profilePic = dbResult[0]['profile_pic']
-
     // Send data to HTML
-    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, profilePic: profilePic, hours: totalTutoringHours});
+    res.render(__dirname + "\\tutor.hbs", { name: nameToSend, fullName: fullName, profilePic: global.profilePic, hours: totalTutoringHours});
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
@@ -258,22 +260,15 @@ app.post('/login', async (req, res) => {
   
   if (dbResult.length > 0) {
     // Save login info and send first name
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student");
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic']);
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     
     // Get full name and total number of hours completed
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-     // Default image
-     var profilePic = "assets/avataaars.svg"
-
-     // Update image if defined
-     if (dbResult[0]['profile_pic'] != "")
-      profilePic = dbResult[0]['profile_pic']
-
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: profilePic, tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
