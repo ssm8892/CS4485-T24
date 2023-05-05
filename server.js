@@ -271,7 +271,7 @@ app.post('/upload-pic', async(req, res) => {
   avatar.mv(__dirname+"/profile_pics/"+avatar.name);
   console.log(img)
   res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
-  */
+  
   res.render('uploaded', { imageUrl: `/uploads/${req.file.filename}` });
 })
 
