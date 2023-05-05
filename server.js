@@ -488,7 +488,6 @@ app.post('/index-search', (req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
-  console.log(search);
 
   // If searched for nothing, reload
   if (len == 0)
@@ -497,12 +496,7 @@ app.post('/index-search', (req, res) => {
   // Find search keyword
   const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
   const newDbSearch = executeRows(searchQuery);
-  
-  // Execute query insertion
-  con.query(newDbSearch, (err, rows) => {
-    if(err) 
-      console.log("Error");
-  });
+  updateTutors(newDbSearch, "Searched");
 
   res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
 });
