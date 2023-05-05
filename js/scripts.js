@@ -4,8 +4,6 @@
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
 */
 
-//import { first } from "cheerio/lib/api/traversing";
-
 //
 // Scripts
 // 
@@ -151,9 +149,6 @@ classButtonForm.onclick = function () {
     classButtonForm.classList.add("text-primary");
 };
 
-
-
-console.log(favtutors.classList);
 function displayAll() {
     console.log("Display All is being called.");
     const tutorDiv = document.getElementById("dash-content-tutor");
@@ -171,6 +166,7 @@ function displayFavs() {
 
 var checkList = document.getElementById('list1');
 checkList.getElementsByClassName('anchor1')[0].onclick = function (evt) {
+    console.log("function is being called");
     if (checkList.classList.contains('visible'))
         checkList.classList.remove('visible');
     else
