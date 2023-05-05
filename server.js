@@ -488,26 +488,23 @@ app.post('/index-search', (req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
+  console.log(search);
 
   // If searched for nothing, reload
   if (len == 0)
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
   
-  // Else, search in queries
-  else {
-    // Find search keyword
-    const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
-    const newDbSearch = executeRows(searchQuery);
-    updateTutors(newDbSearch, "Searched");
-    
-    // Execute query insertion
-    con.query(findQuery, (err, rows) => {
-      if(err) 
-        console.log("Error");
-    });
+  // Find search keyword
+  const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+  const newDbSearch = executeRows(searchQuery);
+  
+  // Execute query insertion
+  con.query(newDbSearch, (err, rows) => {
+    if(err) 
+      console.log("Error");
+  });
 
-    res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
-  }
+  res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
 });
 
 app.post('/home-search', (req, res) => {
