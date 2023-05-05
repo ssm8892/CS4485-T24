@@ -264,7 +264,7 @@ app.post('/upload-pic', upload.single('avatar'), async(req, res) => {
   console.log(img)
   res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
   */
-  res.render('uploaded', { imageUrl: `/uploads/${req.file.filename}` });
+  res.render('uploaded', { profilePic: `/uploads/${req.file.filename}` });
 })
 
 // Become a tutor
