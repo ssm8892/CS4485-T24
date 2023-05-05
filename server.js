@@ -220,9 +220,10 @@ app.post('/tutor-login', async (req, res) => {
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
-
-    // Get image if needed
+    // Default image
     var profilePic = "assets/avataaars.svg"
+
+    // Update image if defined
     if (dbResult[0]['profile_pic'] != "")
       profilePic = dbResult[0]['profile_pic']
 
@@ -263,8 +264,15 @@ app.post('/login', async (req, res) => {
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
 
+     // Default image
+     var profilePic = "assets/avataaars.svg"
+
+     // Update image if defined
+     if (dbResult[0]['profile_pic'] != "")
+      profilePic = dbResult[0]['profile_pic']
+
     // Send data to HTML
-    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: profilePic, tutors: displayTutors });
   }
   // Send invalid login to HTML
   else if (dbResult.length == 0 && email != "" && password != "")
