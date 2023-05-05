@@ -411,6 +411,7 @@ app.post('/signup', async (req, res) => {
       if(err) 
         console.log("Error!");
     });
+
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Student successfully registered!"});
   }
 });
@@ -484,7 +485,7 @@ app.post('/upload-pic', async(req, res) => {
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
 });
 
-app.post('/index-search', (req, res) => {
+app.post('/index-search', async (req, res) => {
   // Input of searchbar and string length of input
   const search = req.body.find;
   const len = search.length;
@@ -493,17 +494,35 @@ app.post('/index-search', (req, res) => {
   if (len == 0)
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
   
-  // Find search keyword
-  const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
-  const newDbSearch = executeRows(searchQuery);
-  updateTutors(newDbSearch, "Searched");
+  // Else, try searching
+  else {
+    // Find search keyword
+    const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+    const newDbSearch = await executeRows(searchQuery);
+    updateTutors(newDbSearch, "Searched");
 
-  res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
+    res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
+  }
 });
 
-app.post('/home-search', (req, res) => {
-  // Input of searchbar
+app.post('/home-search', async (req, res) => {
+  // Input of searchbar and string length of input
   const search = req.body.find;
+  const len = search.length;
+
+  // If searched for nothing, reload
+  if (len == 0)
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  
+  // Else, try searching
+  else {
+    // Find search keyword
+    const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+    const newDbSearch = await executeRows(searchQuery);
+    updateTutors(newDbSearch, "Searched");
+
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.searchedTutors });
+  }
 });
 
 /*

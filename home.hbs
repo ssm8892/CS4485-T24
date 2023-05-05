@@ -54,7 +54,7 @@
             </div>
             <div class="dashboard-right bg-white text-secondary" id="dash-right"
                 style="width: 100%; height: inherit; border-radius: 1rem; font-weight: bolder;">
-                <form form id="searchForm" action="/home-search" data-sb-form-api-token="API_TOKEN" method="post"></form>
+                <form id="searchForm" action="/home-search" data-sb-form-api-token="API_TOKEN" method="post"></form>
                     <div class="dash-menu" style="display: flex; flex-direction: row; position: fixed-top;">
                         <div class="dash-menu-left flex-row"
                             style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle; gap:5%">
@@ -69,7 +69,7 @@
                                 <div class="form-outline" style="width: 80%">
                                     <input type="search" name="find" id="form1" class="form-control">
                                 </div>
-                                <button type="button" class="btn btn-primary bg-primary" style="width:20%">
+                                <button type="submit" class="btn btn-primary bg-primary" style="width:20%">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -328,7 +328,7 @@
                                                 picture:</label>
                                         </div>
                                         <button class="btn bg-primary btn-xl mb-5" id="submitButton" type="submit"
-                                            onclick="return confirm('Submit Profile Picture?')">UPLOAD IMAGE</button>
+                                            onclick="return confirm('Submit Profile Picture')">UPLOAD IMAGE</button>
                                     </form>
                                 </div>
                             </div>
