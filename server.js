@@ -42,6 +42,7 @@ global.firstName = "";
 global.lastName = "";
 global.email = "";
 global.accountType = "";
+global.profilePic = "";
 
 // Magic for POST requests
 app.use(express.urlencoded({extended:true}));
@@ -180,26 +181,26 @@ function checkValidPassword(password) {
 
 app.get('/', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 app.get('/index', (req, res) => {
   resetUser();
   res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 app.get('/home', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType != "")
     res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 app.get('/tutor-login', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType == "Tutor")
     res.render(__dirname + "\\tutor.html");
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 // Login as tutor 
 app.post('/tutor-login', async (req, res) => {
@@ -243,7 +244,7 @@ app.get('/login', (req, res) => {
   res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, tutors: global.displayTutors });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 // Login as student
 app.post('/login', async (req, res) => {
@@ -344,7 +345,7 @@ app.post('/become-tutor', async(req, res) => {
 
 app.get('/signup', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
-})
+});
 
 // Sign up as a user
 app.post('/signup', async (req, res) => {
@@ -422,7 +423,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
   updateTutors(newDbTutors);
 
   res.render(__dirname + "\\tutor.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
-})
+});
 
 app.post('/upload-pic', async(req, res) => {
   // Send error message
@@ -452,7 +453,7 @@ app.post('/upload-pic', async(req, res) => {
   });
 
   res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
-})
+});
 
 app.post('/index-search', (req, res) => {
   // Input of searchbar and string length of input
@@ -467,7 +468,8 @@ app.post('/index-search', (req, res) => {
     if(err) 
       console.log("Error");
   });
-  
+
+  // if (findQuery.length == 0) 
 
 });
 
