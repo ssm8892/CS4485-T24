@@ -466,18 +466,16 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <form id="contactForm" action="/book" data-sb-form-api-token="API_TOKEN" method="post">
-                                    <input type="hidden" value="{{this.fullName}}" name="myH2"
-                                            value="{{ myH2Value }}">
+                                    <input type="hidden" value="{{this.fullName}}" name="myH2">
 
-                                    <input type="hidden" value="{{fullName}}" name="myH3"
-                                            value="{{ myH3Value }}">
+                                    <input type="hidden" value="{{fullName}}" name="myH3">
 
                                     <!-- Subject input-->
                                     <div id="apptSubList" class="dropdown-check-list" style="width:100%" tabindex="100">
                                         <label for="apptSub">Select Subject</label>
                                         <select name="apptSub" id="apptSub">
                                             {{#each this.courses}}
-                                            <option value="Phsysics">{{this}}</option>
+                                            <option value="{{this}}">{{this}}</option>
                                             {{/each}}
                                         </select>
                                     </div>
@@ -490,7 +488,7 @@
                                             <label for="apptDays">Select Day</label>
                                             <select name="apptDays" id="apptDays">
                                                 {{#each this.days}}
-                                                <option value="Sunday">{{this}}</option>
+                                                <option value="{{this}}">{{this}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
@@ -501,7 +499,7 @@
                                             <label for="apptTime">Select Time</label>
                                             <select name="apptTime" id="apptTime">
                                                 {{#each this.times}}
-                                                <option value="10:00 - 12:00">{{this}}</option>
+                                                <option value="{{this}}">{{this}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>

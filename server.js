@@ -560,7 +560,7 @@ app.post('/book', async(req, res) => {
   
   // res.render('home');
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
-  
+
 })
 
 app.listen(3000, () => {
