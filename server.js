@@ -4,6 +4,7 @@ import mysql from 'mysql';
 import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 import { totalmem } from 'os';
+import multer from 'multer';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -14,6 +15,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// set up Multer to handle file uploads
+const upload = multer({ dest: 'uploads/' });
+
 // Set up view engine and views directory
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
@@ -21,7 +25,7 @@ app.set('views', __dirname + '/views');
 var con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: '',
   database: 'online_tutoring'
 });
 
@@ -243,20 +247,24 @@ app.get('/become-tutor', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
 
-app.post('/upload-pic', async(req, res) => {
+app.post('/upload-pic', upload.single('avatar'), async(req, res) => {
+  /*
   if(!req.files){
     res.send('File was not found');
     return;
   }
   
   const avatar = req.files.avatar;
-  if(!avatar) return res.sendStatus(400);
+  if(!avatar) 
+    return res.sendStatus(400);
 
   var img = __dirname+"/profile_pics/"+avatar.name;
   console.log(img);
   avatar.mv(__dirname+"/profile_pics/"+avatar.name);
   console.log(img)
-  res.render(__dirname + "\\tutor.hbs");
+  res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
+  */
+  res.render('uploaded', { imageUrl: `/uploads/${req.file.filename}` });
 })
 
 // Become a tutor
