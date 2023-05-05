@@ -70,7 +70,7 @@ for (let i=0; i<dbTutors.length; i++) {
     times: dbTutors[i]['hours_available'].split(','),
     courses: dbTutors[i]['subject_expertise'].split(', '),
     favorite: false,
-    image: "avataaars.svg",
+    image: "assets/avataaars.svg",
     index: i
   }
   displayTutors.push(tutorDict);
