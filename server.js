@@ -454,6 +454,8 @@ app.post('/upload-pic', async(req, res) => {
   res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
 })
 
+
+
 /*
 app.get('/index-search', (req, res) => {
   
