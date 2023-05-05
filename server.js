@@ -5,7 +5,8 @@ import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 import { totalmem } from 'os';
 import multer from 'multer';
-import cheerio, { load } from 'cheerio';
+import cheerio from 'cheerio';
+import { add, format } from 'date-fns';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -632,6 +633,27 @@ app.post('/book', async (req, res) => {
   const date = req.body.apptDays;
   const time = req.body.apptTime;
   const email = req.body.email;
+
+  // Create an array of day of week names
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayOfWeekIndex = daysOfWeek.indexOf(date);
+
+  // Get the current date and add one day
+  const today = new Date();
+  const tomorrow = add(today, { days: 1 });
+
+  // Loop until next day is found
+  while (tomorrow.getDay() !== dayOfWeekIndex) { 
+    tomorrow = add(tomorrow, { days: 1 });
+  }
+
+  // Format the resulting date as a written date
+  const writtenDate = format(tomorrow, 'EEEE, MMMM d, yyyy');
+  
+  console.log(writtenDate);
+  console.log(tutor);
+  console.log(global.fullName);
+  console.log(subject)
 
   // Booking queries
   // const newBooking = `insert into tutor
