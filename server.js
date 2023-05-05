@@ -81,6 +81,13 @@ function updateTutors(dbUpdate) {
   displayTutors = []; 
 
   for (let i=0; i<dbUpdate.length; i++) {
+    // Else make default
+    var picture = "assets/avataaars.svg";
+
+    // Update image
+    if (dbUpdate[i]['profile_pic'] != "")
+      picture = dbUpdate[i]['profile_pic']
+
     // Dictionary of tutor info
     const tutorDict = {
       fullName: dbUpdate[i]['first_name'] + " " + dbUpdate[i]['last_name'],
@@ -92,8 +99,8 @@ function updateTutors(dbUpdate) {
       times: dbUpdate[i]['hours_available'].split(','),
       courses: dbUpdate[i]['subject_expertise'].split(', '),
       favorite: false,
-      image: "",
-      index: i,
+      image: dbUpdate[i]['profile_pic'],
+      index: picture,
       favorite: false
     }
     global.displayTutors.push(tutorDict);
