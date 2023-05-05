@@ -529,31 +529,10 @@ app.post('/favorites', async(req, res) => {
   // New tutor to add to favorites list
   const val = req.body.myH1;
 
-  /*
-  // Get favorites list 
-  const query = `select * from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}' and tutor_name = '${val}';`;
+  const query = `insert into favorites (student_fname, student_lname, student_email, tutor_name) values('${global.firstName}', '${global.lastName}', '${global.email}', '${val}');`;
   const querySearch = await executeRows(query);
+  console.log(querySearch);
 
-  // In empty query, add to favorites list
-  if (querySearch.length == 0) {
-    const add = `insert into favorites (student_fname, student_lname, student_email, tutor_name) values('${global.firstName}', '${global.lastName}', '${global.email}', '${val}');`;
-    
-    // Execute query insertion
-    con.query(add, (err, rows) => {
-      if(err) 
-        console.log("Error");
-    });
-  }
-  else {
-    const subtract = `delete from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}' and tutor_name = '${val}';`;
-
-    // Execute query deletion
-    con.query(subtract, (err, rows) => {
-      if(err) 
-        console.log("Error");
-    });
-  }
-  */
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
 });
 
