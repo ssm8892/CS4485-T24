@@ -255,26 +255,6 @@ app.get('/become-tutor', (req, res) => {
   res.render(__dirname + "\\index.hbs", { tutors: displayTutors });
 })
 
-app.post('/upload-pic', async(req, res) => {
-  
-  if(!req.files){
-    res.send('File was not found');
-    return;
-  }
-  
-  const avatar = req.files.avatar;
-  if(!avatar) 
-    return res.sendStatus(400);
-
-  var img = __dirname+"/profile_pics/"+avatar.name;
-  console.log(img);
-  avatar.mv(__dirname+"/profile_pics/"+avatar.name);
-  console.log(img)
-  res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
-  
-  res.render('uploaded', { imageUrl: `/uploads/${req.file.filename}` });
-})
-
 // Become a tutor
 app.post('/become-tutor', async(req, res) => {
   // Info to become a tutor
@@ -377,6 +357,51 @@ app.post('/signup', async (req, res) => {
     res.render(__dirname + "\\index.hbs", { tutors: displayTutors, welcome: "Student successfully registered!"});
   }
 });
+
+/*
+app.post('/upload-tutor-pic', async(req, res) => {
+  
+  if(!req.files){
+    res.send('File was not found');
+    return;
+  }
+  
+  // Get file name
+  const avatar = req.files.avatar;
+  
+  // Catch error
+  if(!avatar) 
+    return res.sendStatus(400);
+
+  // Get filename and move it
+  var img = __dirname+"\\profile_pics\\"+avatar.name;
+  avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
+
+  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: img });
+})
+*/
+
+
+app.post('/upload-pic', async(req, res) => {
+  // Send error message
+  if(!req.files){
+    res.send('File was not found');
+    return;
+  }
+  // Get file name
+  const avatar = req.files.avatar;
+
+  // Catch error
+  if(!avatar) 
+    return res.sendStatus(400);
+
+  // Get filename and move it
+  var img = __dirname+"\\profile_pics\\"+avatar.name;
+  avatar.mv(__dirname+"\\profile_pics\\"+avatar.name);
+  var imgToSend = `profile_pics/${avatar.name}`
+
+  res.render(__dirname + "\\home.hbs", { tutors: displayTutors, profilePic: imgToSend });
+})
 
 /*
 app.get('/index-search', (req, res) => {
