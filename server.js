@@ -59,6 +59,13 @@ const dbTutors = await executeRows(tutorsQuery);
 global.displayTutors = [];
 
 for (let i=0; i<dbTutors.length; i++) {
+  // Make default
+  var prePicture = "assets/avataaars.svg";
+
+  // Update image
+  if (dbUpdate[i]['profile_pic'] != "")
+    prePicture = dbUpdate[i]['profile_pic']
+
   // Dictionary of tutor info
   const tutorDict = {
     fullName: dbTutors[i]['first_name'] + " " + dbTutors[i]['last_name'],
@@ -70,7 +77,7 @@ for (let i=0; i<dbTutors.length; i++) {
     times: dbTutors[i]['hours_available'].split(','),
     courses: dbTutors[i]['subject_expertise'].split(', '),
     favorite: false,
-    image: dbTutors[i]['profile_pic'],
+    image: prePicture,
     index: i
   }
   displayTutors.push(tutorDict);
@@ -81,13 +88,6 @@ function updateTutors(dbUpdate) {
   displayTutors = []; 
 
   for (let i=0; i<dbUpdate.length; i++) {
-    // Else make default
-    var picture = "assets/avataaars.svg";
-
-    // Update image
-    if (dbUpdate[i]['profile_pic'] != "")
-      picture = dbUpdate[i]['profile_pic']
-
     // Dictionary of tutor info
     const tutorDict = {
       fullName: dbUpdate[i]['first_name'] + " " + dbUpdate[i]['last_name'],
@@ -100,7 +100,7 @@ function updateTutors(dbUpdate) {
       courses: dbUpdate[i]['subject_expertise'].split(', '),
       favorite: false,
       image: dbUpdate[i]['profile_pic'],
-      index: picture,
+      index: dbUpdate[i]['profile_pic'],
       favorite: false
     }
     global.displayTutors.push(tutorDict);
