@@ -542,14 +542,25 @@ app.post('/favorites', async(req, res) => {
 
 // Book appointment with tutor (still working)
 app.post('/book', async(req, res) => {
-  const subject = req.body.subject;
-  const date = req.body.date;
-  const time = req.body.time;
+  const tutor = req.body.myH2;
+  const name = req.body.myH3;
+
+  const subject = req.body.apptSub;
+  const date = req.body.apptDays;
+  const time = req.body.apptTime;
   const email = req.body.email;
 
+  console.log(tutor);
+  console.log(name);
+
+  console.log(subject);
+  console.log(date);
+  console.log(time);
+  console.log(email);
   
   // res.render('home');
-  res.sendFile(__dirname + "/home.html");
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
+  
 })
 
 app.listen(3000, () => {
