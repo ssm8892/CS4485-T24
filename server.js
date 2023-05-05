@@ -294,9 +294,8 @@ app.post('/login', async(req, res) => {
     const nameToSend = dbResult[0]['first_name'].toUpperCase();
     const fullName = nameToSend + " " + dbResult[0]['last_name'].toUpperCase();
     const totalTutoringHours = dbResult[0]['total_tutoring_hours'];
-    const favorites = dbResult[0]['favorites'].split(',');
 
-    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours, favorites);
+    setUser(dbResult[0]['first_name'], dbResult[0]['last_name'], dbResult[0]['email'], "Student", dbResult[0]['profile_pic'], nameToSend, fullName, totalTutoringHours);
 
     // Send data to HTML
     res.render(__dirname + "\\home.hbs", { name: nameToSend, fullName: fullName, hours: totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors });
@@ -530,42 +529,31 @@ app.post('/favorites', async(req, res) => {
   // New tutor to add to favorites list
   const val = req.body.myH1;
 
+  /*
   // Get favorites list 
-  const query = `select favorites from student where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
+  const query = `select * from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}' and tutor_name = '${val}';`;
   const querySearch = await executeRows(query);
 
-  // Split string on comma
-  const favoritesStr = querySearch[0]['favorites'];
-
-  // Avoid extra comma
-  if (favoritesStr.length > 0)
-    global.favorites = favoritesStr.split(",");
-  else
-    global.favorites = [];
-
-  // Remove element if exists, else append
-  if (global.favorites.includes(val)) {
-    var temp = global.favorites;
-    global.favorites = [];
-
-    for (let i=0; i<temp.length; i++) {
-      if (temp[i] != val)
-        global.favorites.push(val);
-    }
+  // In empty query, add to favorites list
+  if (querySearch.length == 0) {
+    const add = `insert into favorites (student_fname, student_lname, student_email, tutor_name) values('${global.firstName}', '${global.lastName}', '${global.email}', '${val}');`;
+    
+    // Execute query insertion
+    con.query(add, (err, rows) => {
+      if(err) 
+        console.log("Error");
+    });
   }
-  else
-    global.favorites.push(val);
+  else {
+    const subtract = `delete from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}' and tutor_name = '${val}';`;
 
-  // Convert back into string and write query
-  var newStringFavorites = global.favorites.join(",");
-  const newQuery = `update student set favorites = '${newStringFavorites}' where first_name = '${global.firstName}' and last_name = '${global.lastName}' and email = '${global.email}';`;
-  
-  // Execute query insertion
-  con.query(newQuery, (err, rows) => {
-    if(err) 
-      console.log("Error");
-  });
-  console.log(global.favorites)
+    // Execute query deletion
+    con.query(subtract, (err, rows) => {
+      if(err) 
+        console.log("Error");
+    });
+  }
+  */
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
 });
 
