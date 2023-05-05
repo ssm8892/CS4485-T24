@@ -59,6 +59,9 @@ const dbTutors = await executeRows(tutorsQuery);
 // Store dictionaries of tutor info
 global.displayTutors = [];
 
+// Searched tutors
+global.searchedTutors = [];
+
 for (let i=0; i<dbTutors.length; i++) {
   // Make default
   var prePicture = "assets/avataaars.svg";
@@ -84,9 +87,14 @@ for (let i=0; i<dbTutors.length; i++) {
   displayTutors.push(tutorDict);
 }
 
-function updateTutors(dbUpdate) {
-  // Store dictionaries of tutor info
-  displayTutors = []; 
+function updateTutors(dbUpdate, specific) {
+  // If searching all tutor data, store dictionaries of tutor info
+  if (specific == "All")
+    global.displayTutors = []; 
+
+  // If searching searched data, store dictionaries of searched tutor info
+  else if (specific == "Searched")
+    global.searchedTutors = [];
 
   for (let i=0; i<dbUpdate.length; i++) {
     // Make default
@@ -111,9 +119,16 @@ function updateTutors(dbUpdate) {
       index: i,
       favorite: false
     }
-    global.displayTutors.push(tutorDict);
+    // Add to dict of all tutors
+    if (specific == "All")
+      global.displayTutors.push(tutorDict);
+
+    // Add to dict of searched tutors
+    else if (specific == "Searched")
+      global.searchedTutors.push(tutorDict);
   }
 }
+
 
 function executeRows(query) {
   return new Promise((resolve, reject) => {
@@ -332,7 +347,7 @@ app.post('/become-tutor', async(req, res) => {
     });
     // Update tutors
     const newDbTutors = await executeRows(`select * from tutor;`);
-    updateTutors(newDbTutors);
+    updateTutors(newDbTutors, "All");
 
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors, welcome: "Tutor successfully registered!"});
   }
@@ -415,7 +430,7 @@ app.post('/upload-tutor-pic', async(req, res) => {
 
   // Update tutors
   const newDbTutors = await executeRows(`select * from tutor;`);
-  updateTutors(newDbTutors);
+  updateTutors(newDbTutors, "All");
 
   res.render(__dirname + "\\tutor.hbs", { tutors: global.displayTutors, profilePic: imgToSend });
 });
@@ -455,17 +470,25 @@ app.post('/index-search', (req, res) => {
   const search = req.body.find;
   const len = search.length;
 
-  // Find search keyword
-  const findQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+  // If searched for nothing, reload
+  if (len == 0)
+    res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
   
-  // Execute query insertion
-  con.query(findQuery, (err, rows) => {
-    if(err) 
-      console.log("Error");
-  });
+  // Else, search in queries
+  else {
+    // Find search keyword
+    const searchQuery = `select * from tutor where left(first_name, ${len}) = '${search}' or left(last_name, ${len}) = '${search}' or left(subject_expertise, ${len}) = '${search}';`;
+    const newDbSearch = executeRows(searchQuery);
+    updateTutors(newDbSearch, "Searched");
+    
+    // Execute query insertion
+    con.query(findQuery, (err, rows) => {
+      if(err) 
+        console.log("Error");
+    });
 
-  // if (findQuery.length == 0) 
-
+    res.render(__dirname + "\\index.hbs", { tutors: global.searchedTutors });
+  }
 });
 
 app.post('/home-search', (req, res) => {
