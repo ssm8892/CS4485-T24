@@ -15,8 +15,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// set up Multer to handle file uploads
-const upload = multer({ dest: 'uploads/' });
+// Set up Multer and storage to handle file uploads
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
 
 // Set up view engine and views directory
 app.set('view engine', 'hbs');
@@ -264,7 +272,9 @@ app.post('/upload-pic', upload.single('avatar'), async(req, res) => {
   console.log(img)
   res.render(__dirname + "\\tutor.hbs", { tutors: displayTutors, profilePic: img });
   */
-  res.render('uploaded', { profilePic: `/uploads/${req.file.filename}` });
+  pic = req.file.filename;
+  console.log(pic);
+  res.render(__dirname + "\\home.hbs", { profilePic: pic });
 })
 
 // Become a tutor
