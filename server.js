@@ -101,32 +101,6 @@ for (let i=0; i<dbTutors.length; i++) {
   displayTutors.push(tutorDict);
 }
 
-/*
-async function getTutorFullName(tutor_id) {
-  const new_query = `select * from tutor where tutor_id = '${tutor_id}';`;
-  const result = await executeRows(new_query);
-  let name = result[0]['first_name'] + " " + result[0]['last_name'];
-  console.log(name + " tutor");
-  return name;
-}
-
-async function getStudentFullName(student_id) {
-  const new_query = `select * from student where student_id = '${student_id}';`;
-  const result = await executeRows(new_query);
-  let name = result[0]['first_name'] + " " + result[0]['last_name'];
-  console.log(name + " student");
-  return name;
-}
-
-async function getSubjectName(subject_id) {
-  const new_query = `select * from subject where subject_id = '${subject_id}';`;
-  const result = await executeRows(new_query);
-  let name = result[0]['course_name'];
-  console.log(name + " course");
-  return name;
-}
-*/
-
 function updateTutors(dbUpdate, specific) {
   // If searching all tutor data, store dictionaries of tutor info
   if (specific == "All")
