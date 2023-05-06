@@ -446,7 +446,7 @@
 
 
     {{#each appointments}}
-    <div class="portfolio-modal modal fade" id="appointmentModal1" tabindex="-1" aria-labelledby="portfolioModal1"
+    <div class="portfolio-modal modal fade" id="appointmentModal1" tabindex="{{this.ID}}" aria-labelledby="portfolioModal1"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -457,7 +457,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">TUTOR NAME</h2>
+                                <h2 class="portfolio-modal-title text-secondary mb-0">{{this.tutor}}</h2>
                                 <!-- Icon Divider-->
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
@@ -466,9 +466,9 @@
                                 <div class="container d-flex align-items-center flex-column">
 
                                     <!-- Masthead Heading-->
-                                    <h4 class="text-uppercase mb-0">MEHCANICS - PHYS 2325</h4>
+                                    <h4 class="text-uppercase mb-0">{{this.course}}</h4>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <h4 class="text-primary mb-0">MAY 25TH | 2:00 - 4:00 PM</h4>
+                                    <h4 class="text-primary mb-0">{{this.date}} | {{this.time}}</h4>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
 
                                 </div>
