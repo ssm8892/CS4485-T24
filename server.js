@@ -6,7 +6,7 @@ import fileUpload from 'express-fileupload';
 //import { totalmem } from 'os';
 import multer from 'multer';
 //import cheerio from 'cheerio';
-//import { add, format } from 'date-fns';
+import { add, format } from 'date-fns';
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -595,7 +595,7 @@ app.post('/book', async (req, res) => {
 
   // Get the current date and add one day
   const today = new Date();
-  var tomorrow = add(today, { days: 1 });
+  var tomorrow = add(today, { days: 1});
 
   // Loop until next day is found
   while (tomorrow.getDay() !== dayOfWeekIndex) { 
@@ -608,7 +608,7 @@ app.post('/book', async (req, res) => {
   
   // Booking queries
   var randomId = Math.floor(Math.random() * (10000000000 - 1000000000) + 1000000000)
-  const newBooking = `insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${writtenDate}', '${time}', ${2}, '${tutor}', '${global.fullName}', '${subject}');`
+  const newBooking = `insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('${randomId}', '${writtenDate}', '${time}', ${2}, '${tutor}', '${tempFullName}', '${subject}');`
 
   // Execute query insertion
   con.query(newBooking, (err, rows) => {
@@ -648,15 +648,22 @@ app.post('/favorites', async(req, res) => {
   const querySearch = await executeRows(query);
   console.log(querySearch);
   
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors,appointments: global.appointments });
 });
 
 app.get('/show-favorites', async(req, res) => {
+  console.log("Hello");
+
   // Get favorites
   const queryFav = `select tutor_name from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}';`;
   const dbFav = await executeRows(queryAppt);
 
-
+  var favTutors = []
+  for (let i=0; i<dbFav.length; i++) {
+    var name = dbFav[i]['tutorName'];
+    favTutors.push(name);
+  }
+  console.log(favTutors);
 })
 
 app.listen(3000, () => {

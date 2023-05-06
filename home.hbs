@@ -60,11 +60,12 @@
                             style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle; gap:5%">
                             FILTER:
                             <button type="button" class="filter-button rounded bg-secondary text-white" id="ALL-BUTTON"
-                                href="/home" onclick="displayAll();">ALL</button>
+                                href="/home">ALL</button>
                             <button type="button" class="filter-button rounded" id="FAV-BUTTON"
-                                onclick="displayFavs();">FAVORITES</button>
+                                href="/show-favorites">FAVORITES</button>
                         </div>
-
+                        
+                        <form id="searchForm" action="/home-search" data-sb-form-api-token="API_TOKEN" method="post"></form>
                         <div class="dash-menu-right"
                             style="display: flex; flex-direction: row; width: 50%; text-align: right; margin: 0.5rem;">
                             <div class="input-group">
