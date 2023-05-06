@@ -59,13 +59,12 @@
                         <div class="dash-menu-left flex-row"
                             style="width: 50%; text-align: left; margin: 1rem; padding-left: 0.5rem; vertical-align: middle; gap:5%">
                             FILTER:
-                            <button type="button" class="filter-button rounded bg-secondary text-white" id="ALL-BUTTON"
-                                href="/home">ALL</button>
-                            <button type="button" class="filter-button rounded" id="FAV-BUTTON"
-                                href="/show-favorites">FAVORITES</button>
+                            <button type="button" class="filter-button rounded bg-secondary text-white" id="ALL-BUTTON" onclick="displayAll();">ALL</button>
+                            <button type="button" class="filter-button rounded" id="FAV-BUTTON" onclick="displayFavs();">FAVORITES</button>
                         </div>
-                        
-                        <form id="searchForm" action="/home-search" data-sb-form-api-token="API_TOKEN" method="post"></form>
+
+                        <form id="searchForm" action="/home-search" data-sb-form-api-token="API_TOKEN" method="post">
+                        </form>
                         <div class="dash-menu-right"
                             style="display: flex; flex-direction: row; width: 50%; text-align: right; margin: 0.5rem;">
                             <div class="input-group">
@@ -94,9 +93,8 @@
                                 <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
                                 </h1>
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
+                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.email}}
                                 </h2>
-
                                 <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
                                 <div
                                     style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
@@ -109,35 +107,7 @@
                     </div>
                     {{/each}}
                 </div>
-                <div class="dash-content dash-tutor" id="dash-content-tutor-favs"
-                    style="display: none; flex-direction:row">
-                    {{#each tutors}}
-                    <div class="tutor-card rounded bg-secondary" data-bs-toggle="modal"
-                        data-bs-target="#tutorProfileModal{{this.index}}">
-                        <div class="container d-flex align-items-center flex-row"
-                            style="justify-content: space-around;">
-                            <!-- Masthead Avatar Image-->
-                            <img class="masthead-avatar mb-2" src="{{this.image}}" alt="..." style="width: 5rem;" />
-                            <!-- Masthead Heading-->
-                            <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                                <h1 class="text-white mb-0" style="font-size: large;">{{this.fullName}}
-                                </h1>
-                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 10px;"></h2>
-                                <h2 class="text-white mb-0" style="font-size:x-small;">{{this.expertise}}
-                                </h2>
 
-                                <h2 class="text-white mb-0" style="font-size: medium; min-height: 20px;"></h2>
-                                <div
-                                    style="display: flex; flex-direction: row; font-size: x-small; flex-wrap: wrap; gap: 0.5rem; padding-right: 0.5rem;">
-                                    {{#each this.courses}}
-                                    <div class="text-primary text-uppercase course-name">{{this}}</div>
-                                    {{/each}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
             </div>
         </section>
 
@@ -235,7 +205,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{fullName}}</h2>
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">{{name}}</h2>
                                 <!-- Icon Divider-->
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
@@ -385,8 +355,7 @@
                                     <div class="divider-custom-line"></div>
                                 </div>
                                 <form id="contactForm" action="/book" method="post">
-                                    <input type="hidden" value="{{this.fullName}}" name="myH2"
-                                    value="{{ myH2Value }}">
+                                    <input type="hidden" value="{{this.fullName}}" name="myH2" value="{{ myH2Value }}">
 
                                     <!-- Subject input-->
                                     <div id="apptSubList" class="dropdown-check-list" style="width:100%" tabindex="100">
@@ -447,8 +416,8 @@
 
 
     {{#each appointments}}
-    <div class="portfolio-modal modal fade" id="appointmentModal{{this.index}}" tabindex="-1" aria-labelledby="portfolioModal1"
-        aria-hidden="true">
+    <div class="portfolio-modal modal fade" id="appointmentModal{{this.index}}" tabindex="-1"
+        aria-labelledby="portfolioModal1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal"

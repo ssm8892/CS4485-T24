@@ -169,6 +169,10 @@ function displayAll() {
         var s = favcards[i].style;
         s.visibility = "visible";
     }
+    const allbutton = document.getElementById("ALL-BUTTON");
+    const favButton = document.getElementById("FAV-BUTTON");
+    allbutton.classList.add("bg-secondary", "text-white");
+    favButton.classList.remove("bg-secondary", "text-white");
     favToggler = false;
 };
 function displayFavs() {
@@ -178,6 +182,10 @@ function displayFavs() {
         var s = cards[i].style;
         s.visibility = "hidden";
     }
+    const allbutton = document.getElementById("ALL-BUTTON");
+    const favButton = document.getElementById("FAV-BUTTON");
+    favButton.classList.add("bg-secondary", "text-white");
+    allbutton.classList.remove("bg-secondary", "text-white");
     favToggler = true;
 };
 
