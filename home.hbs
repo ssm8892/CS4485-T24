@@ -163,7 +163,7 @@
                 </div>
             </div>
             <div class="calendar-right justify-content-center" style="padding: 5%;">
-
+                {{#each appointments}}
                 <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
                     data-bs-target="#appointmentModal1">
                     <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
@@ -171,47 +171,15 @@
                         <div><i class="fa fa-calendar fa-2x"></i></div>
                         <!-- Masthead Heading-->
                         <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">TUTOR NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
+                            <h1 class="text-white mb-0" style="font-size: large;">{{this.tutor}}</h1>
+                            <h2 class="text-white mb-0" style="font-size:x-small;">{{this.course}}</h2>
                         </div>
                     </div>
                     <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
+                        <h2 class="text-white mb-0" style="font-size:small;">{{this.date}} | {{this.time}}</h2>
                     </div>
                 </div>
-
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">TUTOR NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-
-                <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
-                    <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
-                        <!-- Masthead Avatar Image-->
-                        <div><i class="fa fa-calendar fa-2x"></i></div>
-                        <!-- Masthead Heading-->
-                        <div class="flex-column" style="text-align: left; margin-left: 1rem;">
-                            <h1 class="text-white mb-0" style="font-size: large;">TUTOR NAME</h1>
-                            <h2 class="text-white mb-0" style="font-size:x-small;">MECHANICS - PHYS 2325</h2>
-                        </div>
-                    </div>
-                    <div style="text-align: center; padding-top: 5%">
-                        <h2 class="text-white mb-0" style="font-size:small;">MAY 25TH | 2:00 - 4:00 PM</h2>
-                    </div>
-                </div>
-
+                {{/each}}
             </div>
         </section>
 
@@ -476,8 +444,9 @@
     </div>
     {{/each}}
 
+
     {{#each appointments}}
-    <div class="portfolio-modal modal fade" id="appointmentModal{{this.index}}" tabindex="-1" aria-labelledby="portfolioModal1"
+    <div class="portfolio-modal modal fade" id="appointmentModal1" tabindex="-1" aria-labelledby="portfolioModal1"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -485,7 +454,6 @@
                         aria-label="Close"></button></div>
                 <div class="modal-body text-center pb-5">
                     <div class="container">
-                        {{#each appointments}}
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
                                 <!-- Portfolio Modal - Title-->
@@ -498,15 +466,14 @@
                                 <div class="container d-flex align-items-center flex-column">
 
                                     <!-- Masthead Heading-->
-                                    <h4 class="text-uppercase mb-0">{{this.subject}}</h4>
+                                    <h4 class="text-uppercase mb-0">MEHCANICS - PHYS 2325</h4>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <h4 class="text-primary mb-0">{{this.date}} | {{this.time}}</h4>
+                                    <h4 class="text-primary mb-0">MAY 25TH | 2:00 - 4:00 PM</h4>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
 
                                 </div>
                             </div>
                         </div>
-                        {{/each}}
                     </div>
                 </div>
             </div>
