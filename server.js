@@ -289,7 +289,8 @@ app.post('/tutor-login', async (req, res) => {
         duration: dbAppt[i]['duration'],
         tutor: dbAppt[i]['tutor_name'],
         student: dbAppt[i]['student_name'],
-        subject: dbAppt[i]['subject']
+        subject: dbAppt[i]['subject'],
+        index: i,
       }
       global.appointments.push(apptDict);
     }
@@ -346,7 +347,8 @@ app.post('/login', async (req, res) => {
         duration: dbAppt[i]['duration'],
         tutor: dbAppt[i]['tutor_name'],
         student: dbAppt[i]['student_name'],
-        subject: dbAppt[i]['subject']
+        subject: dbAppt[i]['subject'],
+        index: i,
       }
       global.appointments.push(apptDict);
     }

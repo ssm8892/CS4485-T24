@@ -93,7 +93,11 @@ VALUES
 select * from tutor;
 select * from favorites;
 
-# insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('9999999999', 'Saturday, May 6, 2023', '12:00 PM - 2:00 PM', 2, 'Helen Clyde', 'Thomas Kahng', 'Chemistry');
+insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('9999999999', 'Saturday, May 6, 2023', '12:00 PM - 2:00 PM', 2, 'Helen Clyde', 'Thomas Kahng', 'Chemistry');
+insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('1000000000', 'Saturday, May 6, 2023', '12:00 PM - 2:00 PM', 2, 'Helen Clyde', 'Brad Owen', 'Chemistry');
+insert into appointments (appointment_id, written_date, written_time, duration_time, tutor_name, student_name, subject_name) values('1000000001', 'Saturday, May 6, 2023', '12:00 PM - 2:00 PM', 2, 'Helen Clyde', 'Brad Owen', 'Chemistry');
+
+
 select * from appointments;
 
 
