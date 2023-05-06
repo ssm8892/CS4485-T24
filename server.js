@@ -243,7 +243,7 @@ app.get('/index', (req, res) => {
 
 app.get('/home', (req, res) => {
   if (firstName != "" && lastName != "" && email != "" && accountType != "")
-    res.render(__dirname + "\\home.hbs", { tutors: global.displayTutors });
+    res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, tutors: global.displayTutors });
   else
     res.render(__dirname + "\\index.hbs", { tutors: global.displayTutors });
 });
