@@ -73,7 +73,7 @@
             <div class="calendar-right justify-content-center" style="padding: 5%;">
                 {{#each appointments}}
                 <div class="appointment-card rounded bg-primary flex-column" data-bs-toggle="modal"
-                    data-bs-target="#appointmentModal1">
+                    data-bs-target="#appointmentModal{{this.index}}">
                     <div class="container d-flex align-items-center flex-row" style="justify-content: space-around;">
                         <!-- Masthead Avatar Image-->
                         <div><i class="fa fa-calendar fa-2x"></i></div>
