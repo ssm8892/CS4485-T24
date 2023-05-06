@@ -579,19 +579,6 @@ app.post('/home-search', async (req, res) => {
   }
 });
 
-app.post('/favorites', async(req, res) => {
-  // New tutor to add to favorites list
-  const val = req.body.myH1;
-  
-  const possibility = `select tutor_name from favorites where student_fname = '${global.firstName}' and student_lname = '${globalLastName}' and email = '${global.email}' and tutor_name = '${val}';`;
-
-  const query = `insert into favorites (student_fname, student_lname, student_email, tutor_name) values('${global.firstName}', '${global.lastName}', '${global.email}', '${val}');`;
-  const querySearch = await executeRows(query);
-  console.log(querySearch);
-  
-  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
-});
-
 // Book appointment with tutor (still working)
 app.post('/book', async (req, res) => {
   // Hidden variable
@@ -649,6 +636,27 @@ app.post('/book', async (req, res) => {
 
   // res.render('home');
   res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, appointments: global.appointments });
+});
+
+app.post('/favorites', async(req, res) => {
+  // New tutor to add to favorites list
+  const val = req.body.myH1;
+  
+  const possibility = `select tutor_name from favorites where student_fname = '${global.firstName}' and student_lname = '${globalLastName}' and email = '${global.email}' and tutor_name = '${val}';`;
+
+  const query = `insert into favorites (student_fname, student_lname, student_email, tutor_name) values('${global.firstName}', '${global.lastName}', '${global.email}', '${val}');`;
+  const querySearch = await executeRows(query);
+  console.log(querySearch);
+  
+  res.render(__dirname + "\\home.hbs", { name: global.nameToSend, fullName: global.fullName, hours: global.totalTutoringHours, profilePic: global.profilePic, tutors: global.displayTutors, favorites: global.favorites});
+});
+
+app.get('/show-favorites', async(req, res) => {
+  // Get favorites
+  const queryFav = `select tutor_name from favorites where student_fname = '${global.firstName}' and student_lname = '${global.lastName}' and student_email = '${global.email}';`;
+  const dbFav = await executeRows(queryAppt);
+
+
 })
 
 app.listen(3000, () => {
