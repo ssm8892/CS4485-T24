@@ -285,7 +285,6 @@ app.get('/tutor-login', (req, res) => {
 app.post('/tutor-login', async (req, res) => {
   // Email and password
   const email = req.body.tutor_email;
-  console.log(email);
   var password = req.body.tutor_password;
 
   // Get query pertaining to email and password
